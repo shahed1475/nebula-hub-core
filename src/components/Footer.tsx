@@ -22,11 +22,11 @@ const Footer = () => {
   ];
 
   const services = [
+    { name: "AI & Machine Learning", href: "#services" },
+    { name: "Custom Software", href: "#services" },
     { name: "Web Development", href: "#services" },
     { name: "Mobile Apps", href: "#services" },
-    { name: "E-commerce", href: "#services" },
-    { name: "UI/UX Design", href: "#services" },
-    { name: "Digital Marketing", href: "#services" }
+    { name: "CRM & SaaS Tools", href: "#services" }
   ];
 
   const socialLinks = [
@@ -82,8 +82,8 @@ const Footer = () => {
                 />
               </div>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                PopupGenix creates cutting-edge web solutions that drive business growth 
-                and deliver exceptional user experiences.
+                PopupGenix creates cutting-edge AI and software solutions that drive business growth 
+                and deliver exceptional user experiences through intelligent, scalable technology.
               </p>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-muted-foreground">

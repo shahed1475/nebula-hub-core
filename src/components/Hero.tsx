@@ -27,25 +27,24 @@ const Hero = () => {
           {/* Badge */}
           <div className="inline-flex items-center space-x-2 bg-card/50 backdrop-blur-sm border border-primary/30 rounded-full px-6 py-3 mb-8 animate-glow-pulse">
             <Sparkles className="w-4 h-4 text-accent" />
-            <span className="text-sm font-medium">Premium Web Solutions</span>
+            <span className="text-sm font-medium">AI & Software Solutions</span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent leading-tight">
-            PopupGenix
-          </h1>
-          
-          <h2 className="text-2xl md:text-4xl font-semibold mb-8 text-foreground/90">
-            Futuristic Web Development
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <span className="bg-gradient-primary bg-clip-text text-transparent">
+              Building Future-Ready
+            </span>
             <br />
-            <span className="text-accent">That Converts</span>
-          </h2>
+            <span className="text-foreground">AI & Software Solutions</span>
+            <span className="text-4xl md:text-5xl lg:text-6xl ml-4">🚀</span>
+          </h1>
 
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-            Transform your digital presence with cutting-edge web solutions. 
-            We create stunning, high-converting websites that captivate your audience 
-            and drive real business results.
+            PopupGenix creates intelligent, scalable, and future-proof AI solutions 
+            that empower businesses worldwide to enhance efficiency, security, and growth 
+            through cutting-edge technology.
           </p>
 
           {/* CTA Buttons */}
@@ -62,17 +61,17 @@ const Hero = () => {
 
           {/* Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
-            <div className="text-center animate-fade-in" style={{ animationDelay: '0.5s' }}>
-              <div className="text-3xl font-bold text-accent mb-2">150+</div>
+            <div className="text-center animate-fade-in" style={{ animationDelay: "0.5s" }}>
+              <div className="text-3xl font-bold text-accent mb-2">50+</div>
               <div className="text-muted-foreground">Projects Delivered</div>
             </div>
-            <div className="text-center animate-fade-in" style={{ animationDelay: '0.7s' }}>
-              <div className="text-3xl font-bold text-accent mb-2">98%</div>
-              <div className="text-muted-foreground">Client Satisfaction</div>
+            <div className="text-center animate-fade-in" style={{ animationDelay: "0.7s" }}>
+              <div className="text-3xl font-bold text-accent mb-2">25+</div>
+              <div className="text-muted-foreground">Global Clients</div>
             </div>
-            <div className="text-center animate-fade-in" style={{ animationDelay: '0.9s' }}>
-              <div className="text-3xl font-bold text-accent mb-2">24/7</div>
-              <div className="text-muted-foreground">Support Available</div>
+            <div className="text-center animate-fade-in" style={{ animationDelay: "0.9s" }}>
+              <div className="text-3xl font-bold text-accent mb-2">5+</div>
+              <div className="text-muted-foreground">Years in Business</div>
             </div>
           </div>
         </div>

@@ -15,44 +15,44 @@ const Services = () => {
   const services = [
     {
       icon: Globe,
-      title: "Custom Web Development",
-      description: "Bespoke websites built with cutting-edge technologies for maximum performance and user experience.",
-      features: ["React & Next.js", "Performance Optimized", "SEO Ready", "Mobile First"],
+      title: "AI & Machine Learning",
+      description: "Advanced AI solutions including NLP, computer vision, predictive analytics, and AI security systems.",
+      features: ["Natural Language Processing", "Computer Vision", "Predictive Analytics", "AI Security"],
       color: "text-primary"
     },
     {
       icon: Smartphone,
-      title: "Mobile App Development",
-      description: "Native and cross-platform mobile applications that engage users and drive business growth.",
-      features: ["iOS & Android", "React Native", "App Store Optimization", "Push Notifications"],
+      title: "Custom Software Development",
+      description: "Bespoke enterprise solutions including ERP, CRM, SaaS platforms, and business automation tools.",
+      features: ["ERP Systems", "CRM Solutions", "SaaS Platforms", "Business Automation"],
       color: "text-accent"
     },
     {
       icon: ShoppingCart,
-      title: "E-commerce Solutions",
-      description: "Complete online stores with secure payments, inventory management, and conversion optimization.",
-      features: ["Shopify & WooCommerce", "Payment Integration", "Inventory Management", "Analytics"],
+      title: "Web Development",
+      description: "Modern web applications from corporate websites to e-commerce platforms and progressive web apps.",
+      features: ["Corporate Websites", "E-commerce Platforms", "Content Management", "Progressive Web Apps"],
       color: "text-primary-glow"
     },
     {
       icon: Palette,
-      title: "UI/UX Design",
-      description: "Beautiful, intuitive designs that convert visitors into customers with proven design principles.",
-      features: ["User Research", "Wireframing", "Prototyping", "A/B Testing"],
+      title: "Mobile Apps",
+      description: "Native and cross-platform mobile applications powered by AI for iOS, Android, and hybrid platforms.",
+      features: ["iOS Development", "Android Development", "Cross-platform", "AI-powered Apps"],
       color: "text-accent-glow"
     },
     {
       icon: BarChart3,
-      title: "Digital Marketing",
-      description: "Data-driven marketing strategies that increase your online visibility and drive qualified leads.",
-      features: ["SEO & SEM", "Social Media", "Content Marketing", "Analytics"],
+      title: "CRM & SaaS Tools",
+      description: "Intelligent CRM systems and SaaS tools with sales automation and AI-driven analytics dashboards.",
+      features: ["Sales Automation", "AI Dashboards", "Customer Analytics", "Lead Management"],
       color: "text-primary"
     },
     {
       icon: Rocket,
-      title: "Performance Optimization",
-      description: "Speed up your website and improve user experience with advanced optimization techniques.",
-      features: ["Core Web Vitals", "CDN Setup", "Image Optimization", "Caching Strategy"],
+      title: "Cloud & DevOps",
+      description: "Cloud migration services, CI/CD pipelines, Kubernetes orchestration, and scalable infrastructure.",
+      features: ["Cloud Migration", "CI/CD Pipelines", "Kubernetes", "Infrastructure Scaling"],
       color: "text-accent"
     }
   ];
@@ -74,12 +74,12 @@ const Services = () => {
           </div>
           
           <h2 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-            What We Do Best
+            Our Core Services
           </h2>
           
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            We offer comprehensive digital solutions that transform your ideas into 
-            powerful, conversion-focused web experiences.
+            We deliver comprehensive AI and software solutions that drive innovation, 
+            enhance efficiency, and accelerate your business growth in the digital age.
           </p>
         </div>
 
@@ -133,15 +133,15 @@ const Services = () => {
         <div className="text-center">
           <div className="bg-gradient-card p-12 rounded-2xl border border-primary/20 shadow-elegant">
             <h3 className="text-3xl font-bold mb-4 text-foreground">
-              Ready to Start Your Project?
+              Let's Build Together – Your Idea, Our Technology
             </h3>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Let's discuss how we can bring your vision to life with our proven expertise 
-              and cutting-edge technology solutions.
+              Ready to transform your business with AI-powered solutions? Let's discuss how 
+              we can bring your vision to life with our proven expertise in cutting-edge technology.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Button variant="hero" size="lg">
-                Get Free Consultation
+                Start Your Project
                 <ArrowRight className="w-5 h-5" />
               </Button>
               <Button variant="outline" size="lg">
