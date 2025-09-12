@@ -52,7 +52,7 @@ const Header = () => {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
                 </Link>
               )
-            ))
+            ))}
           </div>
 
           {/* CTA Buttons */}
@@ -101,7 +101,7 @@ const Header = () => {
                   {item.name}
                 </Link>
               )
-            ))
+            ))}
             <div className="pt-4 space-y-3">
               <Link to="/portal">
                 <Button variant="outline" size="sm" className="w-full">
