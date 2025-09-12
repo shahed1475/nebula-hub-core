@@ -191,6 +191,9 @@ const Footer = () => {
               <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
                 Cookie Policy
               </a>
+              <Link to="/admin-signup" className="text-muted-foreground hover:text-accent transition-colors">
+                Admin
+              </Link>
             </div>
           </div>
         </div>

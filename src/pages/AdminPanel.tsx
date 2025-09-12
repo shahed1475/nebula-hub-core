@@ -42,10 +42,21 @@ export default function AdminPanel() {
 
   const checkAdminStatus = async (email: string) => {
     try {
-      // Check if user is admin (you can modify this logic based on your needs)
-      const adminEmails = ['admin@popupgenix.com', 'contact@popupgenix.com']; // Add your admin emails
-      const isUserAdmin = adminEmails.includes(email.toLowerCase());
-      setIsAdmin(isUserAdmin);
+      // Check if user is admin via the profiles table
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .select("is_admin")
+        .eq("email", email.toLowerCase())
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error checking admin status:', error);
+        setIsAdmin(false);
+        setLoading(false);
+        return;
+      }
+
+      setIsAdmin(profile?.is_admin || false);
     } catch (error) {
       console.error('Error checking admin status:', error);
       setIsAdmin(false);
@@ -100,6 +111,18 @@ export default function AdminPanel() {
               providers={[]}
               redirectTo={`${window.location.origin}/admin`}
             />
+            
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-400 mb-3">
+                Don't have an admin account?
+              </p>
+              <a
+                href="/admin-signup"
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-sm"
+              >
+                Create Admin Account
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -109,10 +132,30 @@ export default function AdminPanel() {
   if (!isAdmin) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-midnight-dark via-midnight to-midnight-light flex items-center justify-center p-6">
-        <div className="text-center space-y-4">
-          <h1 className="text-3xl font-bold text-red-400">Access Denied</h1>
-          <p className="text-gray-300">You don't have permission to access the admin panel.</p>
-          <p className="text-sm text-gray-400">Contact the administrator if you believe this is an error.</p>
+        <div className="w-full max-w-md space-y-8">
+          <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 text-center">
+            <h2 className="text-xl font-bold text-red-400 mb-2">Access Denied</h2>
+            <p className="text-red-300 mb-4">
+              You don't have admin privileges for this account ({user.email}).
+            </p>
+            <p className="text-sm text-gray-400 mb-4">
+              If you should have admin access, please contact the system administrator to enable admin privileges for your account.
+            </p>
+            <div className="space-y-3">
+              <button
+                onClick={() => supabase.auth.signOut()}
+                className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+              >
+                Sign Out
+              </button>
+              <a
+                href="/admin-signup"
+                className="block w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-center"
+              >
+                Create New Admin Account
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     );
