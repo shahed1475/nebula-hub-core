@@ -205,6 +205,106 @@ export default function ServicesManager() {
               Add Service
             </Button>
           </DialogTrigger>
+          
+          {/* Edit Dialog */}
+          <DialogContent className="bg-midnight-light border-gray-700 max-w-2xl max-h-[80vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-white">
+                {editingService?.id ? 'Edit Service' : 'Add New Service'}
+              </DialogTitle>
+            </DialogHeader>
+
+            {editingService && (
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label className="text-gray-300">Service Title</Label>
+                    <Input
+                      value={editingService.title}
+                      onChange={(e) => setEditingService({ ...editingService, title: e.target.value })}
+                      className="bg-midnight border-gray-600 text-white"
+                      placeholder="Enter service title"
+                    />
+                  </div>
+                  <div>
+                    <Label className="text-gray-300">Icon</Label>
+                    <select
+                      value={editingService.icon}
+                      onChange={(e) => setEditingService({ ...editingService, icon: e.target.value })}
+                      className="w-full p-2 bg-midnight border border-gray-600 text-white rounded-md"
+                    >
+                      {iconOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <Label className="text-gray-300">Description</Label>
+                  <Textarea
+                    value={editingService.description}
+                    onChange={(e) => setEditingService({ ...editingService, description: e.target.value })}
+                    className="bg-midnight border-gray-600 text-white"
+                    rows={3}
+                    placeholder="Enter service description"
+                  />
+                </div>
+
+                <div>
+                  <Label className="text-gray-300">Features</Label>
+                  <div className="space-y-2">
+                    {editingService.features.map((feature, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Input
+                          value={feature}
+                          onChange={(e) => updateFeature(index, e.target.value)}
+                          className="bg-midnight border-gray-600 text-white"
+                          placeholder="Enter feature"
+                        />
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => removeFeature(index)}
+                          className="border-red-600 text-red-400 hover:bg-red-600/20"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={addFeature}
+                      className="border-gray-600"
+                    >
+                      <Plus className="h-3 w-3 mr-1" />
+                      Add Feature
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => setIsDialogOpen(false)}
+                    className="border-gray-600"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={saveService}
+                    disabled={saving}
+                    className="bg-gradient-to-r from-neon-purple to-neon-blue"
+                  >
+                    {saving ? "Saving..." : "Save Service"}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
         </Dialog>
       </div>
 
@@ -270,108 +370,6 @@ export default function ServicesManager() {
           </Card>
         ))}
       </div>
-
-      {/* Edit Dialog */}
-      <DialogContent className="bg-midnight-light border-gray-700 max-w-2xl max-h-[80vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-white">
-            {editingService?.id ? 'Edit Service' : 'Add New Service'}
-          </DialogTitle>
-        </DialogHeader>
-
-        {editingService && (
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label className="text-gray-300">Service Title</Label>
-                <Input
-                  value={editingService.title}
-                  onChange={(e) => setEditingService({ ...editingService, title: e.target.value })}
-                  className="bg-midnight/50 border-gray-600 text-white"
-                />
-              </div>
-              <div>
-                <Label className="text-gray-300">Icon</Label>
-                <select
-                  value={editingService.icon}
-                  onChange={(e) => setEditingService({ ...editingService, icon: e.target.value })}
-                  className="w-full px-3 py-2 bg-midnight/50 border border-gray-600 text-white rounded-md"
-                >
-                  {iconOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div>
-              <Label className="text-gray-300">Description</Label>
-              <Textarea
-                value={editingService.description}
-                onChange={(e) => setEditingService({ ...editingService, description: e.target.value })}
-                className="bg-midnight/50 border-gray-600 text-white"
-                rows={3}
-              />
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between mb-3">
-                <Label className="text-gray-300">Features</Label>
-                <Button
-                  type="button"
-                  size="sm"
-                  onClick={addFeature}
-                  className="bg-neon-purple/20 text-neon-purple border border-neon-purple/30"
-                >
-                  <Plus className="h-3 w-3 mr-1" />
-                  Add Feature
-                </Button>
-              </div>
-              <div className="space-y-2">
-                {editingService.features.map((feature, index) => (
-                  <div key={index} className="flex gap-2">
-                    <Input
-                      value={feature}
-                      onChange={(e) => updateFeature(index, e.target.value)}
-                      placeholder={`Feature ${index + 1}`}
-                      className="bg-midnight/50 border-gray-600 text-white"
-                    />
-                    <Button
-                      type="button"
-                      size="sm"
-                      variant="outline"
-                      onClick={() => removeFeature(index)}
-                      className="border-red-600 text-red-400 hover:bg-red-600/10"
-                    >
-                      <X className="h-3 w-3" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex justify-end gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setIsDialogOpen(false)}
-                className="border-gray-600"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={saveService}
-                disabled={saving}
-                className="bg-gradient-to-r from-neon-purple to-neon-blue hover:from-neon-purple/80 hover:to-neon-blue/80"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                {saving ? "Saving..." : "Save Service"}
-              </Button>
-            </div>
-          </div>
-        )}
-      </DialogContent>
     </div>
   );
 }
