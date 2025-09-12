@@ -20,7 +20,8 @@ const Portfolio = () => {
       tags: ["AI/ML", "SaaS", "FinTech", "React"],
       challenge: "Complex expense tracking and budget management for businesses",
       approach: "Machine learning algorithms for automatic expense categorization",
-      outcome: "40% reduction in expense processing time for clients"
+      outcome: "40% reduction in expense processing time for clients",
+      link: "https://github.com/raihan-js/spendly"
     },
     {
       title: "Clarify AI",
@@ -30,7 +31,8 @@ const Portfolio = () => {
       tags: ["AI/ML", "Data Analytics", "Python", "React"],
       challenge: "Making complex data analysis accessible to non-technical users",
       approach: "Natural language processing for intuitive data queries",
-      outcome: "300% increase in data-driven decision making"
+      outcome: "300% increase in data-driven decision making",
+      link: "https://www.clarify.ai/"
     },
     {
       title: "Pregacare",
@@ -40,7 +42,8 @@ const Portfolio = () => {
       tags: ["Mobile", "Healthcare", "AI", "React Native"],
       challenge: "Personalized healthcare guidance throughout pregnancy",
       approach: "AI algorithms for personalized health recommendations",
-      outcome: "50,000+ active users with 98% satisfaction rate"
+      outcome: "50,000+ active users with 98% satisfaction rate",
+      link: "https://github.com/raihan-js/pregacare"
     },
     {
       title: "FlaskColorWorks",
@@ -50,7 +53,8 @@ const Portfolio = () => {
       tags: ["AI", "Computer Vision", "Design", "Python"],
       challenge: "Automated color palette generation for designers",
       approach: "Computer vision algorithms analyzing color harmony",
-      outcome: "Used by 10,000+ designers worldwide"
+      outcome: "Used by 10,000+ designers worldwide",
+      link: "https://github.com/raihan-js/FlaskColorWorks"
     },
     {
       title: "Klevere AI",
@@ -60,7 +64,8 @@ const Portfolio = () => {
       tags: ["AI", "Business Intelligence", "SaaS", "Analytics"],
       challenge: "Complex business data analysis and forecasting",
       approach: "Predictive AI models for business intelligence",
-      outcome: "85% improvement in forecast accuracy"
+      outcome: "85% improvement in forecast accuracy",
+      link: "https://www.klevere.ai/"
     },
     {
       title: "BlackGPT",
@@ -70,7 +75,8 @@ const Portfolio = () => {
       tags: ["AI", "NLP", "Chatbot", "Machine Learning"],
       challenge: "Creating culturally aware and context-sensitive AI",
       approach: "Fine-tuned language models with specialized training",
-      outcome: "95% user satisfaction with conversation quality"
+      outcome: "95% user satisfaction with conversation quality",
+      link: "https://blackgpt.us/"
     },
     {
       title: "Inno AI",
@@ -80,7 +86,8 @@ const Portfolio = () => {
       tags: ["AI", "Automation", "Business", "Enterprise"],
       challenge: "End-to-end business process automation",
       approach: "Modular AI systems for different business functions",
-      outcome: "60% reduction in manual processes"
+      outcome: "60% reduction in manual processes",
+      link: "https://inno-ai-main-qk95hz.laravel.cloud/"
     }
   ];
 
@@ -127,7 +134,13 @@ const Portfolio = () => {
                   </Badge>
                 </div>
                 <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button size="icon" variant="ghost" className="bg-card/80 backdrop-blur-sm hover:bg-primary">
+                  <Button 
+                    size="icon" 
+                    variant="ghost" 
+                    className="bg-card/80 backdrop-blur-sm hover:bg-primary"
+                    aria-label={`Open ${project.title}`}
+                    onClick={() => window.open(project.link, '_blank')}
+                  >
                     <ExternalLink className="w-4 h-4" />
                   </Button>
                 </div>
@@ -175,8 +188,9 @@ const Portfolio = () => {
                   variant="outline" 
                   size="sm" 
                   className="w-full group-hover:border-primary/60 group-hover:shadow-neon"
+                  onClick={() => window.open(project.link, '_blank')}
                 >
-                  View Case Study
+                  View the Project
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>

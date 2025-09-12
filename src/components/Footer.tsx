@@ -109,13 +109,13 @@ const Footer = () => {
                 {quickLinks.map((link) => (
                   <li key={link.name}>
                     {link.isAnchor ? (
-                      <a 
-                        href={link.href}
+                      <Link 
+                        to={`/${link.href}`}
                         className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
                       >
                         {link.name}
                         <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                      </a>
+                      </Link>
                     ) : (
                       <Link 
                         to={link.href}
@@ -126,7 +126,7 @@ const Footer = () => {
                       </Link>
                     )}
                   </li>
-                ))}
+                ))
               </ul>
             </div>
 
@@ -136,13 +136,13 @@ const Footer = () => {
               <ul className="space-y-3">
                 {services.map((service) => (
                   <li key={service.name}>
-                    <a 
-                      href={service.href}
+                    <Link 
+                      to={`/${service.href}`}
                       className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
                     >
                       {service.name}
                       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
