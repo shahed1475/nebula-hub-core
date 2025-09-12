@@ -5,39 +5,43 @@ import { Button } from "@/components/ui/button";
 import { Calendar, User, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { supabase } from "@/integrations/supabase/client";
 
-interface BlogPost {
-  id: string;
+interface WordPressBlogPost {
+  ID: number;
   title: string;
   slug: string;
-  excerpt: string | null;
+  excerpt: string;
   content: string;
-  featured_image_url: string | null;
-  author_name: string;
-  category: string | null;
-  tags: string[] | null;
-  status: string;
-  featured: boolean;
-  published_at: string | null;
-  created_at: string;
+  featured_image?: string;
+  author: {
+    name: string;
+  };
+  categories: Record<string, { name: string }>;
+  tags: Record<string, { name: string }>;
+  date: string;
+  URL: string;
 }
 
 const Blog = () => {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [posts, setPosts] = useState<WordPressBlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Replace 'yourblog' with your actual WordPress.com site name
+  const WORDPRESS_SITE = 'yourblog.wordpress.com';
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data, error } = await supabase
-          .from('blog_posts')
-          .select('*')
-          .eq('status', 'published')
-          .order('published_at', { ascending: false });
-
-        if (error) throw error;
-        setPosts(data || []);
+        const response = await fetch(
+          `https://public-api.wordpress.com/rest/v1.1/sites/${WORDPRESS_SITE}/posts/?number=20`
+        );
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch posts');
+        }
+        
+        const data = await response.json();
+        setPosts(data.posts || []);
       } catch (error) {
         console.error('Error fetching posts:', error);
         setPosts([]);
@@ -95,11 +99,11 @@ const Blog = () => {
             ) : (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {posts.map((post) => (
-                  <Card key={post.id} className="bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300 group">
-                    {post.featured_image_url && (
+                  <Card key={post.ID} className="bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300 group">
+                    {post.featured_image && (
                       <div className="h-48 overflow-hidden rounded-t-lg">
                         <img 
-                          src={post.featured_image_url} 
+                          src={post.featured_image} 
                           alt={post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
@@ -110,11 +114,11 @@ const Blog = () => {
                       <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
                         <div className="flex items-center">
                           <Calendar className="w-4 h-4 mr-1" />
-                          {formatDate(post.published_at || post.created_at)}
+                          {formatDate(post.date)}
                         </div>
                         <div className="flex items-center">
                           <User className="w-4 h-4 mr-1" />
-                          {post.author_name}
+                          {post.author.name}
                         </div>
                       </div>
                       
@@ -123,14 +127,9 @@ const Blog = () => {
                       </CardTitle>
                       
                       <div className="flex flex-wrap gap-2 mt-2">
-                        {post.category && (
+                        {Object.keys(post.categories).length > 0 && (
                           <Badge variant="secondary" className="text-xs">
-                            {post.category}
-                          </Badge>
-                        )}
-                        {post.featured && (
-                          <Badge variant="default" className="text-xs">
-                            Featured
+                            {Object.values(post.categories)[0].name}
                           </Badge>
                         )}
                       </div>
@@ -138,13 +137,13 @@ const Blog = () => {
                     
                     <CardContent className="pt-0">
                       <CardDescription className="line-clamp-3 mb-4">
-                        {post.excerpt || post.content.substring(0, 150) + '...'}
+                        {post.excerpt ? post.excerpt.replace(/<[^>]*>/g, '') : post.content.substring(0, 150) + '...'}
                       </CardDescription>
                       
                       <div className="flex flex-wrap gap-1 mb-4">
-                        {post.tags?.slice(0, 3).map((tag, index) => (
+                        {Object.values(post.tags).slice(0, 3).map((tag, index) => (
                           <Badge key={index} variant="outline" className="text-xs">
-                            {tag}
+                            {tag.name}
                           </Badge>
                         ))}
                       </div>
@@ -152,7 +151,7 @@ const Blog = () => {
                       <Button 
                         variant="ghost" 
                         className="w-full justify-between group-hover:bg-primary/10 transition-colors"
-                        onClick={() => window.open(`/blog/${post.slug}`, '_blank')}
+                        onClick={() => window.open(post.URL, '_blank')}
                       >
                         Read More
                         <ChevronRight className="w-4 h-4" />
