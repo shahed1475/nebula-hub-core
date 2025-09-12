@@ -14,91 +14,70 @@ export default function AdminPanel() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [checkingAdmin, setCheckingAdmin] = useState(false);
-  const [hasAnyAdmin, setHasAnyAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Set up auth listener first
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    let mounted = true;
+
+    const initAuth = async () => {
+      try {
+        // Get current session
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!mounted) return;
+
+        if (session?.user) {
+          setUser(session.user);
+          await checkAdminStatus(session.user.email || '');
+        } else {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error('Auth init error:', error);
+        if (mounted) setLoading(false);
+      }
+    };
+
+    // Set up auth listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (!mounted) return;
+      
       setUser(session?.user ?? null);
       if (session?.user) {
-        initAdminCheck(session.user);
+        await checkAdminStatus(session.user.email || '');
       } else {
         setIsAdmin(false);
         setLoading(false);
       }
     });
 
-    // Then check for existing session
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-      if (user) {
-        initAdminCheck(user);
-      } else {
-        setLoading(false);
-      }
-    });
+    initAuth();
 
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
-
-  const initAdminCheck = async (authUser: any) => {
-    setCheckingAdmin(true);
-    try {
-      await ensureProfile(authUser);
-      await fetchHasAnyAdmin();
-      await checkAdminStatus(authUser.email || '');
-    } finally {
-      setCheckingAdmin(false);
-    }
-  };
-
-  const ensureProfile = async (authUser: any) => {
-    try {
-      const { data: existing } = await supabase
-        .from('profiles')
-        .select('user_id')
-        .eq('user_id', authUser.id)
-        .maybeSingle();
-
-      if (!existing) {
-        await supabase.from('profiles').insert({
-          user_id: authUser.id,
-          email: authUser.email,
-          full_name: authUser.user_metadata?.full_name || authUser.email,
-        });
-      }
-    } catch (e) {
-      console.warn('ensureProfile error', e);
-    }
-  };
-
-  const fetchHasAnyAdmin = async () => {
-    try {
-      const { data, error } = await supabase.rpc('has_any_admin');
-      if (!error) setHasAnyAdmin(Boolean(data));
-    } catch (e) {
-      console.warn('has_any_admin error', e);
-      setHasAnyAdmin(null);
-    }
-  };
-
-  const requestAdminAccess = async () => {
-    if (!user) return;
-    setCheckingAdmin(true);
-    try {
-      await supabase.rpc('promote_to_admin', { user_email: user.email });
-      await checkAdminStatus(user.email || '');
-    } catch (e) {
-      console.warn('promote_to_admin error', e);
-    } finally {
-      setCheckingAdmin(false);
-    }
-  };
 
   const checkAdminStatus = async (email: string) => {
     try {
-      // Check if user is admin via the profiles table
+      // Ensure profile exists first
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (authUser) {
+        const { data: existing } = await supabase
+          .from('profiles')
+          .select('user_id')
+          .eq('user_id', authUser.id)
+          .maybeSingle();
+
+        if (!existing) {
+          await supabase.from('profiles').insert({
+            user_id: authUser.id,
+            email: authUser.email,
+            full_name: authUser.user_metadata?.full_name || authUser.email,
+          });
+        }
+      }
+
+      // Check admin status
       const { data: profile, error } = await supabase
         .from("profiles")
         .select("is_admin")
@@ -108,16 +87,31 @@ export default function AdminPanel() {
       if (error) {
         console.error('Error checking admin status:', error);
         setIsAdmin(false);
-        setLoading(false);
-        return;
+      } else {
+        setIsAdmin(profile?.is_admin || false);
       }
-
-      setIsAdmin(profile?.is_admin || false);
     } catch (error) {
-      console.error('Error checking admin status:', error);
+      console.error('Error in checkAdminStatus:', error);
       setIsAdmin(false);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const requestAdminAccess = async () => {
+    if (!user) return;
+    
+    try {
+      const { error } = await supabase.rpc('promote_to_admin', { 
+        user_email: user.email 
+      });
+      
+      if (error) throw error;
+      
+      // Recheck admin status
+      await checkAdminStatus(user.email || '');
+    } catch (error) {
+      console.error('Error promoting to admin:', error);
     }
   };
 
@@ -198,15 +192,12 @@ export default function AdminPanel() {
               If you should have admin access, please contact the system administrator to enable admin privileges for your account.
             </p>
             <div className="space-y-3">
-              {hasAnyAdmin === false && (
-                <button
-                  onClick={requestAdminAccess}
-                  disabled={checkingAdmin}
-                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-4 py-2 rounded transition-colors"
-                >
-                  {checkingAdmin ? 'Granting access...' : 'Grant Admin Access (first admin)'}
-                </button>
-              )}
+              <button
+                onClick={requestAdminAccess}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+              >
+                Grant Admin Access (First Admin)
+              </button>
               <button
                 onClick={() => supabase.auth.signOut()}
                 className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
