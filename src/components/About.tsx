@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { 
   Target, 
   Eye, 
@@ -176,14 +177,13 @@ const About = () => {
                 Join the growing list of businesses that have transformed their operations 
                 with our innovative AI and software solutions.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <Button variant="hero" size="lg">
-                  Start Your Journey
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-                <Button variant="outline" size="lg">
-                  Meet Our Team
-                </Button>
+              <div className="flex items-center justify-center">
+                <Link to="/contact">
+                  <Button variant="hero" size="lg">
+                    Start Your Journey
+                    <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

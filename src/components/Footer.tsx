@@ -5,14 +5,19 @@ import {
   MapPin, 
   Facebook, 
   Twitter, 
-  Linkedin, 
-  Instagram,
+  Linkedin,
   ArrowRight 
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const { toast } = useToast();
 
   const quickLinks = [
     { name: "About Us", href: "#about", isAnchor: true },
@@ -31,11 +36,51 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Instagram, href: "#", label: "Instagram" }
+    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61577242150254", label: "Facebook" },
+    { icon: Twitter, href: "https://x.com/popupgenix7", label: "Twitter" },
+    { icon: Linkedin, href: "https://www.linkedin.com/company/popupgenix", label: "LinkedIn" }
   ];
+
+  const handleSubscribe = async () => {
+    if (!email) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('newsletter_subscriptions')
+        .insert([{ email }]);
+
+      if (error) {
+        if (error.code === '23505') {
+          toast({
+            title: "Already Subscribed",
+            description: "This email is already subscribed to our newsletter.",
+            variant: "destructive"
+          });
+        } else {
+          throw error;
+        }
+      } else {
+        setIsSubscribed(true);
+        toast({
+          title: "Successfully Subscribed!",
+          description: "Thank you for subscribing to our newsletter.",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Subscription Failed",
+        description: "There was an error subscribing. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
 
   return (
     <footer className="bg-gradient-card border-t border-border/50 relative overflow-hidden">
@@ -56,17 +101,46 @@ const Footer = () => {
               Get the latest insights on web development, design trends, and digital marketing 
               strategies delivered to your inbox.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email"
-                className="w-full px-6 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-              />
-              <Button variant="hero" size="lg" className="w-full sm:w-auto">
-                Subscribe
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
+            {!isSubscribed ? (
+              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 max-w-md mx-auto">
+                <input 
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  className="w-full px-6 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                />
+                <Button 
+                  variant="hero" 
+                  size="lg" 
+                  className="w-full sm:w-auto"
+                  onClick={handleSubscribe}
+                >
+                  Subscribe
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
+            ) : (
+              <div className="text-center space-y-4">
+                <div className="text-lg font-semibold text-accent">
+                  🎉 Thank you for subscribing!
+                </div>
+                <p className="text-muted-foreground">
+                  You'll receive our latest insights on web development and digital marketing.
+                </p>
+                <div className="flex items-center justify-center space-x-4">
+                  <span className="text-sm text-muted-foreground">Connect with us:</span>
+                  <a 
+                    href="https://www.linkedin.com/company/popupgenix"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent hover:text-primary transition-colors"
+                  >
+                    <Linkedin className="w-5 h-5" />
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -89,7 +163,7 @@ const Footer = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-muted-foreground">
                   <Mail className="w-4 h-4 text-accent" />
-                  <span>info@popupgenix.com</span>
+                  <span>hello@popupgenix.com</span>
                 </div>
                 <div className="flex items-center space-x-3 text-muted-foreground">
                   <Phone className="w-4 h-4 text-accent" />
@@ -136,13 +210,13 @@ const Footer = () => {
               <ul className="space-y-3">
                 {services.map((service) => (
                   <li key={service.name}>
-                    <Link 
-                      to={`/${service.href}`}
+                    <a 
+                      href={service.href}
                       className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
                     >
                       {service.name}
                       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                    </Link>
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -158,6 +232,8 @@ const Footer = () => {
                     <a
                       key={social.label}
                       href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       aria-label={social.label}
                       className="p-3 bg-card border border-border rounded-lg hover:border-primary/30 hover:shadow-neon transition-all duration-300 group"
                     >
