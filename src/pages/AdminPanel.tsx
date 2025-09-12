@@ -7,6 +7,7 @@ import AdminDashboard from "@/components/AdminPanel/AdminDashboard";
 import HomepageManager from "@/components/AdminPanel/HomepageManager";
 import ServicesManager from "@/components/AdminPanel/ServicesManager";
 import TestimonialManager from "@/components/AdminPanel/TestimonialManager";
+import BlogManager from "@/components/AdminPanel/BlogManager";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 
@@ -238,6 +239,7 @@ export default function AdminPanel() {
                 <Route path="/" element={<AdminDashboard />} />
                 <Route path="/homepage" element={<HomepageManager />} />
                 <Route path="/services" element={<ServicesManager />} />
+                <Route path="/blog" element={<BlogManager />} />
                 <Route path="/testimonials" element={<TestimonialManager />} />
                 <Route path="*" element={<Navigate to="/admin" replace />} />
               </Routes>

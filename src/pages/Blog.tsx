@@ -2,115 +2,45 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, ExternalLink, User, ChevronRight } from "lucide-react";
+import { Calendar, User, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { supabase } from "@/integrations/supabase/client";
 
 interface BlogPost {
-  id: number;
-  title: {
-    rendered: string;
-  };
-  excerpt: {
-    rendered: string;
-  };
-  content: {
-    rendered: string;
-  };
-  date: string;
-  link: string;
-  author: number;
-  categories: number[];
-  tags: number[];
-  featured_media: number;
-  _embedded?: {
-    author?: Array<{
-      name: string;
-    }>;
-    'wp:featuredmedia'?: Array<{
-      source_url: string;
-      alt_text: string;
-    }>;
-    'wp:term'?: Array<Array<{
-      name: string;
-      taxonomy: string;
-    }>>;
-  };
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  content: string;
+  featured_image_url: string | null;
+  author_name: string;
+  category: string | null;
+  tags: string[] | null;
+  status: string;
+  featured: boolean;
+  published_at: string | null;
+  created_at: string;
 }
 
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  // Temporary WordPress site for demo - replace with your site
-  const WORDPRESS_SITE = "https://techcrunch.com"; // You can replace this with your WordPress site
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Try to fetch from WordPress REST API
-        const response = await fetch(`${WORDPRESS_SITE}/wp-json/wp/v2/posts?per_page=12&_embed`);
-        
-        if (!response.ok) {
-          throw new Error('WordPress site not accessible');
-        }
-        
-        const data = await response.json();
-        setPosts(data);
-      } catch (err) {
-        // Fallback to demo content if WordPress is not available
-        setError("WordPress blog not connected yet");
-        setPosts([
-          {
-            id: 1,
-            title: { rendered: "The Future of Web Development in 2024" },
-            excerpt: { rendered: "<p>Explore the latest trends and technologies shaping the future of web development...</p>" },
-            content: { rendered: "" },
-            date: "2024-01-15T10:00:00",
-            link: "#",
-            author: 1,
-            categories: [1],
-            tags: [1, 2],
-            featured_media: 1,
-            _embedded: {
-              author: [{ name: "PopupGenix Team" }],
-              'wp:term': [[{ name: "Technology", taxonomy: "category" }, { name: "Web Development", taxonomy: "post_tag" }]]
-            }
-          },
-          {
-            id: 2,
-            title: { rendered: "AI Integration in Modern Applications" },
-            excerpt: { rendered: "<p>How artificial intelligence is revolutionizing user experience and functionality...</p>" },
-            content: { rendered: "" },
-            date: "2024-01-10T14:30:00",
-            link: "#",
-            author: 1,
-            categories: [2],
-            tags: [2, 3],
-            featured_media: 2,
-            _embedded: {
-              author: [{ name: "PopupGenix Team" }],
-              'wp:term': [[{ name: "AI", taxonomy: "category" }, { name: "Innovation", taxonomy: "post_tag" }]]
-            }
-          },
-          {
-            id: 3,
-            title: { rendered: "Mobile-First Design Best Practices" },
-            excerpt: { rendered: "<p>Essential strategies for creating responsive, mobile-optimized applications...</p>" },
-            content: { rendered: "" },
-            date: "2024-01-05T09:15:00",
-            link: "#",
-            author: 1,
-            categories: [1],
-            tags: [1, 4],
-            featured_media: 3,
-            _embedded: {
-              author: [{ name: "PopupGenix Team" }],
-              'wp:term': [[{ name: "Design", taxonomy: "category" }, { name: "Mobile", taxonomy: "post_tag" }]]
-            }
-          }
-        ]);
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .eq('status', 'published')
+          .order('published_at', { ascending: false });
+
+        if (error) throw error;
+        setPosts(data || []);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        setPosts([]);
       } finally {
         setLoading(false);
       }
@@ -125,28 +55,6 @@ const Blog = () => {
       month: 'long',
       day: 'numeric'
     });
-  };
-
-  const stripHtml = (html: string) => {
-    const tmp = document.createElement("div");
-    tmp.innerHTML = html;
-    return tmp.textContent || tmp.innerText || "";
-  };
-
-  const getCategories = (post: BlogPost) => {
-    return post._embedded?.['wp:term']?.[0]?.filter(term => term.taxonomy === 'category').map(cat => cat.name) || [];
-  };
-
-  const getTags = (post: BlogPost) => {
-    return post._embedded?.['wp:term']?.[0]?.filter(term => term.taxonomy === 'post_tag').map(tag => tag.name) || [];
-  };
-
-  const getFeaturedImage = (post: BlogPost) => {
-    return post._embedded?.['wp:featuredmedia']?.[0]?.source_url || '';
-  };
-
-  const getAuthor = (post: BlogPost) => {
-    return post._embedded?.author?.[0]?.name || 'PopupGenix Team';
   };
 
   return (
@@ -169,14 +77,6 @@ const Blog = () => {
         {/* Blog Posts */}
         <section className="py-20">
           <div className="container mx-auto px-6">
-            {error && (
-              <div className="mb-8 p-4 bg-muted/20 border border-border rounded-lg">
-                <p className="text-muted-foreground text-center">
-                  {error} - Showing demo content. Configure your WordPress site URL to display real blog posts.
-                </p>
-              </div>
-            )}
-
             {loading ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -196,11 +96,11 @@ const Blog = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {posts.map((post) => (
                   <Card key={post.id} className="bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-lg transition-all duration-300 group">
-                    {getFeaturedImage(post) && (
+                    {post.featured_image_url && (
                       <div className="h-48 overflow-hidden rounded-t-lg">
                         <img 
-                          src={getFeaturedImage(post)} 
-                          alt={post.title.rendered}
+                          src={post.featured_image_url} 
+                          alt={post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
                       </div>
@@ -210,34 +110,39 @@ const Blog = () => {
                       <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
                         <div className="flex items-center">
                           <Calendar className="w-4 h-4 mr-1" />
-                          {formatDate(post.date)}
+                          {formatDate(post.published_at || post.created_at)}
                         </div>
                         <div className="flex items-center">
                           <User className="w-4 h-4 mr-1" />
-                          {getAuthor(post)}
+                          {post.author_name}
                         </div>
                       </div>
                       
                       <CardTitle className="text-xl line-clamp-2 group-hover:text-primary transition-colors">
-                        {stripHtml(post.title.rendered)}
+                        {post.title}
                       </CardTitle>
                       
                       <div className="flex flex-wrap gap-2 mt-2">
-                        {getCategories(post).slice(0, 2).map((category, index) => (
-                          <Badge key={index} variant="secondary" className="text-xs">
-                            {category}
+                        {post.category && (
+                          <Badge variant="secondary" className="text-xs">
+                            {post.category}
                           </Badge>
-                        ))}
+                        )}
+                        {post.featured && (
+                          <Badge variant="default" className="text-xs">
+                            Featured
+                          </Badge>
+                        )}
                       </div>
                     </CardHeader>
                     
                     <CardContent className="pt-0">
                       <CardDescription className="line-clamp-3 mb-4">
-                        {stripHtml(post.excerpt.rendered)}
+                        {post.excerpt || post.content.substring(0, 150) + '...'}
                       </CardDescription>
                       
                       <div className="flex flex-wrap gap-1 mb-4">
-                        {getTags(post).slice(0, 3).map((tag, index) => (
+                        {post.tags?.slice(0, 3).map((tag, index) => (
                           <Badge key={index} variant="outline" className="text-xs">
                             {tag}
                           </Badge>
@@ -247,14 +152,10 @@ const Blog = () => {
                       <Button 
                         variant="ghost" 
                         className="w-full justify-between group-hover:bg-primary/10 transition-colors"
-                        onClick={() => window.open(post.link, '_blank')}
+                        onClick={() => window.open(`/blog/${post.slug}`, '_blank')}
                       >
                         Read More
-                        {post.link === "#" ? (
-                          <ChevronRight className="w-4 h-4" />
-                        ) : (
-                          <ExternalLink className="w-4 h-4" />
-                        )}
+                        <ChevronRight className="w-4 h-4" />
                       </Button>
                     </CardContent>
                   </Card>
@@ -266,7 +167,7 @@ const Blog = () => {
               <div className="text-center py-20">
                 <h3 className="text-2xl font-bold mb-4">No blog posts found</h3>
                 <p className="text-muted-foreground">
-                  Configure your WordPress site to display blog posts here.
+                  No published blog posts yet. Check back later for updates!
                 </p>
               </div>
             )}
