@@ -14,7 +14,381 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      clients: {
+        Row: {
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          status: string
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          status?: string
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          budget_range: string | null
+          company: string | null
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          preferred_contact: string | null
+          priority: string
+          status: string
+          subject: string | null
+          updated_at: string
+        }
+        Insert: {
+          budget_range?: string | null
+          company?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          preferred_contact?: string | null
+          priority?: string
+          status?: string
+          subject?: string | null
+          updated_at?: string
+        }
+        Update: {
+          budget_range?: string | null
+          company?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          preferred_contact?: string | null
+          priority?: string
+          status?: string
+          subject?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      feedback: {
+        Row: {
+          client_company: string | null
+          client_email: string
+          client_id: string | null
+          client_name: string
+          created_at: string
+          featured: boolean
+          id: string
+          project_id: string | null
+          rating: number
+          status: string
+          testimonial: string
+          updated_at: string
+        }
+        Insert: {
+          client_company?: string | null
+          client_email: string
+          client_id?: string | null
+          client_name: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          project_id?: string | null
+          rating: number
+          status?: string
+          testimonial: string
+          updated_at?: string
+        }
+        Update: {
+          client_company?: string | null
+          client_email?: string
+          client_id?: string | null
+          client_name?: string
+          created_at?: string
+          featured?: boolean
+          id?: string
+          project_id?: string | null
+          rating?: number
+          status?: string
+          testimonial?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedback_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "feedback_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      homepage_content: {
+        Row: {
+          about_description: string
+          about_title: string
+          clients_count: number
+          created_at: string
+          hero_cta_primary: string
+          hero_cta_secondary: string
+          hero_subtitle: string
+          hero_title: string
+          id: string
+          projects_count: number
+          satisfaction_rate: number
+          team_size: number
+          updated_at: string
+        }
+        Insert: {
+          about_description?: string
+          about_title?: string
+          clients_count?: number
+          created_at?: string
+          hero_cta_primary?: string
+          hero_cta_secondary?: string
+          hero_subtitle?: string
+          hero_title?: string
+          id?: string
+          projects_count?: number
+          satisfaction_rate?: number
+          team_size?: number
+          updated_at?: string
+        }
+        Update: {
+          about_description?: string
+          about_title?: string
+          clients_count?: number
+          created_at?: string
+          hero_cta_primary?: string
+          hero_cta_secondary?: string
+          hero_subtitle?: string
+          hero_title?: string
+          id?: string
+          projects_count?: number
+          satisfaction_rate?: number
+          team_size?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          is_admin: boolean
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id?: string
+          is_admin?: boolean
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          is_admin?: boolean
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      projects: {
+        Row: {
+          active: boolean
+          category: string
+          client_name: string | null
+          client_user_id: string | null
+          completion_percentage: number
+          created_at: string
+          description: string
+          eta_date: string | null
+          featured: boolean
+          id: string
+          image_url: string | null
+          next_milestone: string | null
+          project_url: string | null
+          status: string
+          technologies: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          category: string
+          client_name?: string | null
+          client_user_id?: string | null
+          completion_percentage?: number
+          created_at?: string
+          description: string
+          eta_date?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          next_milestone?: string | null
+          project_url?: string | null
+          status?: string
+          technologies?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          category?: string
+          client_name?: string | null
+          client_user_id?: string | null
+          completion_percentage?: number
+          created_at?: string
+          description?: string
+          eta_date?: string | null
+          featured?: boolean
+          id?: string
+          image_url?: string | null
+          next_milestone?: string | null
+          project_url?: string | null
+          status?: string
+          technologies?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      quote_requests: {
+        Row: {
+          additional_requirements: string | null
+          budget_range: string
+          company: string | null
+          created_at: string
+          email: string
+          estimated_cost: number | null
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          project_description: string
+          project_type: string
+          status: string
+          timeline: string | null
+          updated_at: string
+        }
+        Insert: {
+          additional_requirements?: string | null
+          budget_range: string
+          company?: string | null
+          created_at?: string
+          email: string
+          estimated_cost?: number | null
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          project_description: string
+          project_type: string
+          status?: string
+          timeline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          additional_requirements?: string | null
+          budget_range?: string
+          company?: string | null
+          created_at?: string
+          email?: string
+          estimated_cost?: number | null
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          project_description?: string
+          project_type?: string
+          status?: string
+          timeline?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      services: {
+        Row: {
+          active: boolean
+          created_at: string
+          description: string
+          features: string[]
+          icon: string
+          id: string
+          order_index: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          description: string
+          features?: string[]
+          icon?: string
+          id?: string
+          order_index?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          description?: string
+          features?: string[]
+          icon?: string
+          id?: string
+          order_index?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

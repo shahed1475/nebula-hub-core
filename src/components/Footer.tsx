@@ -9,16 +9,17 @@ import {
   Instagram,
   ArrowRight 
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const quickLinks = [
-    { name: "About Us", href: "#about" },
-    { name: "Services", href: "#services" },
-    { name: "Portfolio", href: "#portfolio" },
-    { name: "Blog", href: "#blog" },
-    { name: "Contact", href: "#contact" }
+    { name: "About Us", href: "#about", isAnchor: true },
+    { name: "Services", href: "#services", isAnchor: true },
+    { name: "Portfolio", href: "#portfolio", isAnchor: true },
+    { name: "Blog", href: "/blog", isAnchor: false },
+    { name: "Contact", href: "/contact", isAnchor: false }
   ];
 
   const services = [
@@ -88,15 +89,15 @@ const Footer = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-muted-foreground">
                   <Mail className="w-4 h-4 text-accent" />
-                  <span>hello@popupgenix.com</span>
+                  <span>info@popupgenix.com</span>
                 </div>
                 <div className="flex items-center space-x-3 text-muted-foreground">
                   <Phone className="w-4 h-4 text-accent" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+1 479 689 1012</span>
                 </div>
                 <div className="flex items-center space-x-3 text-muted-foreground">
                   <MapPin className="w-4 h-4 text-accent" />
-                  <span>San Francisco, CA</span>
+                  <span>1209 MOUNTAIN ROAD PL NE, STE R, ALBUQUERQUE, NM 87110, USA</span>
                 </div>
               </div>
             </div>
@@ -107,13 +108,23 @@ const Footer = () => {
               <ul className="space-y-3">
                 {quickLinks.map((link) => (
                   <li key={link.name}>
-                    <a 
-                      href={link.href}
-                      className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
-                    >
-                      {link.name}
-                      <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                    </a>
+                    {link.isAnchor ? (
+                      <a 
+                        href={link.href}
+                        className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
+                      >
+                        {link.name}
+                        <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                      </a>
+                    ) : (
+                      <Link 
+                        to={link.href}
+                        className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
+                      >
+                        {link.name}
+                        <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -155,9 +166,11 @@ const Footer = () => {
                   );
                 })}
               </div>
-              <Button variant="outline" size="sm" className="w-full">
-                Client Portal Login
-              </Button>
+              <Link to="/portal">
+                <Button variant="outline" size="sm" className="w-full">
+                  Client Portal Login
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

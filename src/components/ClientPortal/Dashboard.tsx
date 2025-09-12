@@ -7,11 +7,11 @@ import { useToast } from "@/hooks/use-toast";
 
 interface Project {
   id: string;
-  name: string;
-  progress: number;
+  title: string;
+  completion_percentage: number;
   next_milestone: string;
   eta_date: string;
-  client_id: string;
+  client_user_id: string;
 }
 
 interface User {
@@ -64,7 +64,7 @@ export default function Dashboard() {
         const { data: projects } = await supabase
           .from('projects')
           .select('*')
-          .eq('client_id', authUser.id)
+          .eq('client_user_id', authUser.id)
           .limit(1);
         
         if (projects && projects.length > 0) {
@@ -115,14 +115,14 @@ export default function Dashboard() {
               <CardContent className="space-y-6">
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-2">
-                    {project.name}
+                    {project.title}
                   </h3>
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-300">Progress</span>
-                      <span className="text-neon-blue font-medium">{project.progress}% Completed</span>
+                      <span className="text-neon-blue font-medium">{project.completion_percentage}% Completed</span>
                     </div>
-                    <Progress value={project.progress} className="h-3" />
+                    <Progress value={project.completion_percentage} className="h-3" />
                   </div>
                 </div>
               </CardContent>
@@ -166,7 +166,7 @@ export default function Dashboard() {
           <Card className="bg-gradient-to-br from-neon-purple/10 to-neon-blue/10 border-neon-purple/20">
             <CardContent className="text-center py-6">
               <div className="text-3xl font-bold text-neon-purple mb-2">
-                {project?.progress || 0}%
+                {project?.completion_percentage || 0}%
               </div>
               <div className="text-gray-300">Project Progress</div>
             </CardContent>
