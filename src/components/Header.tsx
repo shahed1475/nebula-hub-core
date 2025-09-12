@@ -34,14 +34,14 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
               item.isAnchor ? (
-                <Link
+                <a
                   key={item.name}
-                  to={`/${item.href}`}
+                  href={item.href}
                   className="text-foreground hover:text-accent transition-colors duration-300 relative group"
                 >
                   {item.name}
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
-                </Link>
+                </a>
               ) : (
                 <Link
                   key={item.name}
@@ -83,14 +83,14 @@ const Header = () => {
           <div className="md:hidden mt-6 pb-6 space-y-4 animate-slide-up">
             {navigation.map((item) => (
               item.isAnchor ? (
-                <Link
+                <a
                   key={item.name}
-                  to={`/${item.href}`}
+                  href={item.href}
                   className="block text-foreground hover:text-accent transition-colors duration-300 py-2"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
-                </Link>
+                </a>
               ) : (
                 <Link
                   key={item.name}

@@ -109,13 +109,13 @@ const Footer = () => {
                 {quickLinks.map((link) => (
                   <li key={link.name}>
                     {link.isAnchor ? (
-                      <Link 
-                        to={`/${link.href}`}
+                      <a 
+                        href={link.href}
                         className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
                       >
                         {link.name}
                         <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                      </Link>
+                      </a>
                     ) : (
                       <Link 
                         to={link.href}
