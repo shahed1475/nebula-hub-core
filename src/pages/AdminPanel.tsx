@@ -14,31 +14,87 @@ export default function AdminPanel() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingAdmin, setCheckingAdmin] = useState(false);
+  const [hasAnyAdmin, setHasAnyAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Check current user
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-      if (user) {
-        checkAdminStatus(user.email || '');
-      } else {
-        setLoading(false);
-      }
-    });
-
-    // Listen for auth changes
+    // Set up auth listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        checkAdminStatus(session.user.email || '');
+        initAdminCheck(session.user);
       } else {
         setIsAdmin(false);
         setLoading(false);
       }
     });
 
+    // Then check for existing session
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user);
+      if (user) {
+        initAdminCheck(user);
+      } else {
+        setLoading(false);
+      }
+    });
+
     return () => subscription.unsubscribe();
   }, []);
+
+  const initAdminCheck = async (authUser: any) => {
+    setCheckingAdmin(true);
+    try {
+      await ensureProfile(authUser);
+      await fetchHasAnyAdmin();
+      await checkAdminStatus(authUser.email || '');
+    } finally {
+      setCheckingAdmin(false);
+    }
+  };
+
+  const ensureProfile = async (authUser: any) => {
+    try {
+      const { data: existing } = await supabase
+        .from('profiles')
+        .select('user_id')
+        .eq('user_id', authUser.id)
+        .maybeSingle();
+
+      if (!existing) {
+        await supabase.from('profiles').insert({
+          user_id: authUser.id,
+          email: authUser.email,
+          full_name: authUser.user_metadata?.full_name || authUser.email,
+        });
+      }
+    } catch (e) {
+      console.warn('ensureProfile error', e);
+    }
+  };
+
+  const fetchHasAnyAdmin = async () => {
+    try {
+      const { data, error } = await supabase.rpc('has_any_admin');
+      if (!error) setHasAnyAdmin(Boolean(data));
+    } catch (e) {
+      console.warn('has_any_admin error', e);
+      setHasAnyAdmin(null);
+    }
+  };
+
+  const requestAdminAccess = async () => {
+    if (!user) return;
+    setCheckingAdmin(true);
+    try {
+      await supabase.rpc('promote_to_admin', { user_email: user.email });
+      await checkAdminStatus(user.email || '');
+    } catch (e) {
+      console.warn('promote_to_admin error', e);
+    } finally {
+      setCheckingAdmin(false);
+    }
+  };
 
   const checkAdminStatus = async (email: string) => {
     try {
@@ -142,6 +198,15 @@ export default function AdminPanel() {
               If you should have admin access, please contact the system administrator to enable admin privileges for your account.
             </p>
             <div className="space-y-3">
+              {hasAnyAdmin === false && (
+                <button
+                  onClick={requestAdminAccess}
+                  disabled={checkingAdmin}
+                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white px-4 py-2 rounded transition-colors"
+                >
+                  {checkingAdmin ? 'Granting access...' : 'Grant Admin Access (first admin)'}
+                </button>
+              )}
               <button
                 onClick={() => supabase.auth.signOut()}
                 className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
