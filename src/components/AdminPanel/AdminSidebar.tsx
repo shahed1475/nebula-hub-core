@@ -11,6 +11,7 @@ import {
   Shield,
   FileText
 } from "lucide-react";
+import { Mail } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -31,6 +32,7 @@ const adminItems = [
   { title: "Homepage Manager", url: "/admin/homepage", icon: Settings },
   { title: "Services Manager", url: "/admin/services", icon: PenTool },
   { title: "Blog Manager", url: "/admin/blog", icon: FileText },
+  { title: "Messages", url: "/admin/messages", icon: Mail },
   { title: "Portfolio Manager", url: "/admin/portfolio", icon: FolderOpen },
   { title: "Client Manager", url: "/admin/clients", icon: Users },
   { title: "Project Tracker", url: "/admin/projects", icon: BarChart3 },

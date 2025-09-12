@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Link } from "react-router-dom";
 import { 
   Globe, 
   Smartphone, 
@@ -140,13 +141,12 @@ const Services = () => {
               we can bring your vision to life with our proven expertise in cutting-edge technology.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <Button variant="hero" size="lg">
-                Start Your Project
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-              <Button variant="outline" size="lg">
-                View Our Process
-              </Button>
+              <Link to="/contact">
+                <Button variant="hero" size="lg">
+                  Start Your Project
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

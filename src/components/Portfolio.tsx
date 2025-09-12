@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { 
   ExternalLink, 
   Calendar,
@@ -209,10 +210,12 @@ const Portfolio = () => {
               speaks for itself – now let's write your success story.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <Button variant="hero" size="lg">
-                Start Your Project
-                <ArrowRight className="w-5 h-5" />
-              </Button>
+              <Link to="/contact">
+                <Button variant="hero" size="lg">
+                  Start Your Project
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              </Link>
               <Button variant="outline" size="lg">
                 Schedule Consultation
               </Button>

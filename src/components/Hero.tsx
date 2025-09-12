@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-bg.jpg";
 
 const Hero = () => {
@@ -49,14 +50,18 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
-            <Button variant="hero" size="xl" className="group">
-              Start Your Project
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button variant="neon" size="xl" className="group">
-              <Zap className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-              View Portfolio
-            </Button>
+            <Link to="/contact">
+              <Button variant="hero" size="xl" className="group">
+                Start Your Project
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <a href="#portfolio">
+              <Button variant="neon" size="xl" className="group">
+                <Zap className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+                View Portfolio
+              </Button>
+            </a>
           </div>
 
           {/* Stats */}
