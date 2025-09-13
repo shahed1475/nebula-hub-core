@@ -31,24 +31,21 @@ export default function TestimonialManager() {
     try {
       const { data, error } = await supabase
         .from('feedback')
-        .select(`
-          *,
-          projects:project_id (
-            name,
-            profiles:client_id (
-              full_name
-            )
-          )
-        `)
+        .select('id, testimonial, rating, status, created_at, client_name, client_company, project_id')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
-      const formattedData = data?.map(item => ({
-        ...item,
-        client_name: item.projects?.profiles?.full_name || 'Unknown Client',
-        project_name: item.projects?.name || 'Unknown Project'
-      })) || [];
+      const formattedData: Testimonial[] = (data || []).map((item: any) => ({
+        id: item.id,
+        content: item.testimonial,
+        rating: item.rating,
+        status: item.status,
+        created_at: item.created_at,
+        project_id: item.project_id || '',
+        client_name: item.client_name || item.client_company || 'Anonymous',
+        project_name: item.project_id ? 'Linked Project' : 'N/A',
+      }));
 
       setTestimonials(formattedData);
     } catch (error) {

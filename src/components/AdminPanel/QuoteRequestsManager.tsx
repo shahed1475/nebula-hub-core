@@ -7,43 +7,41 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 
-interface ContactMessage {
+interface QuoteRequest {
   id: string;
   created_at: string;
   name: string;
   email: string;
-  budget_range: string | null;
-  message: string;
+  phone: string | null;
+  company: string | null;
+  project_type: string;
+  budget_range: string;
   status: string;
-  priority: string;
+  project_description: string;
 }
 
-export default function MessagesManager() {
-  const [messages, setMessages] = useState<ContactMessage[]>([]);
+export default function QuoteRequestsManager() {
+  const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<string[]>([]);
   const { toast } = useToast();
 
   useEffect(() => {
-    loadMessages();
+    loadQuotes();
   }, []);
 
-  const loadMessages = async () => {
+  const loadQuotes = async () => {
     try {
       const { data, error } = await supabase
-        .from("contact_submissions")
-        .select("id, created_at, name, email, budget_range, message, status, priority")
+        .from("quote_requests")
+        .select("id, created_at, name, email, phone, company, project_type, budget_range, status, project_description")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      setMessages(data || []);
+      setQuotes(data || []);
     } catch (err) {
-      console.error("Error loading messages:", err);
-      toast({
-        title: "Failed to load messages",
-        description: "Please try again.",
-        variant: "destructive",
-      });
+      console.error("Error loading quotes:", err);
+      toast({ title: "Failed to load quotes", description: "Please try again.", variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -54,23 +52,20 @@ export default function MessagesManager() {
   };
 
   const selectAll = (checked: boolean) => {
-    if (checked) {
-      setSelected(messages.map((m) => m.id));
-    } else {
-      setSelected([]);
-    }
+    if (checked) setSelected(quotes.map((q) => q.id));
+    else setSelected([]);
   };
 
   const deleteSelected = async () => {
-    if (selected.length === 0) return;
+    if (!selected.length) return;
     try {
-      const { error } = await supabase.from("contact_submissions").delete().in("id", selected);
+      const { error } = await supabase.from("quote_requests").delete().in("id", selected);
       if (error) throw error;
-      toast({ title: "Deleted", description: "Selected messages were deleted." });
+      toast({ title: "Deleted", description: "Selected quote requests were deleted." });
       setSelected([]);
-      await loadMessages();
+      await loadQuotes();
     } catch (err) {
-      console.error("Error deleting messages:", err);
+      console.error("Error deleting quotes:", err);
       toast({ title: "Delete failed", description: "Please try again.", variant: "destructive" });
     }
   };
@@ -78,9 +73,10 @@ export default function MessagesManager() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold text-white">Client Messages</h1>
-        <p className="text-gray-300">View contact form submissions from your website visitors.</p>
+        <h1 className="text-2xl font-semibold text-white">Quote Requests</h1>
+        <p className="text-gray-300">View and manage quote submissions from your website.</p>
       </div>
+
       <div className="flex items-center justify-between">
         <p className="text-gray-400 text-sm">{selected.length} selected</p>
         <Button
@@ -94,15 +90,15 @@ export default function MessagesManager() {
 
       <Card className="bg-midnight-light/50 border-gray-700">
         <CardHeader>
-          <CardTitle className="text-white">All Messages</CardTitle>
+          <CardTitle className="text-white">All Quotes</CardTitle>
         </CardHeader>
         <CardContent>
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-neon-purple"></div>
             </div>
-          ) : messages.length === 0 ? (
-            <div className="text-center text-gray-400 py-10">No messages yet.</div>
+          ) : quotes.length === 0 ? (
+            <div className="text-center text-gray-400 py-10">No quote requests yet.</div>
           ) : (
             <div className="overflow-x-auto">
               <Table>
@@ -110,7 +106,7 @@ export default function MessagesManager() {
                   <TableRow>
                     <TableHead>
                       <Checkbox
-                        checked={selected.length > 0 && selected.length === messages.length}
+                        checked={selected.length > 0 && selected.length === quotes.length}
                         onCheckedChange={(checked) => selectAll(Boolean(checked))}
                         aria-label="Select all"
                       />
@@ -118,44 +114,38 @@ export default function MessagesManager() {
                     <TableHead className="text-gray-300">Date</TableHead>
                     <TableHead className="text-gray-300">Name</TableHead>
                     <TableHead className="text-gray-300">Email</TableHead>
+                    <TableHead className="text-gray-300">Type</TableHead>
                     <TableHead className="text-gray-300">Budget</TableHead>
                     <TableHead className="text-gray-300">Status</TableHead>
-                    <TableHead className="text-gray-300">Priority</TableHead>
-                    <TableHead className="text-gray-300">Message</TableHead>
+                    <TableHead className="text-gray-300">Description</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {messages.map((m) => (
-                      <TableRow key={m.id} className="hover:bg-white/5">
-                        <TableCell>
-                          <Checkbox
-                            checked={selected.includes(m.id)}
-                            onCheckedChange={() => toggleSelect(m.id)}
-                            aria-label="Select row"
-                          />
-                        </TableCell>
-                        <TableCell className="text-gray-200">
-                          {new Date(m.created_at).toLocaleString()}
-                        </TableCell>
-                      <TableCell className="text-gray-200">{m.name}</TableCell>
+                  {quotes.map((q) => (
+                    <TableRow key={q.id} className="hover:bg-white/5">
                       <TableCell>
-                        <a href={`mailto:${m.email}`} className="text-neon-blue hover:underline">
-                          {m.email}
+                        <Checkbox
+                          checked={selected.includes(q.id)}
+                          onCheckedChange={() => toggleSelect(q.id)}
+                          aria-label="Select row"
+                        />
+                      </TableCell>
+                      <TableCell className="text-gray-200">{new Date(q.created_at).toLocaleString()}</TableCell>
+                      <TableCell className="text-gray-200">{q.name}</TableCell>
+                      <TableCell>
+                        <a href={`mailto:${q.email}`} className="text-neon-blue hover:underline">
+                          {q.email}
                         </a>
                       </TableCell>
-                      <TableCell className="text-gray-200">{m.budget_range || "-"}</TableCell>
+                      <TableCell className="text-gray-200">{q.project_type}</TableCell>
+                      <TableCell className="text-gray-200">{q.budget_range}</TableCell>
                       <TableCell>
                         <Badge variant="secondary" className="bg-white/10 text-white border border-white/20">
-                          {m.status}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary" className="bg-white/10 text-white border border-white/20">
-                          {m.priority}
+                          {q.status}
                         </Badge>
                       </TableCell>
                       <TableCell className="max-w-[400px] text-gray-200">
-                        <div className="line-clamp-3 leading-relaxed">{m.message}</div>
+                        <div className="line-clamp-3 leading-relaxed">{q.project_description}</div>
                       </TableCell>
                     </TableRow>
                   ))}

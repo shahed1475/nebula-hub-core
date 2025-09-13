@@ -9,6 +9,7 @@ import ServicesManager from "@/components/AdminPanel/ServicesManager";
 import TestimonialManager from "@/components/AdminPanel/TestimonialManager";
 import BlogManager from "@/components/AdminPanel/BlogManager";
 import MessagesManager from "@/components/AdminPanel/MessagesManager";
+import QuoteRequestsManager from "@/components/AdminPanel/QuoteRequestsManager";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 
@@ -236,15 +237,16 @@ export default function AdminPanel() {
 
             {/* Page Content */}
             <div className="p-6">
-              <Routes>
-                <Route path="/" element={<AdminDashboard />} />
-                <Route path="/homepage" element={<HomepageManager />} />
-                <Route path="/services" element={<ServicesManager />} />
-                <Route path="/blog" element={<BlogManager />} />
-                <Route path="/messages" element={<MessagesManager />} />
-                <Route path="/testimonials" element={<TestimonialManager />} />
-                <Route path="*" element={<Navigate to="/admin" replace />} />
-              </Routes>
+                <Routes>
+                  <Route path="/" element={<AdminDashboard />} />
+                  <Route path="/homepage" element={<HomepageManager />} />
+                  <Route path="/services" element={<ServicesManager />} />
+                  <Route path="/blog" element={<BlogManager />} />
+                  <Route path="/messages" element={<MessagesManager />} />
+                  <Route path="/quotes" element={<QuoteRequestsManager />} />
+                  <Route path="/testimonials" element={<TestimonialManager />} />
+                  <Route path="*" element={<Navigate to="/admin" replace />} />
+                </Routes>
             </div>
           </main>
         </div>
