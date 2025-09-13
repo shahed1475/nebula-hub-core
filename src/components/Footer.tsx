@@ -20,19 +20,19 @@ const Footer = () => {
   const { toast } = useToast();
 
   const quickLinks = [
-    { name: "About Us", href: "#about", isAnchor: true },
-    { name: "Services", href: "#services", isAnchor: true },
-    { name: "Portfolio", href: "#portfolio", isAnchor: true },
+    { name: "About Us", href: "/#about", isAnchor: false },
+    { name: "Services", href: "/#services", isAnchor: false },
+    { name: "Portfolio", href: "/#portfolio", isAnchor: false },
     { name: "Blog", href: "/blog", isAnchor: false },
     { name: "Contact", href: "/contact", isAnchor: false }
   ];
 
   const services = [
-    { name: "AI & Machine Learning", href: "#services" },
-    { name: "Custom Software", href: "#services" },
-    { name: "Web Development", href: "#services" },
-    { name: "Mobile Apps", href: "#services" },
-    { name: "CRM & SaaS Tools", href: "#services" }
+    { name: "AI & Machine Learning", href: "/#services" },
+    { name: "Custom Software", href: "/#services" },
+    { name: "Web Development", href: "/#services" },
+    { name: "Mobile Apps", href: "/#services" },
+    { name: "CRM & SaaS Tools", href: "/#services" }
   ];
 
   const socialLinks = [
@@ -182,23 +182,13 @@ const Footer = () => {
               <ul className="space-y-3">
                 {quickLinks.map((link) => (
                   <li key={link.name}>
-                    {link.isAnchor ? (
-                      <a 
-                        href={link.href}
-                        className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
-                      >
-                        {link.name}
-                        <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                      </a>
-                    ) : (
-                      <Link 
-                        to={link.href}
-                        className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
-                      >
-                        {link.name}
-                        <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                      </Link>
-                    )}
+                    <Link 
+                      to={link.href}
+                      className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
+                    >
+                      {link.name}
+                      <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -210,13 +200,13 @@ const Footer = () => {
               <ul className="space-y-3">
                 {services.map((service) => (
                   <li key={service.name}>
-                    <a 
-                      href={service.href}
+                    <Link 
+                      to={service.href}
                       className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
                     >
                       {service.name}
                       <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
