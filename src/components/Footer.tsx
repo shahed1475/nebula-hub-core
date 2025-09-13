@@ -36,7 +36,7 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61577242150254", label: "Facebook" },
+    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61577242150254&sk=followers", label: "Facebook" },
     { icon: Twitter, href: "https://x.com/popupgenix7", label: "Twitter" },
     { icon: Linkedin, href: "https://www.linkedin.com/company/popupgenix", label: "LinkedIn" }
   ];
