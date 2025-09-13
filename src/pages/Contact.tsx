@@ -187,7 +187,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <h3 className="font-semibold">Email</h3>
-                        <p className="text-muted-foreground">info@popupgenix.com</p>
+                        <p className="text-muted-foreground">hello@popupgenix.com</p>
                       </div>
                     </div>
 
