@@ -38,7 +38,7 @@ const Hero = () => {
             </span>
             <br />
             <span className="text-foreground">AI & Software Solutions</span>
-            <span className="text-4xl md:text-5xl lg:text-6xl ml-4">🚀</span>
+            <span className="text-4xl md:text-5xl lg:text-6xl ml-4"></span>
           </h1>
 
           {/* Description */}
