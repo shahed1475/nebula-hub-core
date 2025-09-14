@@ -32,6 +32,34 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     loadDashboardData();
+    
+    // Set up real-time subscriptions
+    const feedbackChannel = supabase
+      .channel('feedback_changes')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'feedback'
+      }, () => {
+        loadDashboardData();
+      })
+      .subscribe();
+
+    const projectsChannel = supabase
+      .channel('projects_changes')
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'projects'
+      }, () => {
+        loadDashboardData();
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(feedbackChannel);
+      supabase.removeChannel(projectsChannel);
+    };
   }, []);
 
   const loadDashboardData = async () => {
@@ -48,7 +76,7 @@ export default function AdminDashboard() {
         supabase.from('projects').select('id', { count: 'exact' }),
         supabase.from('feedback').select('id', { count: 'exact' }).eq('status', 'pending'),
         supabase.from('services').select('id', { count: 'exact' }).eq('active', true),
-        supabase.from('feedback').select('content, created_at, status').order('created_at', { ascending: false }).limit(5)
+        supabase.from('feedback').select('testimonial, created_at, status').order('created_at', { ascending: false }).limit(5)
       ]);
 
       setStats({
@@ -166,7 +194,7 @@ export default function AdminDashboard() {
                     </div>
                     <div className="flex-1">
                       <p className="text-white text-sm">
-                        New feedback: "{activity.content.substring(0, 50)}..."
+                        New feedback: "{activity.testimonial.substring(0, 50)}..."
                       </p>
                       <p className="text-gray-400 text-xs mt-1">
                         {new Date(activity.created_at).toLocaleDateString()}

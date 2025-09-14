@@ -82,6 +82,12 @@ export default function Feedback() {
           .eq('client_user_id', user.id);
 
         if (projects && projects.length > 0) {
+          const { data: profile } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('user_id', user.id)
+            .single();
+
           const { error } = await supabase
             .from('feedback')
             .insert({
@@ -89,8 +95,9 @@ export default function Feedback() {
               rating: rating,
               project_id: projects[0].id,
               status: 'pending',
-              client_name: user.email,
-              client_email: user.email
+              client_name: profile?.full_name || user.email || 'Anonymous',
+              client_email: user.email || '',
+              client_id: user.id
             });
 
           if (error) throw error;
