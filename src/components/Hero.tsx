@@ -86,11 +86,32 @@ const Hero = () => {
           {/* Right side - Legal & Trust */}
           <div className="lg:col-span-4 flex items-center justify-center">
             <div className="bg-card/30 backdrop-blur-sm border border-primary/20 rounded-2xl p-8 max-w-sm w-full animate-slide-up" style={{ animationDelay: "0.3s" }}>
-              <h3 className="text-2xl font-bold mb-8 text-center bg-gradient-primary bg-clip-text text-transparent">
+              <h3 className="text-2xl font-bold mb-6 text-center bg-gradient-primary bg-clip-text text-transparent">
                 Legal & Trust
               </h3>
               
               <div className="space-y-4">
+                <Link 
+                  to="/privacy-policy"
+                  className="block text-muted-foreground hover:text-accent transition-colors duration-300 text-center py-2 border-b border-border/30 hover:border-accent/30"
+                >
+                  Privacy Policy
+                </Link>
+                <Link 
+                  to="/privacy-policy"
+                  className="block text-muted-foreground hover:text-accent transition-colors duration-300 text-center py-2 border-b border-border/30 hover:border-accent/30"
+                >
+                  Terms of Service
+                </Link>
+                <Link 
+                  to="/cookie-policy"
+                  className="block text-muted-foreground hover:text-accent transition-colors duration-300 text-center py-2 border-b border-border/30 hover:border-accent/30"
+                >
+                  Cookie Policy
+                </Link>
+              </div>
+
+              <div className="mt-8 space-y-4">
                 <div className="text-center">
                   <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-2">
                     <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
