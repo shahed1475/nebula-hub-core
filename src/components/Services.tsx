@@ -18,7 +18,7 @@ import {
   Users,
   Cloud
 } from "lucide-react";
-import ContactSection from "@/components/ContactSection";
+
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState<any>(null);
@@ -183,12 +183,6 @@ const Services = () => {
 
       </div>
 
-      {/* Contact Section */}
-      <ContactSection
-        title="Ready to Transform Your Business?"
-        subtitle="Let's discuss how our services can help you achieve your goals. Get in touch with our experts today!"
-        className="bg-background"
-      />
     </section>
   );
 };
