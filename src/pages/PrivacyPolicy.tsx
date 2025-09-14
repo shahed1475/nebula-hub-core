@@ -8,10 +8,6 @@ import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Shield, Scale, CreditCard, AlertTriangle, Mail, Phone, MapPin } from "lucide-react";
-import stripeLogo from "@/assets/stripe.png";
-import wiseLogo from "@/assets/wise.png";
-import visaLogo from "@/assets/visa.svg";
-import mastercardLogo from "@/assets/mastercard.svg";
 
 const PrivacyPolicy = () => {
   const [contactForm, setContactForm] = useState({
@@ -57,10 +53,10 @@ const PrivacyPolicy = () => {
   };
 
   const paymentLogos = [
-    { name: "Stripe", logo: stripeLogo },
-    { name: "Wise", logo: wiseLogo },
-    { name: "Visa", logo: visaLogo },
-    { name: "Mastercard", logo: mastercardLogo }
+    { name: "Stripe", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" },
+    { name: "Wise", logo: "https://wise.com/public-resources/assets/logos/logo-square.svg" },
+    { name: "Visa", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" },
+    { name: "Mastercard", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" }
   ];
 
   return (
@@ -245,8 +241,8 @@ const PrivacyPolicy = () => {
                   <div key={partner.name} className="flex items-center justify-center p-4 bg-muted/50 rounded-lg border border-border/50">
                     <img 
                       src={partner.logo} 
-                      alt={partner.name + " logo"} 
-                      className="h-8 object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 dark:invert"
+                      alt={partner.name} 
+                      className="h-8 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
                     />
                   </div>
                 ))}
@@ -360,8 +356,8 @@ const PrivacyPolicy = () => {
                 <img 
                   key={partner.name}
                   src={partner.logo} 
-                  alt={partner.name + " logo"} 
-                  className="h-4 object-contain opacity-70 grayscale dark:invert"
+                  alt={partner.name} 
+                  className="h-4 object-contain filter brightness-0 invert opacity-50"
                 />
               ))}
             </div>

@@ -161,47 +161,6 @@ export type Database = {
         }
         Relationships: []
       }
-      documents: {
-        Row: {
-          created_at: string
-          file_url: string
-          id: string
-          name: string
-          project_id: string | null
-          type: string
-          updated_at: string
-          uploaded_at: string
-        }
-        Insert: {
-          created_at?: string
-          file_url: string
-          id?: string
-          name: string
-          project_id?: string | null
-          type?: string
-          updated_at?: string
-          uploaded_at?: string
-        }
-        Update: {
-          created_at?: string
-          file_url?: string
-          id?: string
-          name?: string
-          project_id?: string | null
-          type?: string
-          updated_at?: string
-          uploaded_at?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "documents_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: false
-            referencedRelation: "projects"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       feedback: {
         Row: {
           client_company: string | null

@@ -32,7 +32,7 @@ export default function FilesDocuments() {
         const { data: projects } = await supabase
           .from('projects')
           .select('id')
-          .eq('client_user_id', user.id);
+          .eq('client_id', user.id);
 
         if (projects && projects.length > 0) {
           const { data: docs } = await supabase
