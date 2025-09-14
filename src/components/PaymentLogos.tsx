@@ -11,11 +11,9 @@ const PaymentLogos = ({ variant = "monochrome", size = "md", title = "We Accept 
     lg: "h-8"
   };
 
-  const logoClasses = variant === "monochrome" 
-    ? `${sizeClasses[size]} object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity`
-    : `${sizeClasses[size]} object-contain hover:opacity-80 transition-opacity`;
-
-  const colorLogoClasses = `${sizeClasses[size]} object-contain hover:opacity-80 transition-opacity`;
+  const base = `${sizeClasses[size]} object-contain transition-opacity`;
+  const mono = `${base} grayscale brightness-110 contrast-125 opacity-80 hover:opacity-100`;
+  const color = `${base} hover:opacity-90`;
 
   return (
     <div className="space-y-2">
@@ -23,53 +21,10 @@ const PaymentLogos = ({ variant = "monochrome", size = "md", title = "We Accept 
         <p className="text-sm font-medium text-foreground">{title}</p>
       )}
       <div className="flex items-center gap-4">
-        {variant === "color" ? (
-          <>
-            <img 
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" 
-              alt="Stripe" 
-              className={colorLogoClasses}
-            />
-            <img 
-              src="https://wise.com/public-resources/assets/logos/logo-square.svg" 
-              alt="Wise" 
-              className={colorLogoClasses}
-            />
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" 
-              alt="Visa" 
-              className={colorLogoClasses}
-            />
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" 
-              alt="Mastercard" 
-              className={colorLogoClasses}
-            />
-          </>
-        ) : (
-          <>
-            <img 
-              src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" 
-              alt="Stripe" 
-              className={logoClasses}
-            />
-            <img 
-              src="https://wise.com/public-resources/assets/logos/logo-square.svg" 
-              alt="Wise" 
-              className={logoClasses}
-            />
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" 
-              alt="Visa" 
-              className={logoClasses}
-            />
-            <img 
-              src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" 
-              alt="Mastercard" 
-              className={logoClasses}
-            />
-          </>
-        )}
+        <img src="/payment-logos/stripe.png" alt="Stripe secure payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src="/payment-logos/wise.png" alt="Wise payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src="/payment-logos/visa.svg" alt="Visa payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src="/payment-logos/mastercard.svg" alt="Mastercard payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
       </div>
     </div>
   );
