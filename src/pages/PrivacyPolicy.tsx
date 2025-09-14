@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PaymentLogos from "@/components/PaymentLogos";
 import { Shield, Scale, CreditCard, AlertTriangle, Mail, Phone, MapPin } from "lucide-react";
 
 const PrivacyPolicy = () => {
@@ -52,12 +53,6 @@ const PrivacyPolicy = () => {
     }
   };
 
-  const paymentLogos = [
-    { name: "Stripe", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" },
-    { name: "Wise", logo: "https://wise.com/public-resources/assets/logos/logo-square.svg" },
-    { name: "Visa", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" },
-    { name: "Mastercard", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" }
-  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -236,16 +231,8 @@ const PrivacyPolicy = () => {
           <CardContent className="space-y-6">
             <div>
               <h3 className="text-xl font-semibold mb-4 text-primary">Secure Payment Partners</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                {paymentLogos.map((partner) => (
-                  <div key={partner.name} className="flex items-center justify-center p-4 bg-muted/50 rounded-lg border border-border/50">
-                    <img 
-                      src={partner.logo} 
-                      alt={partner.name} 
-                      className="h-8 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
-                    />
-                  </div>
-                ))}
+              <div className="flex justify-center mb-6">
+                <PaymentLogos variant="monochrome" size="lg" title="" />
               </div>
             </div>
 
@@ -351,15 +338,7 @@ const PrivacyPolicy = () => {
               © 2025 PopupGenix.com – All Rights Reserved
             </p>
             <div className="flex justify-center items-center gap-4 mt-2">
-              <span className="text-xs text-muted-foreground">Secure Payments:</span>
-              {paymentLogos.slice(0, 4).map((partner) => (
-                <img 
-                  key={partner.name}
-                  src={partner.logo} 
-                  alt={partner.name} 
-                  className="h-4 object-contain filter brightness-0 invert opacity-50"
-                />
-              ))}
+              <PaymentLogos variant="monochrome" size="sm" title="" />
             </div>
           </div>
         </div>
