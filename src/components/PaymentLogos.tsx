@@ -1,7 +1,7 @@
-import stripeIcon from "@/assets/stripe.png";
-import wiseIcon from "@/assets/wise.png";
-import visaIcon from "@/assets/visa.svg";
-import mastercardIcon from "@/assets/mastercard.svg";
+import stripeLogo from "@/assets/stripe.png";
+import wiseLogo from "@/assets/wise.png";
+import visaLogo from "@/assets/visa.svg";
+import mastercardLogo from "@/assets/mastercard.svg";
 
 interface PaymentLogosProps {
   variant?: "color" | "monochrome";
@@ -16,9 +16,9 @@ const PaymentLogos = ({ variant = "monochrome", size = "md", title = "We Accept 
     lg: "h-8"
   };
 
-  const logoClasses = variant === "monochrome" 
-    ? `${sizeClasses[size]} object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity`
-    : `${sizeClasses[size]} object-contain hover:opacity-80 transition-opacity`;
+  const base = `${sizeClasses[size]} object-contain transition-opacity`;
+  const mono = `${base} grayscale brightness-110 contrast-125 opacity-80 hover:opacity-100`;
+  const color = `${base} hover:opacity-90`;
 
   return (
     <div className="space-y-2">
@@ -26,10 +26,10 @@ const PaymentLogos = ({ variant = "monochrome", size = "md", title = "We Accept 
         <p className="text-sm font-medium text-foreground">{title}</p>
       )}
       <div className="flex items-center gap-4">
-        <img src={stripeIcon} alt="Stripe" className={logoClasses} />
-        <img src={wiseIcon} alt="Wise" className={logoClasses} />
-        <img src={visaIcon} alt="Visa" className={logoClasses} />
-        <img src={mastercardIcon} alt="Mastercard" className={logoClasses} />
+        <img src={stripeLogo} alt="Stripe secure payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src={wiseLogo} alt="Wise payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src={visaLogo} alt="Visa payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src={mastercardLogo} alt="Mastercard payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
       </div>
     </div>
   );
