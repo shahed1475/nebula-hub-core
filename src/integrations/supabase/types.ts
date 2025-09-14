@@ -552,9 +552,50 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_testimonials: {
+        Row: {
+          client_company: string | null
+          client_name: string | null
+          created_at: string | null
+          featured: boolean | null
+          id: string | null
+          rating: number | null
+          testimonial: string | null
+        }
+        Insert: {
+          client_company?: string | null
+          client_name?: string | null
+          created_at?: string | null
+          featured?: boolean | null
+          id?: string | null
+          rating?: number | null
+          testimonial?: string | null
+        }
+        Update: {
+          client_company?: string | null
+          client_name?: string | null
+          created_at?: string | null
+          featured?: boolean | null
+          id?: string | null
+          rating?: number | null
+          testimonial?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      get_public_testimonials: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          client_company: string
+          client_name: string
+          created_at: string
+          featured: boolean
+          id: string
+          rating: number
+          testimonial: string
+        }[]
+      }
       has_any_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
