@@ -552,7 +552,36 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      public_testimonials: {
+        Row: {
+          client_company: string | null
+          client_name: string | null
+          created_at: string | null
+          featured: boolean | null
+          id: string | null
+          rating: number | null
+          testimonial: string | null
+        }
+        Insert: {
+          client_company?: string | null
+          client_name?: string | null
+          created_at?: string | null
+          featured?: boolean | null
+          id?: string | null
+          rating?: number | null
+          testimonial?: string | null
+        }
+        Update: {
+          client_company?: string | null
+          client_name?: string | null
+          created_at?: string | null
+          featured?: boolean | null
+          id?: string | null
+          rating?: number | null
+          testimonial?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_public_testimonials: {
