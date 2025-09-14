@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 
 interface Feedback {
   id: string;
-  content: string;
+  testimonial: string;
   rating: number;
   status: 'pending' | 'approved' | 'rejected';
   created_at: string;
@@ -37,12 +37,12 @@ export default function Feedback() {
         const { data: projects } = await supabase
           .from('projects')
           .select('id')
-          .eq('client_id', user.id);
+          .eq('client_user_id', user.id);
 
         if (projects && projects.length > 0) {
           const { data: feedbackData } = await supabase
             .from('feedback')
-            .select('*')
+            .select('id, testimonial, rating, status, created_at, project_id')
             .eq('project_id', projects[0].id)
             .order('created_at', { ascending: false });
 
@@ -79,16 +79,18 @@ export default function Feedback() {
         const { data: projects } = await supabase
           .from('projects')
           .select('id')
-          .eq('client_id', user.id);
+          .eq('client_user_id', user.id);
 
         if (projects && projects.length > 0) {
           const { error } = await supabase
             .from('feedback')
             .insert({
-              content: newFeedback,
+              testimonial: newFeedback,
               rating: rating,
               project_id: projects[0].id,
-              status: 'pending'
+              status: 'pending',
+              client_name: user.email,
+              client_email: user.email
             });
 
           if (error) throw error;
@@ -246,7 +248,7 @@ export default function Feedback() {
                       </span>
                     </div>
                     
-                    <p className="text-gray-300 leading-relaxed">{feedback.content}</p>
+                    <p className="text-gray-300 leading-relaxed">{feedback.testimonial}</p>
                     
                     {feedback.status === 'approved' && (
                       <div className="mt-3 text-sm text-green-400 bg-green-500/10 p-2 rounded">
