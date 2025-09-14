@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import Blog from "./pages/Blog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CookiePolicy from "./pages/CookiePolicy";
 import ScrollToHash from "@/components/ScrollToHash";
 
 const queryClient = new QueryClient();
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/quote" element={<Quote />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/portal/*" element={<ClientPortal />} />
           <Route path="/admin/*" element={<AdminPanel />} />
           <Route path="/admin-signup" element={<AdminSignup />} />

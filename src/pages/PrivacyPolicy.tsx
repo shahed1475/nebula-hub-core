@@ -317,21 +317,21 @@ const PrivacyPolicy = () => {
                   <Mail className="w-5 h-5 text-primary mt-1" />
                   <div>
                     <h4 className="font-semibold">Email Support</h4>
-                    <p className="text-muted-foreground">support@popupgenix.com</p>
+                    <p className="text-muted-foreground">hello@popupgenix.com</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone className="w-5 h-5 text-accent mt-1" />
                   <div>
                     <h4 className="font-semibold">Phone Support</h4>
-                    <p className="text-muted-foreground">+880 1711-123456</p>
+                    <p className="text-muted-foreground">+1 479 689 1012</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-primary mt-1" />
                   <div>
                     <h4 className="font-semibold">Address</h4>
-                    <p className="text-muted-foreground">Dhaka, Bangladesh</p>
+                    <p className="text-muted-foreground">1209 MOUNTAIN ROAD PL NE, STE R, ALBUQUERQUE, NM 87110, USA</p>
                   </div>
                 </div>
               </div>

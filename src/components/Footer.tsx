@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import PaymentLogos from "@/components/PaymentLogos";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -36,7 +37,7 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61577242150254&sk=followers", label: "Facebook" },
+    { icon: Facebook, href: "https://www.facebook.com/profile.php?id=61577242150254", label: "Facebook" },
     { icon: Twitter, href: "https://x.com/popupgenix7", label: "Twitter" },
     { icon: Linkedin, href: "https://www.linkedin.com/company/popupgenix", label: "LinkedIn" }
   ];
@@ -177,13 +178,7 @@ const Footer = () => {
               
               {/* Payment Partners */}
               <div className="mt-8 pt-6 border-t border-border/30">
-                <p className="text-sm font-medium text-foreground mb-4">We Accept Secure Payments</p>
-                <div className="flex items-center gap-4">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" alt="Stripe" className="h-6 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
-                  <img src="https://wise.com/public-resources/assets/logos/logo-square.svg" alt="Wise" className="h-6 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-6 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
-                </div>
+                <PaymentLogos variant="monochrome" size="md" />
               </div>
             </div>
 
@@ -273,7 +268,13 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <span className="text-muted-foreground">Cookie Policy</span>
+                  <Link 
+                    to="/cookie-policy"
+                    className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
+                  >
+                    Cookie Policy
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                  </Link>
                 </li>
               </ul>
               <div className="space-y-2">
@@ -303,7 +304,9 @@ const Footer = () => {
               <Link to="/privacy-policy" className="text-muted-foreground hover:text-accent transition-colors">
                 Terms of Service
               </Link>
-              <span className="text-muted-foreground">Cookie Policy</span>
+              <Link to="/cookie-policy" className="text-muted-foreground hover:text-accent transition-colors">
+                Cookie Policy
+              </Link>
               <Link to="/admin-signup" className="text-muted-foreground hover:text-accent transition-colors">
                 Admin
               </Link>
