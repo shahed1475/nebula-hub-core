@@ -6,7 +6,8 @@ import {
   FolderOpen, 
   MessageSquare, 
   LogOut,
-  Home
+  Home,
+  Bell
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -46,6 +47,11 @@ export default function PortalNavigation() {
       name: "Feedback",
       href: "/portal/feedback",
       icon: MessageSquare,
+    },
+    {
+      name: "Updates",
+      href: "/portal/updates",
+      icon: Bell,
     },
   ];
 

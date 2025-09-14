@@ -5,6 +5,7 @@ import PortalNavigation from "@/components/ClientPortal/PortalNavigation";
 import Dashboard from "@/components/ClientPortal/Dashboard";
 import FilesDocuments from "@/components/ClientPortal/FilesDocuments";
 import Feedback from "@/components/ClientPortal/Feedback";
+import Updates from "@/components/ClientPortal/Updates";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 
@@ -89,12 +90,13 @@ export default function ClientPortal() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-midnight-dark via-midnight to-midnight-light">
       <PortalNavigation />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/files" element={<FilesDocuments />} />
-        <Route path="/feedback" element={<Feedback />} />
-        <Route path="*" element={<Navigate to="/portal" replace />} />
-      </Routes>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/files" element={<FilesDocuments />} />
+              <Route path="/feedback" element={<Feedback />} />
+              <Route path="/updates" element={<Updates />} />
+              <Route path="*" element={<Navigate to="/portal" replace />} />
+            </Routes>
     </div>
   );
 }

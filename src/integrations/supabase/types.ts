@@ -74,6 +74,39 @@ export type Database = {
         }
         Relationships: []
       }
+      client_updates: {
+        Row: {
+          admin_id: string
+          content: string
+          created_at: string
+          id: string
+          is_read: boolean
+          project_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          admin_id: string
+          content: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          project_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          admin_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          project_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       clients: {
         Row: {
           company: string | null
@@ -161,6 +194,47 @@ export type Database = {
         }
         Relationships: []
       }
+      documents: {
+        Row: {
+          created_at: string
+          file_url: string
+          id: string
+          name: string
+          project_id: string | null
+          type: string
+          updated_at: string
+          uploaded_at: string
+        }
+        Insert: {
+          created_at?: string
+          file_url: string
+          id?: string
+          name: string
+          project_id?: string | null
+          type?: string
+          updated_at?: string
+          uploaded_at?: string
+        }
+        Update: {
+          created_at?: string
+          file_url?: string
+          id?: string
+          name?: string
+          project_id?: string | null
+          type?: string
+          updated_at?: string
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       feedback: {
         Row: {
           client_company: string | null
@@ -168,6 +242,7 @@ export type Database = {
           client_id: string | null
           client_name: string
           created_at: string
+          deleted_at: string | null
           featured: boolean
           id: string
           project_id: string | null
@@ -182,6 +257,7 @@ export type Database = {
           client_id?: string | null
           client_name: string
           created_at?: string
+          deleted_at?: string | null
           featured?: boolean
           id?: string
           project_id?: string | null
@@ -196,6 +272,7 @@ export type Database = {
           client_id?: string | null
           client_name?: string
           created_at?: string
+          deleted_at?: string | null
           featured?: boolean
           id?: string
           project_id?: string | null

@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 
 interface Feedback {
   id: string;
-  content: string;
+  testimonial: string;
   rating: number;
   status: 'pending' | 'approved' | 'rejected';
   created_at: string;
@@ -34,20 +34,21 @@ export default function Feedback() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         // Get user's project first
-        const { data: projects } = await supabase
-          .from('projects')
-          .select('id')
-          .eq('client_id', user.id);
+            const { data: projects } = await supabase
+              .from('projects')
+              .select('id')
+              .eq('client_user_id', user.id);
 
-        if (projects && projects.length > 0) {
-          const { data: feedbackData } = await supabase
-            .from('feedback')
-            .select('*')
-            .eq('project_id', projects[0].id)
-            .order('created_at', { ascending: false });
+          if (projects && projects.length > 0) {
+            const { data: feedbackData } = await supabase
+              .from('feedback')
+              .select('*')
+              .eq('project_id', projects[0].id)
+              .is('deleted_at', null)
+              .order('created_at', { ascending: false });
 
-          setFeedbacks(feedbackData || []);
-        }
+            setFeedbacks(feedbackData || []);
+          }
       }
     } catch (error) {
       console.error('Error fetching feedback:', error);
@@ -76,19 +77,22 @@ export default function Feedback() {
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         // Get user's project
-        const { data: projects } = await supabase
-          .from('projects')
-          .select('id')
-          .eq('client_id', user.id);
+          const { data: projects } = await supabase
+            .from('projects')
+            .select('id')
+            .eq('client_user_id', user.id);
 
         if (projects && projects.length > 0) {
           const { error } = await supabase
             .from('feedback')
             .insert({
-              content: newFeedback,
+              testimonial: newFeedback,
               rating: rating,
               project_id: projects[0].id,
-              status: 'pending'
+              status: 'pending',
+              client_id: user.id,
+              client_name: user.email || 'Anonymous',
+              client_email: user.email || ''
             });
 
           if (error) throw error;
@@ -246,7 +250,7 @@ export default function Feedback() {
                       </span>
                     </div>
                     
-                    <p className="text-gray-300 leading-relaxed">{feedback.content}</p>
+                    <p className="text-gray-300 leading-relaxed">{feedback.testimonial}</p>
                     
                     {feedback.status === 'approved' && (
                       <div className="mt-3 text-sm text-green-400 bg-green-500/10 p-2 rounded">

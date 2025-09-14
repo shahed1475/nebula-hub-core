@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MessageSquare, CheckCircle, XCircle, Clock, Eye } from "lucide-react";
+import { MessageSquare, CheckCircle, XCircle, Clock, Eye, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Testimonial {
@@ -32,6 +32,7 @@ export default function TestimonialManager() {
       const { data, error } = await supabase
         .from('feedback')
         .select('id, testimonial, rating, status, created_at, client_name, client_company, project_id')
+        .is('deleted_at', null)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -79,6 +80,30 @@ export default function TestimonialManager() {
       toast({
         title: "Error",
         description: "Failed to update testimonial status",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const deleteTestimonial = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('feedback')
+        .update({ deleted_at: new Date().toISOString() })
+        .eq('id', id);
+
+      if (error) throw error;
+
+      await loadTestimonials();
+      toast({
+        title: "Success",
+        description: "Testimonial moved to trash!",
+      });
+    } catch (error) {
+      console.error('Error deleting testimonial:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete testimonial",
         variant: "destructive"
       });
     }
@@ -226,27 +251,38 @@ export default function TestimonialManager() {
               <CardContent className="space-y-4">
                 <p className="text-gray-300 leading-relaxed">{testimonial.content}</p>
                 
-                {testimonial.status === 'pending' && (
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      onClick={() => updateTestimonialStatus(testimonial.id, 'approved')}
-                      className="bg-green-600 hover:bg-green-700 text-white"
-                    >
-                      <CheckCircle className="h-4 w-4 mr-2" />
-                      Approve
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => updateTestimonialStatus(testimonial.id, 'rejected')}
-                      className="border-red-600 text-red-400 hover:bg-red-600/10"
-                    >
-                      <XCircle className="h-4 w-4 mr-2" />
-                      Reject
-                    </Button>
-                  </div>
-                )}
+                <div className="flex gap-2 flex-wrap">
+                  {testimonial.status === 'pending' && (
+                    <>
+                      <Button
+                        size="sm"
+                        onClick={() => updateTestimonialStatus(testimonial.id, 'approved')}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                      >
+                        <CheckCircle className="h-4 w-4 mr-2" />
+                        Approve
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => updateTestimonialStatus(testimonial.id, 'rejected')}
+                        className="border-red-600 text-red-400 hover:bg-red-600/10"
+                      >
+                        <XCircle className="h-4 w-4 mr-2" />
+                        Reject
+                      </Button>
+                    </>
+                  )}
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => deleteTestimonial(testimonial.id)}
+                    className="border-red-600 text-red-400 hover:bg-red-600/10"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Delete
+                  </Button>
+                </div>
 
                 {testimonial.status === 'approved' && (
                   <div className="text-sm text-green-400 bg-green-500/10 p-2 rounded">
