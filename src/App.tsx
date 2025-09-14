@@ -11,6 +11,7 @@ import AdminSignup from "./pages/AdminSignup";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import Blog from "./pages/Blog";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ScrollToHash from "@/components/ScrollToHash";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/portal/*" element={<ClientPortal />} />
           <Route path="/admin/*" element={<AdminPanel />} />
           <Route path="/admin-signup" element={<AdminSignup />} />

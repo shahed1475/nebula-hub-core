@@ -146,9 +146,9 @@ const Footer = () => {
 
         {/* Main Footer Content */}
         <div className="py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
             {/* Company Info */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-2">
               <div className="flex items-center space-x-3 mb-6">
                 <img 
                   src="/lovable-uploads/840fc8c0-fd1f-46ff-b59e-8c30eeebac75.png" 
@@ -172,6 +172,17 @@ const Footer = () => {
                 <div className="flex items-center space-x-3 text-muted-foreground">
                   <MapPin className="w-4 h-4 text-accent" />
                   <span>1209 MOUNTAIN ROAD PL NE, STE R, ALBUQUERQUE, NM 87110, USA</span>
+                </div>
+              </div>
+              
+              {/* Payment Partners */}
+              <div className="mt-8 pt-6 border-t border-border/30">
+                <p className="text-sm font-medium text-foreground mb-4">We Accept Secure Payments</p>
+                <div className="flex items-center gap-4">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" alt="Stripe" className="h-6 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
+                  <img src="https://wise.com/public-resources/assets/logos/logo-square.svg" alt="Wise" className="h-6 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-6 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
                 </div>
               </div>
             </div>
@@ -238,6 +249,44 @@ const Footer = () => {
                 </Button>
               </Link>
             </div>
+
+            {/* Legal & Trust */}
+            <div>
+              <h4 className="text-lg font-semibold mb-6 text-foreground">Legal & Trust</h4>
+              <ul className="space-y-3 mb-6">
+                <li>
+                  <Link 
+                    to="/privacy-policy"
+                    className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
+                  >
+                    Privacy Policy
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/privacy-policy"
+                    className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
+                  >
+                    Terms of Service
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                  </Link>
+                </li>
+                <li>
+                  <span className="text-muted-foreground">Cookie Policy</span>
+                </li>
+              </ul>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                  <span>99.99% Uptime Guaranteed</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                  <span>30-Day Refund Policy</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -245,21 +294,38 @@ const Footer = () => {
         <div className="py-8 border-t border-border/30">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <p className="text-muted-foreground text-sm">
-              © {currentYear} PopupGenix. All rights reserved.
+              © 2025 PopupGenix.com – All Rights Reserved
             </p>
             <div className="flex items-center space-x-6 text-sm">
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
+              <Link to="/privacy-policy" className="text-muted-foreground hover:text-accent transition-colors">
                 Privacy Policy
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
+              </Link>
+              <Link to="/privacy-policy" className="text-muted-foreground hover:text-accent transition-colors">
                 Terms of Service
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-accent transition-colors">
-                Cookie Policy
-              </a>
+              </Link>
+              <span className="text-muted-foreground">Cookie Policy</span>
               <Link to="/admin-signup" className="text-muted-foreground hover:text-accent transition-colors">
                 Admin
               </Link>
+            </div>
+          </div>
+          <div className="mt-6 pt-6 border-t border-border/30">
+            <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+              <p className="text-xs text-muted-foreground max-w-2xl leading-relaxed">
+                PopupGenix is committed to secure, fair, and reliable services. By using our platform, you agree to our Privacy Policy and Terms of Use.
+              </p>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-muted-foreground">Secure Payments:</span>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>Stripe</span>
+                  <span>|</span>
+                  <span>Wise</span>
+                  <span>|</span>
+                  <span>Visa</span>
+                  <span>|</span>
+                  <span>Mastercard</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
