@@ -216,7 +216,7 @@ const PrivacyPolicy = () => {
             <div>
               <h3 className="text-xl font-semibold mb-4 text-accent">8. Governing Law</h3>
               <p className="text-muted-foreground leading-relaxed">
-                These Terms are governed by the applicable laws of Bangladesh (or jurisdiction where PopupGenix is registered).
+                These Terms are governed by the applicable laws of USA (or jurisdiction where PopupGenix is registered).
               </p>
             </div>
 
