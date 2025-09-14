@@ -188,8 +188,7 @@ const Services = () => {
               Let's Build Together – Your Idea, Our Technology
             </h3>
             <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Ready to transform your business with AI-powered solutions? Let's discuss how 
-              we can bring your vision to life with our proven expertise in cutting-edge technology.
+              Let's discuss how we can bring your vision to life with our proven expertise in cutting-edge technology.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
               <Link to="/contact">
@@ -205,7 +204,7 @@ const Services = () => {
 
       {/* Contact Section */}
       <ContactSection
-        title="Ready to Transform Your Business?"
+        title="Let's Work Together"
         subtitle="Let's discuss how our services can help you achieve your goals. Get in touch with our experts today!"
         className="bg-background"
       />
