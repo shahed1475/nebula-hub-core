@@ -1,3 +1,8 @@
+import stripeLogo from "@/assets/stripe.png";
+import wiseLogo from "@/assets/wise.png";
+import visaLogo from "@/assets/visa.svg";
+import mastercardLogo from "@/assets/mastercard.svg";
+
 interface PaymentLogosProps {
   variant?: "color" | "monochrome";
   size?: "sm" | "md" | "lg";
@@ -21,10 +26,10 @@ const PaymentLogos = ({ variant = "monochrome", size = "md", title = "We Accept 
         <p className="text-sm font-medium text-foreground">{title}</p>
       )}
       <div className="flex items-center gap-4">
-        <img src="/payment-logos/stripe.png" alt="Stripe secure payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
-        <img src="/payment-logos/wise.png" alt="Wise payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
-        <img src="/payment-logos/visa.svg" alt="Visa payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
-        <img src="/payment-logos/mastercard.svg" alt="Mastercard payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src={stripeLogo} alt="Stripe secure payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src={wiseLogo} alt="Wise payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src={visaLogo} alt="Visa payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
+        <img src={mastercardLogo} alt="Mastercard payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
       </div>
     </div>
   );

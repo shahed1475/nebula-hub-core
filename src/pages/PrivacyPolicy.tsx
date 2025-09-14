@@ -8,6 +8,10 @@ import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Shield, Scale, CreditCard, AlertTriangle, Mail, Phone, MapPin } from "lucide-react";
+import stripeLogo from "@/assets/stripe.png";
+import wiseLogo from "@/assets/wise.png";
+import visaLogo from "@/assets/visa.svg";
+import mastercardLogo from "@/assets/mastercard.svg";
 
 const PrivacyPolicy = () => {
   const [contactForm, setContactForm] = useState({
@@ -53,10 +57,10 @@ const PrivacyPolicy = () => {
   };
 
   const paymentLogos = [
-    { name: "Stripe", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/stripe/stripe-original.svg" },
-    { name: "Wise", logo: "https://wise.com/public-resources/assets/logos/logo-square.svg" },
-    { name: "Visa", logo: "https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" },
-    { name: "Mastercard", logo: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" }
+    { name: "Stripe", logo: stripeLogo },
+    { name: "Wise", logo: wiseLogo },
+    { name: "Visa", logo: visaLogo },
+    { name: "Mastercard", logo: mastercardLogo }
   ];
 
   return (
