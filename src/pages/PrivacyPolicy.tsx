@@ -245,8 +245,8 @@ const PrivacyPolicy = () => {
                   <div key={partner.name} className="flex items-center justify-center p-4 bg-muted/50 rounded-lg border border-border/50">
                     <img 
                       src={partner.logo} 
-                      alt={partner.name} 
-                      className="h-8 object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
+                      alt={partner.name + " logo"} 
+                      className="h-8 object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 dark:invert"
                     />
                   </div>
                 ))}
@@ -360,8 +360,8 @@ const PrivacyPolicy = () => {
                 <img 
                   key={partner.name}
                   src={partner.logo} 
-                  alt={partner.name} 
-                  className="h-4 object-contain filter brightness-0 invert opacity-50"
+                  alt={partner.name + " logo"} 
+                  className="h-4 object-contain opacity-70 grayscale dark:invert"
                 />
               ))}
             </div>
