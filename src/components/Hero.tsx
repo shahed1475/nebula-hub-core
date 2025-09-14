@@ -89,27 +89,6 @@ const Hero = () => {
               <h3 className="text-2xl font-bold mb-6 text-center bg-gradient-primary bg-clip-text text-transparent">
                 Legal & Trust
               </h3>
-              
-              <div className="space-y-4">
-                <Link 
-                  to="/privacy-policy"
-                  className="block text-muted-foreground hover:text-accent transition-colors duration-300 text-center py-2 border-b border-border/30 hover:border-accent/30"
-                >
-                  Privacy Policy
-                </Link>
-                <Link 
-                  to="/privacy-policy"
-                  className="block text-muted-foreground hover:text-accent transition-colors duration-300 text-center py-2 border-b border-border/30 hover:border-accent/30"
-                >
-                  Terms of Service
-                </Link>
-                <Link 
-                  to="/cookie-policy"
-                  className="block text-muted-foreground hover:text-accent transition-colors duration-300 text-center py-2 border-b border-border/30 hover:border-accent/30"
-                >
-                  Cookie Policy
-                </Link>
-              </div>
 
               <div className="mt-8 space-y-4">
                 <div className="text-center">
