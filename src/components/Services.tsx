@@ -181,26 +181,6 @@ const Services = () => {
           })}
         </div>
 
-        {/* CTA Section */}
-        <div className="text-center">
-          <div className="bg-gradient-card p-12 rounded-2xl border border-primary/20 shadow-elegant">
-            <h3 className="text-3xl font-bold mb-4 text-foreground">
-              Let's Build Together – Your Idea, Our Technology
-            </h3>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Ready to transform your business with AI-powered solutions? Let's discuss how 
-              we can bring your vision to life with our proven expertise in cutting-edge technology.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <Link to="/contact">
-                <Button variant="hero" size="lg">
-                  Start Your Project
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Contact Section */}
