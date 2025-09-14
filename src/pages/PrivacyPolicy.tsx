@@ -140,7 +140,7 @@ const PrivacyPolicy = () => {
             <div>
               <h3 className="text-xl font-semibold mb-4 text-primary">6. Your Rights</h3>
               <p className="text-muted-foreground leading-relaxed">
-                You may request data access, correction, or deletion at any time by contacting support@popupgenix.com.
+                You may request data access, correction, or deletion at any time by contacting hello@popupgenix.com.
               </p>
             </div>
 
