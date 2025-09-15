@@ -22,11 +22,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <Link to="/">
+            <Link to="/" className="group">
               <img 
                 src={popupgenixLogo} 
                 alt="PopupGenix Logo" 
-                className="h-10 w-auto animate-glow-pulse"
+                className="h-12 w-auto opacity-90 hover:opacity-100 transition-all duration-500 drop-shadow-[0_0_20px_rgba(139,92,246,0.5)] hover:drop-shadow-[0_0_30px_rgba(139,92,246,0.8)] group-hover:scale-105 animate-glow-pulse filter brightness-110 contrast-110"
               />
             </Link>
           </div>
