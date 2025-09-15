@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import popupgenixLogo from "@/assets/popupgenix-logo.png";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,7 +24,7 @@ const Header = () => {
           <div className="flex items-center space-x-3">
             <Link to="/">
               <img 
-                src="/lovable-uploads/840fc8c0-fd1f-46ff-b59e-8c30eeebac75.png" 
+                src={popupgenixLogo} 
                 alt="PopupGenix Logo" 
                 className="h-10 w-auto animate-glow-pulse"
               />
