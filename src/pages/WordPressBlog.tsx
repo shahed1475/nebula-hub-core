@@ -9,7 +9,7 @@ interface WordPressBlogProps {
 
 const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
   const wordpressUrl = adminLogin 
-    ? "https://shahedalfahad19-xvmtl.wordpress.com/wp-admin/"
+    ? "https://shahedalfahad19-xvmtl.wordpress.com/wp-login.php"
     : "https://shahedalfahad19-xvmtl.wordpress.com/";
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
     style.textContent = `
       .wordpress-iframe {
         width: 100%;
-        min-height: 100vh;
+        min-height: calc(100vh - 80px);
         border: none;
         background: hsl(var(--background));
       }
@@ -26,6 +26,16 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
       .wordpress-container {
         background: hsl(var(--background));
         color: hsl(var(--foreground));
+        min-height: calc(100vh - 80px);
+      }
+      
+      .wordpress-container.admin-mode {
+        padding-top: 0;
+        min-height: 100vh;
+      }
+      
+      .wordpress-container.admin-mode .wordpress-iframe {
+        min-height: 100vh;
       }
     `;
     document.head.appendChild(style);
@@ -82,13 +92,13 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
     <div className="min-h-screen bg-background">
       {!adminLogin && <Header />}
       
-      <main className="wordpress-container">
+      <main className={`wordpress-container ${!adminLogin ? 'pt-20' : ''}`}>
         <iframe
           src={wordpressUrl}
           className="wordpress-iframe"
           title={adminLogin ? "WordPress Admin Dashboard" : "PopupGenix Blog"}
           loading="lazy"
-          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation"
         />
       </main>
 
