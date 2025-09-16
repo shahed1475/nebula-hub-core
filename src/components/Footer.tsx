@@ -162,15 +162,15 @@ const Footer = () => {
                 and deliver exceptional user experiences through intelligent, scalable technology.
               </p>
               <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-muted-foreground">
+                <div className="flex items-center space-x-3 text-white font-medium">
                   <Mail className="w-4 h-4 text-accent" />
                   <span>hello@popupgenix.com</span>
                 </div>
-                <div className="flex items-center space-x-3 text-muted-foreground">
+                <div className="flex items-center space-x-3 text-white font-medium">
                   <Phone className="w-4 h-4 text-accent" />
                   <span>+1 479 689 1012</span>
                 </div>
-                <div className="flex items-center space-x-3 text-muted-foreground">
+                <div className="flex items-center space-x-3 text-white font-medium">
                   <MapPin className="w-4 h-4 text-accent" />
                   <span>1209 MOUNTAIN ROAD PL NE, STE R, ALBUQUERQUE, NM 87110, USA</span>
                 </div>
