@@ -9,7 +9,7 @@ interface PaymentLogosProps {
   title?: string;
 }
 
-const PaymentLogos = ({ variant = "monochrome", size = "md", title = "We Accept Secure Payments" }: PaymentLogosProps) => {
+const PaymentLogos = ({ variant = "color", size = "md", title = "We Accept Secure Payments" }: PaymentLogosProps) => {
   const sizeClasses = {
     sm: "h-8",
     md: "h-12", 

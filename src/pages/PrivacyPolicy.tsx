@@ -246,7 +246,7 @@ const PrivacyPolicy = () => {
                     <img 
                       src={partner.logo} 
                       alt={partner.name + " logo"} 
-                      className="h-8 object-contain opacity-80 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 dark:invert"
+                      className="h-8 object-contain opacity-80 hover:opacity-100 transition-opacity"
                     />
                   </div>
                 ))}
@@ -361,7 +361,7 @@ const PrivacyPolicy = () => {
                   key={partner.name}
                   src={partner.logo} 
                   alt={partner.name + " logo"} 
-                  className="h-4 object-contain opacity-70 grayscale dark:invert"
+                  className="h-4 object-contain opacity-70"
                 />
               ))}
             </div>

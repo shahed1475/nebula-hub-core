@@ -178,7 +178,7 @@ const Footer = () => {
               
               {/* Payment Partners */}
               <div className="mt-8 pt-6 border-t border-border/30">
-                <PaymentLogos variant="monochrome" size="md" />
+                <PaymentLogos variant="color" size="md" />
               </div>
             </div>
 
