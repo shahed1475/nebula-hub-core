@@ -10,7 +10,7 @@ import AdminPanel from "./pages/AdminPanel";
 import AdminSignup from "./pages/AdminSignup";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
-import Blog from "./pages/Blog";
+import WordPressBlog from "./pages/WordPressBlog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
 import ScrollToHash from "@/components/ScrollToHash";
@@ -28,7 +28,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/quote" element={<Quote />} />
-          <Route path="/blog" element={<Blog />} />
+           <Route path="/blog" element={<WordPressBlog />} />
+           <Route path="/blog/admin-login" element={<WordPressBlog adminLogin={true} />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/portal/*" element={<ClientPortal />} />

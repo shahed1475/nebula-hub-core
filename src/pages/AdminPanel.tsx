@@ -7,7 +7,7 @@ import AdminDashboard from "@/components/AdminPanel/AdminDashboard";
 import HomepageManager from "@/components/AdminPanel/HomepageManager";
 import ServicesManager from "@/components/AdminPanel/ServicesManager";
 import TestimonialManager from "@/components/AdminPanel/TestimonialManager";
-import BlogManager from "@/components/AdminPanel/BlogManager";
+
 import MessagesManager from "@/components/AdminPanel/MessagesManager";
 import QuoteRequestsManager from "@/components/AdminPanel/QuoteRequestsManager";
 import ClientManager from "@/components/AdminPanel/ClientManager";
@@ -242,7 +242,7 @@ export default function AdminPanel() {
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/homepage" element={<HomepageManager />} />
                   <Route path="/services" element={<ServicesManager />} />
-                  <Route path="/blog" element={<BlogManager />} />
+                  
                   <Route path="/messages" element={<MessagesManager />} />
                   <Route path="/quotes" element={<QuoteRequestsManager />} />
                   <Route path="/testimonials" element={<TestimonialManager />} />
