@@ -218,35 +218,8 @@ const Footer = () => {
               </ul>
             </div>
 
-            {/* Contact & Social */}
-            <div>
-              <h4 className="text-lg font-semibold mb-6 text-foreground">Connect With Us</h4>
-              <div className="flex space-x-4 mb-6">
-                {socialLinks.map((social) => {
-                  const IconComponent = social.icon;
-                  return (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={social.label}
-                      className="p-3 bg-card border border-border rounded-lg hover:border-primary/30 hover:shadow-neon transition-all duration-300 group"
-                    >
-                      <IconComponent className="w-5 h-5 text-muted-foreground group-hover:text-accent transition-colors" />
-                    </a>
-                  );
-                })}
-              </div>
-              <Link to="/portal">
-                <Button variant="outline" size="sm" className="w-full">
-                  Client Portal Login
-                </Button>
-              </Link>
-            </div>
-
-            {/* Legal & Trust */}
-            <div>
+            {/* Legal & Trust - moved to right */}
+            <div className="order-last lg:order-none">
               <h4 className="text-lg font-semibold mb-6 text-foreground">Legal & Trust</h4>
               <ul className="space-y-3 mb-6">
                 <li>
@@ -287,6 +260,33 @@ const Footer = () => {
                   <span>30-Day Refund Policy</span>
                 </div>
               </div>
+            </div>
+
+            {/* Contact & Social */}
+            <div>
+              <h4 className="text-lg font-semibold mb-6 text-foreground">Connect With Us</h4>
+              <div className="flex space-x-4 mb-6">
+                {socialLinks.map((social) => {
+                  const IconComponent = social.icon;
+                  return (
+                    <a
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="p-3 bg-card border border-border rounded-lg hover:border-primary/30 hover:shadow-neon transition-all duration-300 group"
+                    >
+                      <IconComponent className="w-5 h-5 text-muted-foreground group-hover:text-accent transition-colors" />
+                    </a>
+                  );
+                })}
+              </div>
+              <Link to="/portal">
+                <Button variant="outline" size="sm" className="w-full">
+                  Client Portal Login
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
