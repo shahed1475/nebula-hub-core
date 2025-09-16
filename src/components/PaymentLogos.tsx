@@ -23,7 +23,7 @@ const PaymentLogos = ({ variant = "monochrome", size = "md", title = "We Accept 
   return (
     <div className="space-y-2">
       {title && (
-        <p className="text-sm font-medium text-foreground">{title}</p>
+        <h2 className="text-lg font-semibold text-foreground">{title}</h2>
       )}
       <div className="flex items-center gap-4">
         <img src={stripeLogo} alt="Stripe secure payments logo" loading="lazy" className={variant === 'monochrome' ? mono : color} />
