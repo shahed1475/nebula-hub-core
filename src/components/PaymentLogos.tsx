@@ -11,9 +11,9 @@ interface PaymentLogosProps {
 
 const PaymentLogos = ({ variant = "monochrome", size = "md", title = "We Accept Secure Payments" }: PaymentLogosProps) => {
   const sizeClasses = {
-    sm: "h-4",
-    md: "h-6", 
-    lg: "h-8"
+    sm: "h-6",
+    md: "h-10", 
+    lg: "h-12"
   };
 
   const base = `${sizeClasses[size]} object-contain transition-opacity`;
