@@ -19,6 +19,13 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
     title: { rendered: string };
     excerpt: { rendered: string };
     date: string;
+    featured_media: number;
+    _embedded?: {
+      'wp:featuredmedia'?: Array<{
+        source_url: string;
+        alt_text: string;
+      }>;
+    };
   };
 
   const [posts, setPosts] = useState<WPPost[]>([]);
@@ -112,7 +119,7 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
   useEffect(() => {
     if (adminLogin) return;
     setLoading(true);
-    fetch('https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts?per_page=10&_fields=id,link,title,excerpt,date')
+    fetch('https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts?per_page=10&_embed=wp:featuredmedia&_fields=id,link,title,excerpt,date,featured_media,_embedded')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load posts');
         return res.json();
@@ -142,36 +149,116 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
             </p>
           </section>
         ) : (
-          <section className="container mx-auto px-4 py-10">
-            <h1 className="text-3xl font-semibold mb-8">PopupGenix Blog</h1>
+          <section className="container mx-auto px-4 py-16">
+            {/* Centered Blog Title with Gradient */}
+            <div className="text-center mb-16">
+              <h1 className="text-5xl font-bold bg-gradient-to-r from-primary via-accent to-primary-glow bg-clip-text text-transparent mb-4 animate-fade-in">
+                PopupGenix Blog
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Stay updated with the latest insights, tips, and industry updates from our experts
+              </p>
+            </div>
 
-            {loading && <p className="text-muted-foreground">Loading posts…</p>}
-            {error && <p className="text-destructive">Failed to load posts: {error}</p>}
+            {loading && (
+              <div className="text-center py-12">
+                <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent mb-4"></div>
+                <p className="text-muted-foreground">Loading amazing content...</p>
+              </div>
+            )}
+            
+            {error && (
+              <div className="text-center py-12">
+                <p className="text-destructive text-lg">Failed to load posts: {error}</p>
+              </div>
+            )}
 
             {!loading && !error && (
-              <div className="grid gap-6 md:grid-cols-2">
-                {posts.map((post) => (
-                  <article key={post.id} className="rounded-lg bg-card p-6 shadow-[var(--shadow-card)]">
-                    <h2 className="text-xl font-semibold">
-                      <a
-                        href={post.link}
-                        target="_blank"
-                        rel="noopener"
-                        className="hover:underline text-primary"
-                        dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-                      />
-                    </h2>
-                    <div
-                      className="mt-3 text-muted-foreground prose prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
-                    />
-                    <div className="mt-4">
-                      <a href={post.link} target="_blank" rel="noopener" className="text-primary hover:underline">
-                        Read more →
-                      </a>
-                    </div>
-                  </article>
-                ))}
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {posts.map((post, index) => {
+                  const featuredImage = post._embedded?.['wp:featuredmedia']?.[0];
+                  const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  });
+
+                  return (
+                    <article 
+                      key={post.id} 
+                      className="group relative overflow-hidden rounded-xl bg-gradient-to-br from-card to-card/50 border border-border/50 hover:border-primary/50 transition-all duration-500 hover:shadow-[var(--shadow-neon)] hover:-translate-y-2 animate-fade-in"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      {/* Featured Image */}
+                      {featuredImage ? (
+                        <div className="relative h-48 overflow-hidden">
+                          <img
+                            src={featuredImage.source_url}
+                            alt={featuredImage.alt_text || post.title.rendered}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                      ) : (
+                        <div className="h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                          <div className="text-primary/60 text-6xl">📝</div>
+                        </div>
+                      )}
+
+                      {/* Content */}
+                      <div className="p-6 space-y-4">
+                        {/* Date */}
+                        <div className="text-sm text-muted-foreground font-medium">
+                          {formattedDate}
+                        </div>
+
+                        {/* Title */}
+                        <h2 className="text-xl font-bold group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                          <span dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+                        </h2>
+
+                        {/* Excerpt */}
+                        <div 
+                          className="text-muted-foreground line-clamp-3 prose prose-sm prose-invert max-w-none"
+                          dangerouslySetInnerHTML={{ __html: post.excerpt.rendered || "Click to read this exciting post..." }}
+                        />
+
+                        {/* Read More Button */}
+                        <div className="pt-4">
+                          <a 
+                            href={post.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-primary hover:text-primary-glow font-semibold transition-all duration-300 group/link"
+                          >
+                            Read Full Article
+                            <svg 
+                              className="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+
+                      {/* Hover Glow Effect */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-r from-primary/20 via-accent/20 to-primary-glow/20 pointer-events-none" />
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* No Posts Message */}
+            {!loading && !error && posts.length === 0 && (
+              <div className="text-center py-16">
+                <div className="text-6xl mb-4">📝</div>
+                <h3 className="text-2xl font-semibold mb-2">No Posts Yet</h3>
+                <p className="text-muted-foreground">Check back soon for amazing content!</p>
               </div>
             )}
           </section>
