@@ -26,7 +26,7 @@ const Header = () => {
               <img 
                 src={popupgenixLogo} 
                 alt="PopupGenix Logo" 
-                className="h-16 w-auto transition-all duration-500 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:drop-shadow-[0_0_30px_rgba(139,92,246,0.6)] group-hover:scale-105"
+                className="h-20 w-auto transition-all duration-500 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:drop-shadow-[0_0_30px_rgba(139,92,246,0.6)] group-hover:scale-105"
                 style={{ backgroundColor: 'transparent' }}
               />
             </Link>
