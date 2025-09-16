@@ -190,13 +190,25 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
                       style={{ animationDelay: `${index * 0.1}s` }}
                     >
                       {/* Featured Image */}
-                      {featuredImage ? (
+                      {featuredImage?.source_url ? (
                         <div className="relative h-48 overflow-hidden">
                           <img
                             src={featuredImage.source_url}
                             alt={featuredImage.alt_text || post.title.rendered}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                             loading="lazy"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = 'none';
+                              const parent = target.parentElement;
+                              if (parent) {
+                                parent.innerHTML = `
+                                  <div class="h-48 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                                    <div class="text-primary/60 text-6xl">📝</div>
+                                  </div>
+                                `;
+                              }
+                            }}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </div>
