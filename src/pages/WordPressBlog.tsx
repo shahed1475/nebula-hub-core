@@ -23,6 +23,7 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
     content?: { rendered: string };
     date: string;
     featured_media: number;
+    jetpack_featured_media_url?: string;
     _embedded?: {
       'wp:featuredmedia'?: Array<{
         source_url: string;
@@ -124,7 +125,7 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
   useEffect(() => {
     if (adminLogin) return;
     setLoading(true);
-    fetch('https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts?per_page=10&_embed=wp:featuredmedia')
+    fetch('https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts?per_page=10&_embed=1')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load posts');
         return res.json();
@@ -148,7 +149,7 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
 
     setLoadingPost(true);
     try {
-      const response = await fetch(`https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts/${post.id}`);
+      const response = await fetch(`https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts/${post.id}?_embed=1`);
       if (!response.ok) throw new Error('Failed to load full post');
       
       const fullPost: WPPost = await response.json();
@@ -203,7 +204,8 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
             {!loading && !error && (
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post, index) => {
-                  const featuredImage = post._embedded?.['wp:featuredmedia']?.[0];
+                  const imageUrl = post._embedded?.['wp:featuredmedia']?.[0]?.source_url || post.jetpack_featured_media_url || null;
+                  const imageAlt = post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || post.title.rendered;
                   const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -217,11 +219,11 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
                       style={{ animationDelay: `${index * 0.1}s` }}
                     >
                       {/* Featured Image */}
-                      {featuredImage?.source_url ? (
+                      {imageUrl ? (
                         <div className="relative h-48 overflow-hidden">
                           <img
-                            src={featuredImage.source_url}
-                            alt={featuredImage.alt_text || post.title.rendered}
+                            src={imageUrl}
+                            alt={imageAlt}
                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                             loading="lazy"
                             onError={(e) => {
@@ -318,11 +320,11 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
               
               <div className="space-y-6">
                 {/* Featured Image */}
-                {selectedPost._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
+                {(selectedPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || (selectedPost as any).jetpack_featured_media_url) && (
                   <div className="w-full">
                     <img
-                      src={selectedPost._embedded['wp:featuredmedia'][0].source_url}
-                      alt={selectedPost._embedded['wp:featuredmedia'][0].alt_text || selectedPost.title.rendered}
+                      src={selectedPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || (selectedPost as any).jetpack_featured_media_url}
+                      alt={selectedPost._embedded?.['wp:featuredmedia']?.[0]?.alt_text || selectedPost.title.rendered}
                       className="w-full h-auto rounded-lg"
                       loading="lazy"
                     />
