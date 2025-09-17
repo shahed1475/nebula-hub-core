@@ -119,7 +119,7 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
   useEffect(() => {
     if (adminLogin) return;
     setLoading(true);
-    fetch('https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts?per_page=10&_embed=wp:featuredmedia&_fields=id,link,title,excerpt,date,featured_media,_embedded')
+    fetch('https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts?per_page=10&_embed=wp:featuredmedia&_fields=id,link,title,excerpt,date,featured_media,_embedded.wp:featuredmedia')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load posts');
         return res.json();
