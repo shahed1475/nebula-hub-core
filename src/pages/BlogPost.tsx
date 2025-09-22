@@ -172,7 +172,28 @@ const BlogPost = () => {
 
           {/* Article Content */}
           <div 
-            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary prose-a:hover:text-primary-glow prose-blockquote:text-muted-foreground prose-blockquote:border-l-primary prose-code:text-foreground prose-code:bg-muted prose-pre:bg-muted prose-img:rounded-lg prose-li:text-foreground"
+            className="prose prose-lg max-w-none 
+              prose-headings:font-bold prose-headings:text-foreground prose-headings:mb-6 prose-headings:mt-8
+              prose-h1:text-4xl prose-h1:leading-tight prose-h1:border-b prose-h1:border-border prose-h1:pb-4
+              prose-h2:text-3xl prose-h2:leading-snug prose-h2:text-primary
+              prose-h3:text-2xl prose-h3:leading-snug prose-h3:text-primary/80
+              prose-h4:text-xl prose-h4:leading-snug prose-h4:text-primary/70
+              prose-h5:text-lg prose-h5:leading-snug prose-h5:text-primary/60
+              prose-h6:text-base prose-h6:leading-snug prose-h6:text-primary/50
+              prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-6
+              prose-strong:text-foreground prose-strong:font-semibold
+              prose-em:text-muted-foreground prose-em:italic
+              prose-a:text-primary prose-a:font-medium prose-a:no-underline prose-a:hover:text-primary-glow prose-a:hover:underline
+              prose-blockquote:text-muted-foreground prose-blockquote:border-l-4 prose-blockquote:border-l-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:bg-muted/30 prose-blockquote:py-4 prose-blockquote:rounded-r-lg
+              prose-code:text-primary prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
+              prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-pre:p-4 prose-pre:overflow-x-auto
+              prose-img:rounded-xl prose-img:shadow-lg prose-img:border prose-img:border-border prose-img:my-8
+              prose-li:text-foreground prose-li:leading-relaxed prose-li:mb-2
+              prose-ul:my-6 prose-ol:my-6
+              prose-table:border-collapse prose-table:border prose-table:border-border
+              prose-th:border prose-th:border-border prose-th:bg-muted prose-th:p-3 prose-th:text-left prose-th:font-semibold
+              prose-td:border prose-td:border-border prose-td:p-3
+              prose-hr:border-border prose-hr:my-8"
             dangerouslySetInnerHTML={{ 
               __html: post.content?.rendered || post.excerpt.rendered 
             }}

@@ -17,7 +17,7 @@ const Portfolio = () => {
       title: "Spendly",
       category: "Finance SaaS",
       description: "AI-powered expense management platform with automated categorization and intelligent budget insights.",
-      image: "/api/placeholder/400/300",
+      image: "/portfolio/spendly.png",
       tags: ["AI/ML", "SaaS", "FinTech", "React"],
       challenge: "Complex expense tracking and budget management for businesses",
       approach: "Machine learning algorithms for automatic expense categorization",
@@ -28,7 +28,7 @@ const Portfolio = () => {
       title: "Clarify AI",
       category: "AI Platform",
       description: "Advanced AI-powered data analysis platform that transforms complex datasets into actionable insights.",
-      image: "/api/placeholder/400/300",
+      image: "/portfolio/clarify.png",
       tags: ["AI/ML", "Data Analytics", "Python", "React"],
       challenge: "Making complex data analysis accessible to non-technical users",
       approach: "Natural language processing for intuitive data queries",
@@ -39,7 +39,7 @@ const Portfolio = () => {
       title: "Pregacare",
       category: "Healthcare App",
       description: "Comprehensive pregnancy tracking mobile app with AI-powered health monitoring and personalized care plans.",
-      image: "/api/placeholder/400/300",
+      image: "/portfolio/pregacare.png",
       tags: ["Mobile", "Healthcare", "AI", "React Native"],
       challenge: "Personalized healthcare guidance throughout pregnancy",
       approach: "AI algorithms for personalized health recommendations",
@@ -50,7 +50,7 @@ const Portfolio = () => {
       title: "FlaskColorWorks",
       category: "AI Tool",
       description: "Intelligent color palette generator using computer vision and design principles for creative professionals.",
-      image: "/api/placeholder/400/300",
+      image: "/portfolio/flask.png",
       tags: ["AI", "Computer Vision", "Design", "Python"],
       challenge: "Automated color palette generation for designers",
       approach: "Computer vision algorithms analyzing color harmony",
@@ -61,7 +61,7 @@ const Portfolio = () => {
       title: "Klevere AI",
       category: "SaaS Platform",
       description: "Business intelligence platform leveraging AI for predictive analytics and automated reporting.",
-      image: "/api/placeholder/400/300",
+      image: "/portfolio/klevere.png",
       tags: ["AI", "Business Intelligence", "SaaS", "Analytics"],
       challenge: "Complex business data analysis and forecasting",
       approach: "Predictive AI models for business intelligence",
@@ -72,7 +72,7 @@ const Portfolio = () => {
       title: "BlackGPT",
       category: "AI Chatbot",
       description: "Advanced conversational AI chatbot with specialized knowledge base and natural language understanding.",
-      image: "/api/placeholder/400/300",
+      image: "/portfolio/blackgpt.png",
       tags: ["AI", "NLP", "Chatbot", "Machine Learning"],
       challenge: "Creating culturally aware and context-sensitive AI",
       approach: "Fine-tuned language models with specialized training",
@@ -83,7 +83,7 @@ const Portfolio = () => {
       title: "Inno AI",
       category: "Business AI",
       description: "Comprehensive AI suite for business automation, from customer service to process optimization.",
-      image: "/api/placeholder/400/300",
+      image: "/portfolio/inno.png",
       tags: ["AI", "Automation", "Business", "Enterprise"],
       challenge: "End-to-end business process automation",
       approach: "Modular AI systems for different business functions",
@@ -128,6 +128,12 @@ const Portfolio = () => {
             >
               {/* Project Image */}
               <div className="relative h-48 bg-muted/20 overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
                 <div className="absolute inset-0 bg-gradient-primary/20 mix-blend-overlay"></div>
                 <div className="absolute top-4 left-4">
                   <Badge variant="secondary" className="bg-card/80 backdrop-blur-sm">
