@@ -29,7 +29,7 @@ const App = () => (
         <Route path="/contact" element={<Contact />} />
         <Route path="/quote" element={<Quote />} />
          <Route path="/blog" element={<WordPressBlog />} />
-         <Route path="/blog/:id" element={<BlogPost />} />
+         <Route path="/blog/:slug" element={<BlogPost />} />
          <Route path="/blog/admin-login" element={<WordPressBlog adminLogin={true} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />

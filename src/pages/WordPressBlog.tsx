@@ -13,9 +13,10 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
     ? "https://shahedalfahad19-xvmtl.wordpress.com/wp-login.php"
     : "https://shahedalfahad19-xvmtl.wordpress.com/";
 
-  // Types and state for public blog feed
+// Types and state for public blog feed
   type WPPost = {
     id: number;
+    slug: string;
     link: string;
     title: { rendered: string };
     excerpt: { rendered: string };
@@ -139,8 +140,8 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
   }, [adminLogin]);
 
   const handleReadFullArticle = (post: WPPost) => {
-    // Navigate to the individual blog post page
-    window.location.href = `/blog/${post.id}`;
+    // Navigate to the individual blog post page using slug for SEO
+    window.location.href = `/blog/${post.slug}`;
   };
 
   return (

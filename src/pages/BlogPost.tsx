@@ -8,6 +8,7 @@ import "@/components/BlogContent.css";
 
 type WPPost = {
   id: number;
+  slug: string;
   link: string;
   title: { rendered: string };
   excerpt: { rendered: string };
@@ -24,7 +25,7 @@ type WPPost = {
 };
 
 const BlogPost = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<WPPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,15 +51,17 @@ const BlogPost = () => {
   };
 
   useEffect(() => {
-    if (!id) return;
+    if (!slug) return;
 
     const fetchPost = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts/${id}?_embed=1`);
+        const response = await fetch(`https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts?slug=${slug}&_embed=1`);
         if (!response.ok) throw new Error('Failed to load post');
         
-        const postData: WPPost = await response.json();
+        const postsData: WPPost[] = await response.json();
+        if (postsData.length === 0) throw new Error('Post not found');
+        const postData = postsData[0];
         setPost(postData);
         
         // Update SEO metadata
@@ -98,7 +101,7 @@ const BlogPost = () => {
     };
 
     fetchPost();
-  }, [id]);
+  }, [slug]);
 
   if (loading) {
     return (
