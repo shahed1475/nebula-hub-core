@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar, ExternalLink } from "lucide-react";
+import "@/components/BlogContent.css";
 
 type WPPost = {
   id: number;
@@ -27,6 +28,32 @@ const BlogPost = () => {
   const [post, setPost] = useState<WPPost | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Content processing function to enhance WordPress HTML
+  const processWordPressContent = (htmlContent: string): string => {
+    let processedContent = htmlContent;
+    
+    // Replace WordPress-specific classes with semantic HTML
+    processedContent = processedContent.replace(/class="wp-block-heading"/g, '');
+    processedContent = processedContent.replace(/class="wp-block-list"/g, '');
+    
+    // Clean up excessive non-breaking spaces
+    processedContent = processedContent.replace(/&nbsp;/g, ' ');
+    
+    // Add reading indicators for long sections
+    processedContent = processedContent.replace(
+      /<h3([^>]*)>/g, 
+      '<h3$1><span class="text-primary text-lg mr-2">●</span>'
+    );
+    
+    // Enhance list items with better spacing  
+    processedContent = processedContent.replace(
+      /<li>/g, 
+      '<li class="relative pl-2">'
+    );
+    
+    return processedContent;
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -172,30 +199,51 @@ const BlogPost = () => {
 
           {/* Article Content */}
           <div 
-            className="prose prose-lg max-w-none 
-              prose-headings:font-bold prose-headings:text-foreground prose-headings:mb-6 prose-headings:mt-8
-              prose-h1:text-4xl prose-h1:leading-tight prose-h1:border-b prose-h1:border-border prose-h1:pb-4
-              prose-h2:text-3xl prose-h2:leading-snug prose-h2:text-primary
-              prose-h3:text-2xl prose-h3:leading-snug prose-h3:text-primary/80
-              prose-h4:text-xl prose-h4:leading-snug prose-h4:text-primary/70
-              prose-h5:text-lg prose-h5:leading-snug prose-h5:text-primary/60
-              prose-h6:text-base prose-h6:leading-snug prose-h6:text-primary/50
-              prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-6
-              prose-strong:text-foreground prose-strong:font-semibold
-              prose-em:text-muted-foreground prose-em:italic
-              prose-a:text-primary prose-a:font-medium prose-a:no-underline prose-a:hover:text-primary-glow prose-a:hover:underline
-              prose-blockquote:text-muted-foreground prose-blockquote:border-l-4 prose-blockquote:border-l-primary prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:bg-muted/30 prose-blockquote:py-4 prose-blockquote:rounded-r-lg
-              prose-code:text-primary prose-code:bg-muted prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono
-              prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-lg prose-pre:p-4 prose-pre:overflow-x-auto
-              prose-img:rounded-xl prose-img:shadow-lg prose-img:border prose-img:border-border prose-img:my-8
-              prose-li:text-foreground prose-li:leading-relaxed prose-li:mb-2
-              prose-ul:my-6 prose-ol:my-6
-              prose-table:border-collapse prose-table:border prose-table:border-border
-              prose-th:border prose-th:border-border prose-th:bg-muted prose-th:p-3 prose-th:text-left prose-th:font-semibold
-              prose-td:border prose-td:border-border prose-td:p-3
-              prose-hr:border-border prose-hr:my-8"
+            className="article-content prose prose-xl max-w-none
+              /* Base Typography */
+              prose-headings:font-bold prose-headings:text-foreground prose-headings:tracking-tight
+              prose-h1:text-5xl prose-h1:leading-tight prose-h1:mb-8 prose-h1:mt-12 prose-h1:pb-6 prose-h1:border-b-2 prose-h1:border-gradient-primary
+              prose-h2:text-4xl prose-h2:leading-snug prose-h2:mb-6 prose-h2:mt-10 prose-h2:text-primary prose-h2:font-semibold
+              prose-h3:text-3xl prose-h3:leading-snug prose-h3:mb-4 prose-h3:mt-8 prose-h3:text-primary/90 prose-h3:font-medium prose-h3:flex prose-h3:items-center prose-h3:gap-3
+              prose-h4:text-2xl prose-h4:leading-snug prose-h4:mb-4 prose-h4:mt-6 prose-h4:text-primary/80 prose-h4:font-medium
+              prose-h5:text-xl prose-h5:leading-snug prose-h5:mb-3 prose-h5:mt-5 prose-h5:text-primary/70 prose-h5:font-medium
+              prose-h6:text-lg prose-h6:leading-snug prose-h6:mb-3 prose-h6:mt-4 prose-h6:text-primary/60 prose-h6:font-medium
+              
+              /* Paragraph and Text */
+              prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-6 prose-p:text-lg prose-p:font-light
+              prose-strong:text-foreground prose-strong:font-semibold prose-strong:bg-primary/10 prose-strong:px-1 prose-strong:rounded
+              prose-em:text-muted-foreground prose-em:italic prose-em:font-medium
+              
+              /* Links */
+              prose-a:text-primary prose-a:font-medium prose-a:no-underline prose-a:bg-primary/5 prose-a:px-1 prose-a:rounded prose-a:transition-all
+              hover:prose-a:text-primary-glow hover:prose-a:bg-primary/10 hover:prose-a:underline
+              
+              /* Lists */
+              prose-ul:my-8 prose-ul:space-y-3 prose-ul:pl-6
+              prose-ol:my-8 prose-ol:space-y-3 prose-ol:pl-6 prose-ol:list-decimal
+              prose-li:text-foreground prose-li:leading-relaxed prose-li:text-lg prose-li:font-light prose-li:relative prose-li:pl-2
+              
+              /* Blockquotes */
+              prose-blockquote:text-muted-foreground prose-blockquote:border-l-4 prose-blockquote:border-l-primary 
+              prose-blockquote:pl-8 prose-blockquote:italic prose-blockquote:bg-gradient-to-r prose-blockquote:from-muted/20 prose-blockquote:to-transparent
+              prose-blockquote:py-6 prose-blockquote:rounded-r-xl prose-blockquote:my-8 prose-blockquote:text-xl prose-blockquote:font-medium
+              
+              /* Code */
+              prose-code:text-primary prose-code:bg-muted prose-code:px-3 prose-code:py-1 prose-code:rounded-md prose-code:text-base prose-code:font-mono prose-code:font-medium
+              prose-pre:bg-muted prose-pre:border prose-pre:border-border prose-pre:rounded-xl prose-pre:p-6 prose-pre:overflow-x-auto prose-pre:my-8
+              
+              /* Images */
+              prose-img:rounded-2xl prose-img:shadow-2xl prose-img:border prose-img:border-border prose-img:my-10 prose-img:mx-auto
+              
+              /* Tables */
+              prose-table:border-collapse prose-table:border prose-table:border-border prose-table:rounded-lg prose-table:overflow-hidden prose-table:my-8
+              prose-th:border prose-th:border-border prose-th:bg-muted prose-th:p-4 prose-th:text-left prose-th:font-semibold prose-th:text-foreground
+              prose-td:border prose-td:border-border prose-td:p-4 prose-td:text-foreground
+              
+              /* Horizontal Rules */
+              prose-hr:border-border prose-hr:my-12 prose-hr:border-t-2"
             dangerouslySetInnerHTML={{ 
-              __html: post.content?.rendered || post.excerpt.rendered 
+              __html: processWordPressContent(post.content?.rendered || post.excerpt.rendered)
             }}
           />
 
