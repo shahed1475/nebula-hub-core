@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import popupgenixLogo from "@/assets/popupgenix-logo-transparent.png";
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,13 +22,15 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <Link to="/" className="group">
+            <Link to="/" className="group flex items-center space-x-3">
               <img 
-                src={popupgenixLogo} 
+                src="/popupgenix-logo.svg" 
                 alt="PopupGenix Logo" 
-                className="h-20 w-auto transition-all duration-500 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:drop-shadow-[0_0_30px_rgba(139,92,246,0.6)] group-hover:scale-105"
-                style={{ backgroundColor: 'transparent' }}
+                className="h-12 w-auto transition-all duration-500 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:drop-shadow-[0_0_30px_rgba(139,92,246,0.6)] group-hover:scale-105"
               />
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent group-hover:from-accent group-hover:to-primary transition-all duration-500">
+                PopupGenix
+              </span>
             </Link>
           </div>
 
