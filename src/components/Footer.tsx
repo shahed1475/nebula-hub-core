@@ -307,9 +307,6 @@ const Footer = () => {
               <Link to="/cookie-policy" className="text-muted-foreground hover:text-accent transition-colors">
                 Cookie Policy
               </Link>
-              <Link to="/admin-signup" className="text-muted-foreground hover:text-accent transition-colors">
-                Admin
-              </Link>
             </div>
           </div>
           <div className="mt-6 pt-6 border-t border-border/30">

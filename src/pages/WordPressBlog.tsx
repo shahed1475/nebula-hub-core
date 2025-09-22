@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 interface WordPressBlogProps {
@@ -35,8 +34,6 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
   const [posts, setPosts] = useState<WPPost[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedPost, setSelectedPost] = useState<WPPost | null>(null);
-  const [loadingPost, setLoadingPost] = useState(false);
 
   useEffect(() => {
     // Inject custom CSS to style the WordPress iframe content and set SEO tags
@@ -141,26 +138,9 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
       .finally(() => setLoading(false));
   }, [adminLogin]);
 
-  const handleReadFullArticle = async (post: WPPost) => {
-    if (post.content) {
-      setSelectedPost(post);
-      return;
-    }
-
-    setLoadingPost(true);
-    try {
-      const response = await fetch(`https://public-api.wordpress.com/wp/v2/sites/shahedalfahad19-xvmtl.wordpress.com/posts/${post.id}?_embed=1`);
-      if (!response.ok) throw new Error('Failed to load full post');
-      
-      const fullPost: WPPost = await response.json();
-      setSelectedPost(fullPost);
-    } catch (error) {
-      console.error('Error loading full post:', error);
-      // Fallback to opening WordPress link if API fails
-      window.open(post.link, '_blank');
-    } finally {
-      setLoadingPost(false);
-    }
+  const handleReadFullArticle = (post: WPPost) => {
+    // Navigate to the individual blog post page
+    window.location.href = `/blog/${post.id}`;
   };
 
   return (
@@ -307,72 +287,6 @@ const WordPressBlog = ({ adminLogin = false }: WordPressBlogProps) => {
 
       {!adminLogin && <Footer />}
 
-      {/* Full Article Modal */}
-      <Dialog open={!!selectedPost} onOpenChange={() => setSelectedPost(null)}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-          {selectedPost && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="text-2xl font-bold text-left">
-                  <span dangerouslySetInnerHTML={{ __html: selectedPost.title.rendered }} />
-                </DialogTitle>
-              </DialogHeader>
-              
-              <div className="space-y-6">
-                {/* Featured Image */}
-                {(selectedPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || (selectedPost as any).jetpack_featured_media_url) && (
-                  <div className="w-full">
-                    <img
-                      src={selectedPost._embedded?.['wp:featuredmedia']?.[0]?.source_url || (selectedPost as any).jetpack_featured_media_url}
-                      alt={selectedPost._embedded?.['wp:featuredmedia']?.[0]?.alt_text || selectedPost.title.rendered}
-                      className="w-full h-auto rounded-lg"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-
-                {/* Date */}
-                <div className="text-sm text-muted-foreground">
-                  {new Date(selectedPost.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </div>
-
-                {/* Full Content */}
-                <div 
-                  className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary prose-blockquote:text-muted-foreground prose-code:text-foreground"
-                  dangerouslySetInnerHTML={{ 
-                    __html: selectedPost.content?.rendered || selectedPost.excerpt.rendered 
-                  }}
-                />
-
-                {/* Original Link */}
-                <div className="pt-4 border-t border-border">
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Originally published on WordPress:
-                  </p>
-                  <a 
-                    href={selectedPost.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:text-primary-glow underline text-sm"
-                  >
-                    View on WordPress
-                  </a>
-                </div>
-              </div>
-            </>
-          )}
-          
-          {loadingPost && (
-            <div className="flex items-center justify-center py-12">
-              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-primary border-r-transparent"></div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

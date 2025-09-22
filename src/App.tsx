@@ -10,6 +10,7 @@ import AdminPanel from "./pages/AdminPanel";
 import AdminSignup from "./pages/AdminSignup";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
+import BlogPost from "./pages/BlogPost";
 import WordPressBlog from "./pages/WordPressBlog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
@@ -28,6 +29,7 @@ const App = () => (
         <Route path="/contact" element={<Contact />} />
         <Route path="/quote" element={<Quote />} />
          <Route path="/blog" element={<WordPressBlog />} />
+         <Route path="/blog/:id" element={<BlogPost />} />
          <Route path="/blog/admin-login" element={<WordPressBlog adminLogin={true} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />
