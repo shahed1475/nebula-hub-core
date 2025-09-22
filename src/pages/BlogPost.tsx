@@ -40,13 +40,7 @@ const BlogPost = () => {
     // Clean up excessive non-breaking spaces
     processedContent = processedContent.replace(/&nbsp;/g, ' ');
     
-    // Add reading indicators for long sections
-    processedContent = processedContent.replace(
-      /<h3([^>]*)>/g, 
-      '<h3$1><span class="text-primary text-lg mr-2">●</span>'
-    );
-    
-    // Enhance list items with better spacing  
+    // Clean up list items for better styling
     processedContent = processedContent.replace(
       /<li>/g, 
       '<li class="relative pl-2">'
@@ -202,12 +196,12 @@ const BlogPost = () => {
             className="article-content prose prose-xl max-w-none
               /* Base Typography */
               prose-headings:font-bold prose-headings:text-foreground prose-headings:tracking-tight
-              prose-h1:text-5xl prose-h1:leading-tight prose-h1:mb-8 prose-h1:mt-12 prose-h1:pb-6 prose-h1:border-b-2 prose-h1:border-gradient-primary
-              prose-h2:text-4xl prose-h2:leading-snug prose-h2:mb-6 prose-h2:mt-10 prose-h2:text-primary prose-h2:font-semibold
-              prose-h3:text-3xl prose-h3:leading-snug prose-h3:mb-4 prose-h3:mt-8 prose-h3:text-primary/90 prose-h3:font-medium prose-h3:flex prose-h3:items-center prose-h3:gap-3
-              prose-h4:text-2xl prose-h4:leading-snug prose-h4:mb-4 prose-h4:mt-6 prose-h4:text-primary/80 prose-h4:font-medium
-              prose-h5:text-xl prose-h5:leading-snug prose-h5:mb-3 prose-h5:mt-5 prose-h5:text-primary/70 prose-h5:font-medium
-              prose-h6:text-lg prose-h6:leading-snug prose-h6:mb-3 prose-h6:mt-4 prose-h6:text-primary/60 prose-h6:font-medium
+              prose-h1:text-5xl prose-h1:leading-tight prose-h1:mb-8 prose-h1:mt-16 prose-h1:pb-6 prose-h1:border-b-2 prose-h1:border-gradient-primary
+              prose-h2:text-4xl prose-h2:leading-snug prose-h2:mb-6 prose-h2:mt-14 prose-h2:text-primary prose-h2:font-semibold
+              prose-h3:text-3xl prose-h3:leading-snug prose-h3:mb-5 prose-h3:mt-12 prose-h3:text-primary/90 prose-h3:font-medium
+              prose-h4:text-2xl prose-h4:leading-snug prose-h4:mb-4 prose-h4:mt-10 prose-h4:text-primary/80 prose-h4:font-medium
+              prose-h5:text-xl prose-h5:leading-snug prose-h5:mb-4 prose-h5:mt-8 prose-h5:text-primary/70 prose-h5:font-medium
+              prose-h6:text-lg prose-h6:leading-snug prose-h6:mb-3 prose-h6:mt-6 prose-h6:text-primary/60 prose-h6:font-medium
               
               /* Paragraph and Text */
               prose-p:text-foreground prose-p:leading-relaxed prose-p:mb-6 prose-p:text-lg prose-p:font-light
