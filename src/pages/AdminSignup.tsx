@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Shield, User, Mail, Key, CheckCircle } from "lucide-react";
+import { Shield, User, Mail, Key, CheckCircle, Lock } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
@@ -15,7 +15,23 @@ const AdminSignup = () => {
   const [fullName, setFullName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [signupEnabled, setSignupEnabled] = useState<boolean | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const checkSignupEnabled = async () => {
+      try {
+        const { data, error } = await supabase.rpc('is_admin_signup_enabled');
+        if (error) throw error;
+        setSignupEnabled(data);
+      } catch (error) {
+        console.error('Error checking signup status:', error);
+        setSignupEnabled(false);
+      }
+    };
+
+    checkSignupEnabled();
+  }, []);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +77,45 @@ const AdminSignup = () => {
       setIsLoading(false);
     }
   };
+
+  // Show loading while checking signup status
+  if (signupEnabled === null) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-6">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  // Show signup disabled message
+  if (!signupEnabled) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted flex items-center justify-center p-6">
+        <Card className="w-full max-w-md bg-card/50 backdrop-blur-sm border-border/50">
+          <CardContent className="p-8 text-center">
+            <Lock className="w-16 h-16 text-destructive mx-auto mb-4" />
+            <h1 className="text-2xl font-bold mb-4">Admin Signup Disabled</h1>
+            <p className="text-muted-foreground mb-6">
+              Admin account creation is currently disabled for security. 
+              Please contact the system administrator if you need admin access.
+            </p>
+            <div className="space-y-3">
+              <Link to="/admin">
+                <Button variant="outline" className="w-full">
+                  Go to Admin Login
+                </Button>
+              </Link>
+              <Link to="/">
+                <Button variant="ghost" className="w-full">
+                  Back to Homepage
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (isSuccess) {
     return (

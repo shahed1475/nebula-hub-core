@@ -18,6 +18,7 @@ export default function AdminPanel() {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [signupEnabled, setSignupEnabled] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -53,7 +54,20 @@ export default function AdminPanel() {
       }
     });
 
+    // Check if admin signup is enabled
+    const checkSignupEnabled = async () => {
+      try {
+        const { data, error } = await supabase.rpc('is_admin_signup_enabled');
+        if (!error && mounted) {
+          setSignupEnabled(data || false);
+        }
+      } catch (error) {
+        console.error('Error checking signup status:', error);
+      }
+    };
+
     initAuth();
+    checkSignupEnabled();
 
     return () => {
       mounted = false;
@@ -166,17 +180,19 @@ export default function AdminPanel() {
               redirectTo={`${window.location.origin}/admin`}
             />
             
-            <div className="mt-6 text-center">
-              <p className="text-sm text-gray-400 mb-3">
-                Don't have an admin account?
-              </p>
-              <a
-                href="/admin-signup"
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-sm"
-              >
-                Create Admin Account
-              </a>
-            </div>
+            {signupEnabled && (
+              <div className="mt-6 text-center">
+                <p className="text-sm text-gray-400 mb-3">
+                  Don't have an admin account?
+                </p>
+                <a
+                  href="/admin-signup"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-sm"
+                >
+                  Create Admin Account
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -208,12 +224,14 @@ export default function AdminPanel() {
               >
                 Sign Out
               </button>
-              <a
-                href="/admin-signup"
-                className="block w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-center"
-              >
-                Create New Admin Account
-              </a>
+              {signupEnabled && (
+                <a
+                  href="/admin-signup"
+                  className="block w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-center"
+                >
+                  Create New Admin Account
+                </a>
+              )}
             </div>
           </div>
         </div>
