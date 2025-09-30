@@ -43,10 +43,12 @@ const Hero = () => {
 
           {/* Description */}
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-            PopupGenix is a custom software and AI solutions company specializing in 
-            SaaS platforms, CRM systems, mobile and web applications, and advanced AI/ML solutions. 
-            We deliver innovative, scalable technology that empowers businesses to achieve 
-            exceptional efficiency and growth.
+            PopupGenix is a custom software and AI solutions company that helps businesses grow 
+            through innovative technology. We build SaaS platforms, CRM systems (customer relationship 
+            management), ERP systems (enterprise resource planning), mobile and web applications, 
+            and advanced AI/ML solutions including predictive analytics and intelligent automation. 
+            Our mission is to deliver scalable, user-friendly technology that drives exceptional 
+            efficiency and measurable results.
           </p>
 
           {/* CTA Buttons */}
