@@ -14,105 +14,120 @@ const TermsAndConditions = () => {
             Terms and Conditions
           </h1>
           <p className="text-center text-muted-foreground mb-12">
-            Last updated: {new Date().toLocaleDateString()}
+            Last Updated: 9/30/2025
           </p>
 
           <div className="space-y-8">
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
               <h2 className="text-2xl font-bold mb-4 text-foreground">1. Acceptance of Terms</h2>
               <p className="text-muted-foreground leading-relaxed">
-                By accessing and using PopupGenix services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                By using PopupGenix services, you confirm that you accept these Terms and agree to comply with them. If you do not agree, please discontinue use immediately.
               </p>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
               <h2 className="text-2xl font-bold mb-4 text-foreground">2. User Accounts & Responsibilities</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                When you create an account with us, you must provide accurate, complete, and up-to-date information. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account.
+                To access certain services, you may need to create an account and provide accurate, complete, and up-to-date information.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                You are responsible for safeguarding your login credentials and any activities that occur under your account.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                You are responsible for safeguarding your account credentials and for any activities or actions under your account. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.
+                You must notify us immediately if you suspect unauthorized access or security breaches.
               </p>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
-              <h2 className="text-2xl font-bold mb-4 text-foreground">3. Payment & Subscription Renewals</h2>
+              <h2 className="text-2xl font-bold mb-4 text-foreground">3. Payments & Subscriptions</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Subscription fees are billed in advance on a monthly or annual basis and are non-refundable except as stated in our Refund Policy. Your subscription will automatically renew at the end of each billing period unless you cancel before the renewal date.
+                Subscription fees are billed in advance on a monthly or annual basis and are non-refundable except as outlined in our Refund Policy.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Unless canceled before the renewal date, subscriptions will automatically renew at the end of each billing cycle.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                We reserve the right to modify our pricing with 30 days' notice. Continued use of our services after price changes constitutes acceptance of the new pricing.
+                We reserve the right to update our pricing with 30 days' notice. Continued use after pricing changes constitutes acceptance of the new terms.
               </p>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
               <h2 className="text-2xl font-bold mb-4 text-foreground">4. Use of Services</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                PopupGenix provides SaaS products and AI integration services. You agree to use these services only for lawful purposes and in accordance with these Terms. Prohibited uses include:
+                PopupGenix provides custom software, SaaS platforms, ERP/CRM systems, web/mobile apps, and AI/ML integration services. You agree to use these services only for lawful purposes. Prohibited uses include but are not limited to:
               </p>
               <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                <li>Using our services in any way that violates applicable laws or regulations</li>
-                <li>Attempting to gain unauthorized access to any portion of our services</li>
-                <li>Engaging in any activity that interferes with or disrupts our services</li>
-                <li>Using our AI services to generate illegal, harmful, or misleading content</li>
-                <li>Reselling or redistributing our services without explicit permission</li>
+                <li>Violating any applicable laws or regulations.</li>
+                <li>Attempting unauthorized access to our systems.</li>
+                <li>Disrupting or interfering with service performance.</li>
+                <li>Using our AI solutions to generate harmful, illegal, or misleading content.</li>
+                <li>Reselling or redistributing our services without prior written consent.</li>
               </ul>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
-              <h2 className="text-2xl font-bold mb-4 text-foreground">5. Intellectual Property Rights</h2>
+              <h2 className="text-2xl font-bold mb-4 text-foreground">5. Intellectual Property</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                The Service and its original content, features, and functionality are and will remain the exclusive property of PopupGenix and its licensors. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.
+                All software, features, content, and technology provided by PopupGenix are the intellectual property of PopupGenix and its licensors.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Our trademarks, brand assets, and designs may not be used without written consent.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                You retain all rights to any content you submit, post, or display on or through the Service. By submitting content, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, and display such content in connection with providing the Service.
+                You retain ownership of any content you submit but grant PopupGenix a non-exclusive, royalty-free license to use it as necessary to deliver services.
               </p>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
-              <h2 className="text-2xl font-bold mb-4 text-foreground">6. Termination of Service</h2>
+              <h2 className="text-2xl font-bold mb-4 text-foreground">6. Termination of Services</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                We may terminate or suspend your account and bar access to the Service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever, including without limitation if you breach the Terms.
+                PopupGenix may suspend or terminate your account immediately if you violate these Terms.
+              </p>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                Upon termination, your right to use the services will end immediately.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Upon termination, your right to use the Service will cease immediately. If you wish to terminate your account, you may simply discontinue using the Service and cancel your subscription.
+                You may terminate your account anytime by discontinuing use and canceling subscriptions.
               </p>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
               <h2 className="text-2xl font-bold mb-4 text-foreground">7. Limitation of Liability</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                In no event shall PopupGenix, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.
+                PopupGenix, its employees, partners, and affiliates shall not be liable for indirect, incidental, or consequential damages, including loss of profits, data, or goodwill.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Our total liability to you for all claims arising from or related to the Service shall not exceed the amount you paid us in the twelve (12) months preceding the claim.
+                Our total liability for all claims shall not exceed the total amount paid by you to PopupGenix in the 12 months prior to the claim.
               </p>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
               <h2 className="text-2xl font-bold mb-4 text-foreground">8. Governing Law</h2>
               <p className="text-muted-foreground leading-relaxed">
-                These Terms shall be governed and construed in accordance with the laws of the jurisdiction in which PopupGenix operates, without regard to its conflict of law provisions. Any disputes arising from these Terms or the Service will be resolved through binding arbitration.
+                These Terms are governed by the laws of the jurisdiction in which PopupGenix operates. Any disputes shall be resolved through binding arbitration, unless otherwise required by law.
               </p>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
               <h2 className="text-2xl font-bold mb-4 text-foreground">9. Changes to Terms</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                We reserve the right to modify or replace these Terms at any time. We will provide notice of any material changes by posting the new Terms on this page and updating the "Last updated" date.
+                We may revise these Terms from time to time. Any updates will be posted on this page with a revised "Last Updated" date.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                Your continued use of the Service after any such changes constitutes your acceptance of the new Terms.
+                Your continued use of our services indicates acceptance of these changes.
               </p>
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur bg-primary/5">
-              <h2 className="text-2xl font-bold mb-4 text-foreground">Contact Us</h2>
-              <p className="text-muted-foreground leading-relaxed mb-2">
-                If you have any questions about these Terms and Conditions, please contact us:
+              <h2 className="text-2xl font-bold mb-4 text-foreground">10. Contact Us</h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                If you have any questions regarding these Terms & Conditions, you may contact us:
               </p>
-              <p className="text-foreground font-semibold">
-                Email: <a href="mailto:support@popupgenix.com" className="text-primary hover:underline">support@popupgenix.com</a>
+              <p className="text-foreground mb-2">
+                📧 Email: <a href="mailto:support@popupgenix.com" className="text-primary hover:underline font-semibold">support@popupgenix.com</a>
+              </p>
+              <p className="text-foreground">
+                🏢 Company: PopupGenix
               </p>
             </Card>
           </div>
