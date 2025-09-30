@@ -7,106 +7,87 @@ import AdminDashboard from "@/components/AdminPanel/AdminDashboard";
 import HomepageManager from "@/components/AdminPanel/HomepageManager";
 import ServicesManager from "@/components/AdminPanel/ServicesManager";
 import TestimonialManager from "@/components/AdminPanel/TestimonialManager";
-
 import MessagesManager from "@/components/AdminPanel/MessagesManager";
 import QuoteRequestsManager from "@/components/AdminPanel/QuoteRequestsManager";
 import ClientManager from "@/components/AdminPanel/ClientManager";
-import { Auth } from "@supabase/auth-ui-react";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+
+const ADMIN_EMAIL = "shahedalfahad19@gmail.com";
+const ADMIN_PASSWORD = "Fahad@70342@popupgenix";
 
 export default function AdminPanel() {
+  const { toast } = useToast();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [signupEnabled, setSignupEnabled] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
-    let mounted = true;
-
-    const initAuth = async () => {
-      try {
-        // Get current session
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!mounted) return;
-
-        if (session?.user) {
-          setUser(session.user);
-          await checkAdminStatus(session.user.email || '');
-        } else {
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Auth init error:', error);
-        if (mounted) setLoading(false);
+    // Check for existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user?.email === ADMIN_EMAIL) {
+        setUser(session.user);
+        setIsAdmin(true);
       }
-    };
-
-    // Set up auth listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (!mounted) return;
-      
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        await checkAdminStatus(session.user.email || '');
-      } else {
-        setIsAdmin(false);
-        setLoading(false);
-      }
+      setLoading(false);
     });
 
-    // Check if admin signup is enabled
-    const checkSignupEnabled = async () => {
-      try {
-        const { data, error } = await supabase.rpc('is_admin_signup_enabled');
-        if (!error && mounted) {
-          setSignupEnabled(data || false);
-        }
-      } catch (error) {
-        console.error('Error checking signup status:', error);
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user?.email === ADMIN_EMAIL) {
+        setUser(session.user);
+        setIsAdmin(true);
+      } else {
+        setUser(null);
+        setIsAdmin(false);
       }
-    };
+      setLoading(false);
+    });
 
-    initAuth();
-    checkSignupEnabled();
-
-    return () => {
-      mounted = false;
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
-  const checkAdminStatus = async (email: string) => {
-    try {
-      // Check admin status directly without creating profile
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("email", email.toLowerCase())
-        .maybeSingle();
-
-      setIsAdmin(profile?.is_admin || false);
-    } catch (error) {
-      console.error('Error in checkAdminStatus:', error);
-      setIsAdmin(false);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const requestAdminAccess = async () => {
-    if (!user) return;
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     
-    try {
-      const { error } = await supabase.rpc('promote_to_admin', { 
-        user_email: user.email 
+    if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+      toast({
+        title: "Invalid Credentials",
+        description: "Invalid login credentials. Please try again.",
+        variant: "destructive",
       });
-      
+      return;
+    }
+
+    setIsLoggingIn(true);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
       if (error) throw error;
       
-      // Recheck admin status
-      await checkAdminStatus(user.email || '');
-    } catch (error) {
-      console.error('Error promoting to admin:', error);
+      toast({
+        title: "Success",
+        description: "Logged in successfully",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Login Failed",
+        description: error.message || "Invalid login credentials. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -118,99 +99,65 @@ export default function AdminPanel() {
     );
   }
 
-  if (!user) {
+  if (!user || !isAdmin) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-midnight-dark via-midnight to-midnight-light flex items-center justify-center p-6">
         <div className="w-full max-w-md space-y-8">
           <div className="text-center">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent mb-2">
-              Admin Panel Login
+              Admin Login
             </h1>
             <p className="text-gray-300">Access the PopupGenix admin dashboard</p>
           </div>
           
-          <div className="bg-midnight-light/50 p-8 rounded-xl border border-gray-700 backdrop-blur-sm">
-            <Auth
-              supabaseClient={supabase}
-              appearance={{
-                theme: ThemeSupa,
-                variables: {
-                  default: {
-                    colors: {
-                      brand: '#8B5CF6',
-                      brandAccent: '#3B82F6',
-                      brandButtonText: 'white',
-                      defaultButtonBackground: '#1F2937',
-                      defaultButtonBackgroundHover: '#374151',
-                      inputBackground: '#111827',
-                      inputBorder: '#4B5563',
-                      inputBorderHover: '#8B5CF6',
-                      inputBorderFocus: '#3B82F6',
-                      inputText: 'white',
-                      inputLabelText: '#D1D5DB',
-                      inputPlaceholder: '#9CA3AF',
-                    },
-                  },
-                },
-              }}
-              providers={[]}
-              redirectTo={`${window.location.origin}/admin`}
-            />
-            
-            {signupEnabled && (
-              <div className="mt-6 text-center">
-                <p className="text-sm text-gray-400 mb-3">
-                  Don't have an admin account?
-                </p>
-                <a
-                  href="/admin-signup"
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-sm"
-                >
-                  Create Admin Account
-                </a>
+          <Card className="p-8 bg-midnight-light/50 border border-gray-700 backdrop-blur-sm">
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div className="space-y-2">
+                <label htmlFor="email" className="text-sm font-medium text-gray-300">
+                  Email
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  disabled={isLoggingIn}
+                  className="bg-midnight border-gray-600 text-white placeholder:text-gray-400"
+                />
               </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-midnight-dark via-midnight to-midnight-light flex items-center justify-center p-6">
-        <div className="w-full max-w-md space-y-8">
-          <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6 text-center">
-            <h2 className="text-xl font-bold text-red-400 mb-2">Access Denied</h2>
-            <p className="text-red-300 mb-4">
-              You don't have admin privileges for this account ({user.email}).
-            </p>
-            <p className="text-sm text-gray-400 mb-4">
-              If you should have admin access, please contact the system administrator to enable admin privileges for your account.
-            </p>
-            <div className="space-y-3">
-              <button
-                onClick={requestAdminAccess}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors"
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium text-gray-300">
+                  Password
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  disabled={isLoggingIn}
+                  className="bg-midnight border-gray-600 text-white placeholder:text-gray-400"
+                />
+              </div>
+              <Button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-neon-purple to-neon-blue hover:opacity-90" 
+                disabled={isLoggingIn}
               >
-                Grant Admin Access (First Admin)
-              </button>
-              <button
-                onClick={() => supabase.auth.signOut()}
-                className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
-              >
-                Sign Out
-              </button>
-              {signupEnabled && (
-                <a
-                  href="/admin-signup"
-                  className="block w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors text-center"
-                >
-                  Create New Admin Account
-                </a>
-              )}
-            </div>
-          </div>
+                {isLoggingIn ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Logging in...
+                  </>
+                ) : (
+                  "Login"
+                )}
+              </Button>
+            </form>
+          </Card>
         </div>
       </div>
     );
