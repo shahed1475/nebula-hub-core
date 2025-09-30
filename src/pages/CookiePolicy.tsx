@@ -40,6 +40,23 @@ const CookiePolicy = () => {
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto space-y-8">
             
+            {/* Consent Banner */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Cookie className="w-5 h-5 mr-2 text-primary" />
+                  Consent Banner
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="prose prose-lg max-w-none dark:prose-invert">
+                <p>
+                  When you first visit PopupGenix.com, you will be asked to accept or manage your cookie 
+                  preferences through our consent banner. You can choose which cookies to allow and adjust 
+                  your preferences at any time.
+                </p>
+              </CardContent>
+            </Card>
+
             {/* What Are Cookies */}
             <Card>
               <CardHeader>
@@ -142,6 +159,14 @@ const CookiePolicy = () => {
                       </p>
                     </div>
                   </div>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Withdraw Consent</h3>
+                  <p className="text-muted-foreground">
+                    You can withdraw or update your consent to cookies at any time by adjusting your browser 
+                    settings or revisiting our cookie consent banner.
+                  </p>
                 </div>
                 
                 <div>
