@@ -94,60 +94,128 @@ const PrivacyPolicy = () => {
               <CardTitle className="text-3xl">🔒 Privacy Policy</CardTitle>
             </div>
             <CardDescription className="text-base">
-              Last Updated: September 2025
+              Last Updated: {new Date().toLocaleDateString()}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-8">
             <div>
               <h3 className="text-xl font-semibold mb-4 text-primary">1. Information We Collect</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                PopupGenix collects personal information (such as name, email, billing details, payment info) when you register, subscribe, or use our services. We may also collect non-personal technical information such as browser type, IP address, and usage analytics.
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                PopupGenix collects the following types of information:
               </p>
-            </div>
-
-            <div>
-              <h3 className="text-xl font-semibold mb-4 text-primary">2. How We Use Your Information</h3>
-              <p className="text-muted-foreground mb-3">We use your data to:</p>
               <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
-                <li>Provide and improve our services</li>
-                <li>Process payments securely</li>
-                <li>Communicate important updates</li>
-                <li>Prevent fraud and ensure compliance</li>
+                <li><strong>Personal Information:</strong> Name, email address, phone number, company name</li>
+                <li><strong>Account Information:</strong> Username, password, billing details</li>
+                <li><strong>Payment Information:</strong> Credit card details, billing address (processed securely through Paddle)</li>
+                <li><strong>Technical Data:</strong> IP address, browser type, device information, operating system</li>
+                <li><strong>Usage Data:</strong> Pages visited, features used, time spent on site, interaction data</li>
+                <li><strong>Cookies:</strong> Session cookies, preference cookies, analytics cookies</li>
+                <li><strong>Project Data:</strong> Files, documents, and content you upload or create using our services</li>
               </ul>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-primary">3. Data Protection & Security</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                PopupGenix uses SSL encryption, secure servers, and industry-standard practices to protect your data.
+              <h3 className="text-xl font-semibold mb-4 text-primary">2. How We Use Your Information</h3>
+              <p className="text-muted-foreground mb-3">We use the information we collect for the following purposes:</p>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
+                <li><strong>Service Delivery:</strong> To provide, maintain, and improve our SaaS products and AI-powered services</li>
+                <li><strong>Billing & Payments:</strong> To process transactions, manage subscriptions, and send invoices</li>
+                <li><strong>AI Processing:</strong> To power AI-driven features such as automation, content generation, and analytics</li>
+                <li><strong>Communication:</strong> To send service updates, newsletters, marketing materials, and respond to inquiries</li>
+                <li><strong>Analytics:</strong> To analyze usage patterns and improve our services</li>
+                <li><strong>Security:</strong> To detect and prevent fraud, abuse, and security incidents</li>
+                <li><strong>Legal Compliance:</strong> To comply with applicable laws, regulations, and legal processes</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-primary">3. Third-Party Sharing</h3>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                We may share your information with trusted third-party service providers who assist us in operating our business:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
+                <li><strong>Payment Processors:</strong> Paddle (for secure payment processing and billing)</li>
+                <li><strong>Hosting Providers:</strong> Cloud infrastructure providers for data storage and application hosting</li>
+                <li><strong>Analytics Tools:</strong> Google Analytics and similar services for usage tracking and insights</li>
+                <li><strong>AI APIs:</strong> Third-party AI service providers (OpenAI, Google, etc.) for AI-powered features</li>
+                <li><strong>Email Services:</strong> Email delivery platforms for transactional and marketing emails</li>
+                <li><strong>Customer Support:</strong> Help desk and support ticket management systems</li>
+              </ul>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                We do not sell, rent, or trade your personal information to third parties for marketing purposes. All third-party providers are contractually obligated to protect your data.
               </p>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-primary">4. Cookies & Tracking</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                We use cookies to enhance your experience and gather analytics. You can disable cookies in your browser at any time.
+              <h3 className="text-xl font-semibold mb-4 text-primary">4. Data Security & Protection</h3>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                We implement industry-standard security measures to protect your information, including:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
+                <li>SSL/TLS encryption for data transmission</li>
+                <li>Encrypted data storage</li>
+                <li>Regular security audits and vulnerability assessments</li>
+                <li>Access controls and authentication mechanisms</li>
+                <li>Employee training on data protection best practices</li>
+              </ul>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                However, no method of transmission over the Internet or electronic storage is 100% secure. While we strive to protect your personal information, we cannot guarantee absolute security.
               </p>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-primary">5. Third-Party Services</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Payment processing and some analytics may be handled by third parties (Stripe, Wise, Visa, Mastercard). We do not store full payment card details.
+              <h3 className="text-xl font-semibold mb-4 text-primary">5. Data Retention</h3>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. When your data is no longer needed, we securely delete or anonymize it.
               </p>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
+                <li><strong>Account Data:</strong> Retained while your account is active</li>
+                <li><strong>Transaction Records:</strong> Retained for 7 years for accounting and tax purposes</li>
+                <li><strong>Marketing Data:</strong> Retained until you opt out or request deletion</li>
+              </ul>
             </div>
 
             <div>
               <h3 className="text-xl font-semibold mb-4 text-primary">6. Your Rights</h3>
-              <p className="text-muted-foreground leading-relaxed">
-                You may request data access, correction, or deletion at any time by contacting hello@popupgenix.com.
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                You have the following rights regarding your personal information:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
+                <li><strong>Access:</strong> Request a copy of the personal information we hold about you</li>
+                <li><strong>Correction:</strong> Request correction of inaccurate or incomplete information</li>
+                <li><strong>Deletion:</strong> Request deletion of your personal information (subject to legal requirements)</li>
+                <li><strong>Opt-Out:</strong> Unsubscribe from marketing communications at any time</li>
+                <li><strong>Data Portability:</strong> Request a copy of your data in a machine-readable format</li>
+                <li><strong>Object:</strong> Object to processing of your personal information for certain purposes</li>
+              </ul>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                To exercise any of these rights, please contact us at{" "}
+                <a href="mailto:support@popupgenix.com" className="text-primary hover:underline font-semibold">
+                  support@popupgenix.com
+                </a>
               </p>
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-4 text-primary">7. Updates to Privacy Policy</h3>
+              <h3 className="text-xl font-semibold mb-4 text-primary">7. Cookies & Tracking Technologies</h3>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                We use cookies and similar tracking technologies to enhance your experience:
+              </p>
+              <ul className="list-disc list-inside space-y-2 text-muted-foreground ml-4">
+                <li><strong>Essential Cookies:</strong> Required for basic site functionality</li>
+                <li><strong>Performance Cookies:</strong> Help us understand how visitors interact with our site</li>
+                <li><strong>Functional Cookies:</strong> Remember your preferences and settings</li>
+                <li><strong>Marketing Cookies:</strong> Track your visits across websites for targeted advertising</li>
+              </ul>
+              <p className="text-muted-foreground leading-relaxed mt-3">
+                You can control cookie preferences through your browser settings. However, disabling cookies may limit your ability to use certain features of our services.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-semibold mb-4 text-primary">8. Updates to Privacy Policy</h3>
               <p className="text-muted-foreground leading-relaxed">
-                PopupGenix may update this policy at any time. Changes will be posted here with a "Last Updated" date.
+                PopupGenix may update this policy at any time. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the "Last Updated" date. Your continued use of our services after any changes constitutes acceptance of the updated Privacy Policy.
               </p>
             </div>
           </CardContent>
@@ -255,7 +323,7 @@ const PrivacyPolicy = () => {
 
             <div className="grid md:grid-cols-3 gap-4">
               <div className="text-center p-4 bg-muted/20 rounded-lg border border-border/50">
-                <h4 className="font-semibold text-primary mb-2">30-Day Refund</h4>
+                <h4 className="font-semibold text-primary mb-2">14-Day Refund</h4>
                 <p className="text-sm text-muted-foreground">Services only, domains excluded</p>
               </div>
               <div className="text-center p-4 bg-muted/20 rounded-lg border border-border/50">

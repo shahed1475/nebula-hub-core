@@ -14,6 +14,9 @@ import BlogPost from "./pages/BlogPost";
 import WordPressBlog from "./pages/WordPressBlog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import CookiePolicy from "./pages/CookiePolicy";
+import Pricing from "./pages/Pricing";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import RefundPolicy from "./pages/RefundPolicy";
 import ScrollToHash from "@/components/ScrollToHash";
 
 
@@ -28,10 +31,13 @@ const App = () => (
         <Route path="/" element={<Index />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/quote" element={<Quote />} />
+        <Route path="/pricing" element={<Pricing />} />
          <Route path="/blog" element={<WordPressBlog />} />
          <Route path="/blog/:slug" element={<BlogPost />} />
          <Route path="/blog/admin-login" element={<WordPressBlog adminLogin={true} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />
         <Route path="/portal/*" element={<ClientPortal />} />
         <Route path="/admin/*" element={<AdminPanel />} />

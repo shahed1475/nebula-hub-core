@@ -24,6 +24,7 @@ const Footer = () => {
     { name: "About Us", href: "/#about", isAnchor: false },
     { name: "Services", href: "/#services", isAnchor: false },
     { name: "Portfolio", href: "/#portfolio", isAnchor: false },
+    { name: "Pricing", href: "/pricing", isAnchor: false },
     { name: "Blog", href: "/blog", isAnchor: false },
     { name: "Contact", href: "/contact", isAnchor: false }
   ];
@@ -260,10 +261,19 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link 
-                    to="/privacy-policy"
+                    to="/terms-and-conditions"
                     className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
                   >
                     Terms of Service
+                    <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    to="/refund-policy"
+                    className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
+                  >
+                    Refund Policy
                     <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
                   </Link>
                 </li>
@@ -284,7 +294,7 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  <span>30-Day Refund Policy</span>
+                  <span>14-Day Refund Policy</span>
                 </div>
               </div>
             </div>
@@ -301,8 +311,11 @@ const Footer = () => {
               <Link to="/privacy-policy" className="text-muted-foreground hover:text-accent transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/privacy-policy" className="text-muted-foreground hover:text-accent transition-colors">
+              <Link to="/terms-and-conditions" className="text-muted-foreground hover:text-accent transition-colors">
                 Terms of Service
+              </Link>
+              <Link to="/refund-policy" className="text-muted-foreground hover:text-accent transition-colors">
+                Refund Policy
               </Link>
               <Link to="/cookie-policy" className="text-muted-foreground hover:text-accent transition-colors">
                 Cookie Policy
