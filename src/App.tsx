@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ClientPortal from "./pages/ClientPortal";
@@ -36,7 +36,8 @@ const App = () => (
          <Route path="/blog" element={<WordPressBlog />} />
          <Route path="/blog/:slug" element={<BlogPost />} />
          <Route path="/blog/admin-login" element={<WordPressBlog adminLogin={true} />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/privacy-policy" element={<Navigate to="/privacy" replace />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/cookie-policy" element={<CookiePolicy />} />

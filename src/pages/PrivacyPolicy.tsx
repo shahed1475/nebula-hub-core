@@ -77,7 +77,7 @@ const PrivacyPolicy = () => {
             </div>
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Privacy Policy & Terms of Use
+            Privacy Policy
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             PopupGenix.com – Secure. Reliable. Trusted.

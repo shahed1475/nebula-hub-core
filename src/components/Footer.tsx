@@ -252,7 +252,7 @@ const Footer = () => {
               <ul className="space-y-3 mb-6">
                 <li>
                   <Link 
-                    to="/privacy-policy"
+                    to="/privacy"
                     className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
                   >
                     Privacy Policy
@@ -308,7 +308,7 @@ const Footer = () => {
               © 2025 PopupGenix.com – All Rights Reserved
             </p>
             <div className="flex items-center space-x-6 text-sm">
-              <Link to="/privacy-policy" className="text-muted-foreground hover:text-accent transition-colors">
+              <Link to="/privacy" className="text-muted-foreground hover:text-accent transition-colors">
                 Privacy Policy
               </Link>
               <Link to="/terms-and-conditions" className="text-muted-foreground hover:text-accent transition-colors">
