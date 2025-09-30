@@ -264,7 +264,7 @@ const Footer = () => {
                     to="/terms-and-conditions"
                     className="text-muted-foreground hover:text-accent transition-colors duration-300 relative group"
                   >
-                    Terms of Service
+                    Terms & Conditions
                     <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-300"></span>
                   </Link>
                 </li>
@@ -312,7 +312,7 @@ const Footer = () => {
                 Privacy Policy
               </Link>
               <Link to="/terms-and-conditions" className="text-muted-foreground hover:text-accent transition-colors">
-                Terms of Service
+                Terms & Conditions
               </Link>
               <Link to="/refund-policy" className="text-muted-foreground hover:text-accent transition-colors">
                 Refund Policy
