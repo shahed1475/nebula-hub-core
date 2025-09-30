@@ -70,12 +70,28 @@ const About = () => {
             Who We Are
           </h2>
 
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            PopupGenix is a forward-thinking AI & software company creating intelligent, 
-            scalable, and future-proof solutions for businesses worldwide. We combine 
-            cutting-edge technology with deep industry expertise to deliver transformative 
-            digital experiences.
-          </p>
+          <div className="text-left space-y-6 mb-12">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              PopupGenix is a custom software and AI solutions company helping businesses of all sizes 
+              transform their ideas into powerful digital products. We design and build everything from 
+              websites and mobile apps to advanced AI-driven platforms. Our team focuses on creating 
+              scalable, secure, and user-friendly solutions that are designed to grow with your business.
+            </p>
+
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              We provide complete enterprise software such as <span className="text-accent font-medium">CRM systems</span> (Customer 
+              Relationship Management) that help companies manage customer interactions, and <span className="text-accent font-medium">ERP 
+              systems</span> (Enterprise Resource Planning) that streamline operations like sales, HR, finance, 
+              and inventory management.
+            </p>
+
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+              In addition, we deliver modern <span className="text-accent font-medium">SaaS platforms</span>, responsive web applications, 
+              and intelligent <span className="text-accent font-medium">AI/ML solutions</span> such as predictive analytics, automation, 
+              and computer vision. Our mission is simple: to help businesses innovate faster, reduce costs, 
+              and serve their customers better with the power of technology.
+            </p>
+          </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
@@ -109,9 +125,10 @@ const About = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4 text-foreground">Our Mission</h3>
             <p className="text-muted-foreground leading-relaxed">
-              To empower businesses with AI-driven software that enhances efficiency, 
-              security, and growth. We believe in democratizing advanced technology 
-              to make it accessible and valuable for organizations of all sizes.
+              To help businesses innovate faster, reduce costs, and serve their customers better 
+              with the power of technology. We believe in making advanced AI and enterprise software 
+              accessible to organizations of all sizes, delivering solutions that drive measurable 
+              results and sustainable growth.
             </p>
           </Card>
 
