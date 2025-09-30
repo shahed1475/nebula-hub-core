@@ -9,6 +9,9 @@ interface ClientUpdate {
   id: string;
   title: string;
   content: string;
+  file_url: string | null;
+  link_url: string | null;
+  status: string;
   created_at: string;
   is_read: boolean;
   project_id: string;
@@ -78,13 +81,25 @@ export default function Updates() {
 
   const unreadCount = updates.filter(update => !update.is_read).length;
 
+  const downloadFile = async (fileUrl: string) => {
+    try {
+      window.open(fileUrl, '_blank');
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: "Failed to download file",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-midnight-dark via-midnight to-midnight-light p-6">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent">
-            Project Updates
+            Work Updates
           </h1>
           <p className="text-gray-300 text-lg">
             Stay informed about your project progress
@@ -116,9 +131,12 @@ export default function Updates() {
                 >
                   <CardHeader className="pb-3">
                     <div className="flex items-start justify-between">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-3">
+                      <div className="space-y-2 flex-1">
+                        <div className="flex items-center gap-3 flex-wrap">
                           <h3 className="text-white font-semibold text-lg">{update.title}</h3>
+                          <Badge className={update.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'}>
+                            {update.status}
+                          </Badge>
                           {!update.is_read && (
                             <Badge className="bg-neon-purple text-white text-xs">
                               <Bell className="h-3 w-3 mr-1" />
@@ -141,11 +159,43 @@ export default function Updates() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="prose prose-invert max-w-none">
+                    <div className="prose prose-invert max-w-none mb-4">
                       <p className="text-gray-300 leading-relaxed whitespace-pre-wrap">
                         {update.content}
                       </p>
                     </div>
+                    {(update.file_url || update.link_url) && (
+                      <div className="flex gap-2 flex-wrap">
+                        {update.file_url && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              downloadFile(update.file_url!);
+                            }}
+                            className="px-3 py-1.5 bg-neon-purple/20 hover:bg-neon-purple/30 text-neon-purple rounded-md text-sm flex items-center gap-2 transition-colors"
+                          >
+                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Download File
+                          </button>
+                        )}
+                        {update.link_url && (
+                          <a
+                            href={update.link_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="px-3 py-1.5 bg-neon-blue/20 hover:bg-neon-blue/30 text-neon-blue rounded-md text-sm flex items-center gap-2 transition-colors"
+                          >
+                            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Open Link
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               ))}

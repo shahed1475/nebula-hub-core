@@ -10,6 +10,8 @@ import TestimonialManager from "@/components/AdminPanel/TestimonialManager";
 import MessagesManager from "@/components/AdminPanel/MessagesManager";
 import QuoteRequestsManager from "@/components/AdminPanel/QuoteRequestsManager";
 import ClientManager from "@/components/AdminPanel/ClientManager";
+import WorkUpdatesManager from "@/components/AdminPanel/WorkUpdatesManager";
+import ClientMessagesManager from "@/components/AdminPanel/ClientMessagesManager";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -184,7 +186,8 @@ export default function AdminPanel() {
                   <Route path="/" element={<AdminDashboard />} />
                   <Route path="/homepage" element={<HomepageManager />} />
                   <Route path="/services" element={<ServicesManager />} />
-                  
+                  <Route path="/work-updates" element={<WorkUpdatesManager />} />
+                  <Route path="/client-messages" element={<ClientMessagesManager />} />
                   <Route path="/messages" element={<MessagesManager />} />
                   <Route path="/quotes" element={<QuoteRequestsManager />} />
                   <Route path="/testimonials" element={<TestimonialManager />} />

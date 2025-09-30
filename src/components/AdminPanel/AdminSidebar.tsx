@@ -31,12 +31,11 @@ const adminItems = [
   { title: "Dashboard", url: "/admin", icon: Home },
   { title: "Homepage Manager", url: "/admin/homepage", icon: Settings },
   { title: "Services Manager", url: "/admin/services", icon: PenTool },
-  
-  { title: "Messages", url: "/admin/messages", icon: Mail },
+  { title: "Work Updates", url: "/admin/work-updates", icon: FolderOpen },
+  { title: "Client Messages", url: "/admin/client-messages", icon: MessageSquare },
+  { title: "Contact Messages", url: "/admin/messages", icon: Mail },
   { title: "Quote Requests", url: "/admin/quotes", icon: FileText },
-  { title: "Portfolio Manager", url: "/admin/portfolio", icon: FolderOpen },
   { title: "Client Manager", url: "/admin/clients", icon: Users },
-  { title: "Project Tracker", url: "/admin/projects", icon: BarChart3 },
   { title: "Testimonial Manager", url: "/admin/testimonials", icon: MessageSquare },
 ];
 

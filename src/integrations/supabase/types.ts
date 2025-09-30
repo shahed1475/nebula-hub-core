@@ -106,9 +106,12 @@ export type Database = {
           admin_id: string
           content: string
           created_at: string
+          file_url: string | null
           id: string
           is_read: boolean
+          link_url: string | null
           project_id: string
+          status: string
           title: string
           updated_at: string
         }
@@ -116,9 +119,12 @@ export type Database = {
           admin_id: string
           content: string
           created_at?: string
+          file_url?: string | null
           id?: string
           is_read?: boolean
+          link_url?: string | null
           project_id: string
+          status?: string
           title: string
           updated_at?: string
         }
@@ -126,9 +132,12 @@ export type Database = {
           admin_id?: string
           content?: string
           created_at?: string
+          file_url?: string | null
           id?: string
           is_read?: boolean
+          link_url?: string | null
           project_id?: string
+          status?: string
           title?: string
           updated_at?: string
         }
@@ -372,6 +381,47 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      messages: {
+        Row: {
+          created_at: string
+          id: string
+          is_read: boolean
+          message_text: string
+          project_id: string | null
+          sender_id: string
+          sender_type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message_text: string
+          project_id?: string | null
+          sender_id: string
+          sender_type: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          message_text?: string
+          project_id?: string | null
+          sender_id?: string
+          sender_type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       newsletter_subscriptions: {
         Row: {
