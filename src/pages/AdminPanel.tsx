@@ -115,7 +115,7 @@ export default function AdminPanel() {
           <Card className="p-8 bg-midnight-light/50 border border-gray-700 backdrop-blur-sm">
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
-                <label htmlFor="email" className="text-sm font-medium text-gray-300">
+                <label htmlFor="email" className="text-sm font-medium text-foreground/70">
                   Email
                 </label>
                 <Input
@@ -126,11 +126,11 @@ export default function AdminPanel() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isLoggingIn}
-                  className="bg-midnight border-gray-600 text-white placeholder:text-gray-400"
+                  className="bg-background text-foreground placeholder:text-muted-foreground border-border"
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="password" className="text-sm font-medium text-gray-300">
+                <label htmlFor="password" className="text-sm font-medium text-foreground/70">
                   Password
                 </label>
                 <Input
@@ -141,7 +141,7 @@ export default function AdminPanel() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={isLoggingIn}
-                  className="bg-midnight border-gray-600 text-white placeholder:text-gray-400"
+                  className="bg-background text-foreground placeholder:text-muted-foreground border-border"
                 />
               </div>
               <Button 

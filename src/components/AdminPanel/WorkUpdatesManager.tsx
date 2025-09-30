@@ -207,9 +207,9 @@ export default function WorkUpdatesManager() {
         <h3 className="text-xl font-semibold text-white mb-4">Send New Update</h3>
         <div className="space-y-4">
           <div>
-            <Label htmlFor="project" className="text-gray-300">Project</Label>
+            <Label htmlFor="project" className="text-foreground/70">Project</Label>
             <Select value={selectedProject} onValueChange={setSelectedProject}>
-              <SelectTrigger id="project" className="bg-midnight border-gray-600 text-white">
+              <SelectTrigger id="project" className="bg-background text-foreground border-border">
                 <SelectValue placeholder="Select a project" />
               </SelectTrigger>
               <SelectContent>
@@ -223,49 +223,49 @@ export default function WorkUpdatesManager() {
           </div>
 
           <div>
-            <Label htmlFor="title" className="text-gray-300">Title</Label>
+            <Label htmlFor="title" className="text-foreground/70">Title</Label>
             <Input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Update title"
-              className="bg-midnight border-gray-600 text-white"
+              className="bg-background text-foreground placeholder:text-muted-foreground border-border"
             />
           </div>
 
           <div>
-            <Label htmlFor="content" className="text-gray-300">Message</Label>
+            <Label htmlFor="content" className="text-foreground/70">Message</Label>
             <Textarea
               id="content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
               placeholder="Update details..."
               rows={4}
-              className="bg-midnight border-gray-600 text-white"
+              className="bg-background text-foreground placeholder:text-muted-foreground border-border"
             />
           </div>
 
           <div>
-            <Label htmlFor="link" className="text-gray-300">Link (Optional)</Label>
+            <Label htmlFor="link" className="text-foreground/70">Link (Optional)</Label>
             <Input
               id="link"
               type="url"
               value={linkUrl}
               onChange={(e) => setLinkUrl(e.target.value)}
               placeholder="https://..."
-              className="bg-midnight border-gray-600 text-white"
+              className="bg-background text-foreground placeholder:text-muted-foreground border-border"
             />
           </div>
 
           <div>
-            <Label htmlFor="file" className="text-gray-300">File (Optional)</Label>
+            <Label htmlFor="file" className="text-foreground/70">File (Optional)</Label>
             <Input
               id="file"
               type="file"
               onChange={handleFileChange}
-              className="bg-midnight border-gray-600 text-white"
+              className="bg-background text-foreground border-border file:text-foreground"
             />
-            {file && <p className="text-sm text-gray-400 mt-2">{file.name}</p>}
+            {file && <p className="text-sm text-muted-foreground mt-2">{file.name}</p>}
           </div>
 
           <Button

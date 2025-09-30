@@ -189,7 +189,7 @@ export default function Messages() {
             onChange={(e) => setMessageText(e.target.value)}
             placeholder="Type your message..."
             rows={3}
-            className="bg-midnight border-gray-600 text-white"
+            className="bg-background text-foreground placeholder:text-muted-foreground border-border"
           />
           <Button
             onClick={sendMessage}

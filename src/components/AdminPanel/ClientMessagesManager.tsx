@@ -211,13 +211,13 @@ export default function ClientMessagesManager() {
 
             {replyTo === projectId ? (
               <div className="space-y-2">
-                <Textarea
-                  value={replyText}
-                  onChange={(e) => setReplyText(e.target.value)}
-                  placeholder="Type your reply..."
-                  rows={3}
-                  className="bg-midnight border-gray-600 text-white"
-                />
+            <Textarea
+              value={replyText}
+              onChange={(e) => setReplyText(e.target.value)}
+              placeholder="Type your reply..."
+              rows={3}
+              className="bg-background text-foreground placeholder:text-muted-foreground border-border"
+            />
                 <div className="flex gap-2">
                   <Button
                     onClick={() => sendReply(projectId)}

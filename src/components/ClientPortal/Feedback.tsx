@@ -189,14 +189,14 @@ export default function Feedback() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm font-medium text-foreground/70 mb-2">
                 Your Feedback
               </label>
               <Textarea
                 value={newFeedback}
                 onChange={(e) => setNewFeedback(e.target.value)}
                 placeholder="Tell us about your experience with our service..."
-                className="bg-midnight/50 border-gray-600 text-white placeholder-gray-400 min-h-[120px]"
+                className="bg-background text-foreground placeholder:text-muted-foreground border-border min-h-[120px]"
               />
             </div>
 
