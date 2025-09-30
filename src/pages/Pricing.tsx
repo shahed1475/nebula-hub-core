@@ -11,7 +11,7 @@ const Pricing = () => {
   const plans = [
     {
       name: "Starter",
-      price: "$200",
+      price: "$500",
       period: "/month",
       description: "Perfect for growing businesses looking to leverage AI and SaaS solutions",
       features: [
