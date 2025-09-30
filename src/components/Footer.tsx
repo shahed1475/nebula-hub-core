@@ -294,7 +294,7 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                  <span>14-Day Refund Policy</span>
+                  <span>30-Day Refund Policy</span>
                 </div>
               </div>
             </div>
