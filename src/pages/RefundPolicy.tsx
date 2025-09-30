@@ -11,7 +11,7 @@ const RefundPolicy = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-secondary/5" />
         <div className="container mx-auto px-4 relative z-10 max-w-4xl">
           <h1 className="text-4xl md:text-5xl font-bold text-center mb-6 bg-gradient-to-r from-primary via-primary-glow to-secondary bg-clip-text text-transparent">
-            Refund Policy
+            30-Day Refund Policy
           </h1>
           <p className="text-center text-muted-foreground mb-12">
             Last updated: {new Date().toLocaleDateString()}
@@ -19,9 +19,9 @@ const RefundPolicy = () => {
 
           <div className="space-y-8">
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
-              <h2 className="text-2xl font-bold mb-4 text-foreground">14-Day Money-Back Guarantee</h2>
+              <h2 className="text-2xl font-bold mb-4 text-foreground">30-Day Money-Back Guarantee</h2>
               <p className="text-muted-foreground leading-relaxed mb-4">
-                We stand behind the quality of our services. If you're not completely satisfied with your purchase, we offer refunds within <strong className="text-foreground">14 days of purchase</strong> for subscription payments, unless otherwise stated.
+                We stand behind the quality of our services. If you're not completely satisfied with your purchase, we offer refunds within <strong className="text-foreground">30 days of purchase</strong> for subscription payments, unless otherwise stated.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 To request a refund, please contact us at{" "}
@@ -33,9 +33,9 @@ const RefundPolicy = () => {
             </Card>
 
             <Card className="p-8 border-border bg-card/50 backdrop-blur">
-              <h2 className="text-2xl font-bold mb-4 text-foreground">After 14 Days</h2>
+              <h2 className="text-2xl font-bold mb-4 text-foreground">After 30 Days</h2>
               <p className="text-muted-foreground leading-relaxed">
-                After 14 days from the date of purchase, all payments are <strong className="text-foreground">non-refundable</strong>. We encourage you to carefully review our services and pricing before making a purchase decision.
+                After 30 days from the date of purchase, all payments are <strong className="text-foreground">non-refundable</strong>. We encourage you to carefully review our services and pricing before making a purchase decision.
               </p>
             </Card>
 
