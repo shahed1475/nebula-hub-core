@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Pricing = () => {
   const navigate = useNavigate();
@@ -132,9 +132,9 @@ const Pricing = () => {
                 <h3 className="font-semibold text-lg mb-2">Is there a refund policy?</h3>
                 <p className="text-muted-foreground">
                   Yes, we offer refunds within 14 days of purchase. Please see our{" "}
-                  <a href="/refund-policy" className="text-primary hover:underline">
+                  <Link to="/refund-policy" className="text-primary hover:underline">
                     Refund Policy
-                  </a>{" "}
+                  </Link>{" "}
                   for more details.
                 </p>
               </Card>
