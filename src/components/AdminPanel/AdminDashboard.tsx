@@ -17,6 +17,7 @@ interface DashboardStats {
   activeProjects: number;
   pendingTestimonials: number;
   totalServices: number;
+  recentMessages: number;
   recentActivity: any[];
 }
 
@@ -26,6 +27,7 @@ export default function AdminDashboard() {
     activeProjects: 0,
     pendingTestimonials: 0,
     totalServices: 0,
+    recentMessages: 0,
     recentActivity: []
   });
   const [loading, setLoading] = useState(true);
@@ -42,13 +44,15 @@ export default function AdminDashboard() {
         projectsData,
         testimonialsData,
         servicesData,
+        messagesData,
         activityData
       ] = await Promise.all([
         supabase.from('profiles').select('id', { count: 'exact' }),
         supabase.from('projects').select('id', { count: 'exact' }),
         supabase.from('feedback').select('id', { count: 'exact' }).eq('status', 'pending'),
         supabase.from('services').select('id', { count: 'exact' }).eq('active', true),
-        supabase.from('feedback').select('testimonial, created_at, status').is('deleted_at', null).order('created_at', { ascending: false }).limit(5)
+        supabase.from('contact_submissions').select('id', { count: 'exact' }),
+        supabase.from('contact_submissions').select('id, name, email, message, created_at, status').order('created_at', { ascending: false }).limit(5)
       ]);
 
       setStats({
@@ -56,6 +60,7 @@ export default function AdminDashboard() {
         activeProjects: projectsData.count || 0,
         pendingTestimonials: testimonialsData.count || 0,
         totalServices: servicesData.count || 0,
+        recentMessages: messagesData.count || 0,
         recentActivity: activityData.data || []
       });
     } catch (error) {
@@ -75,36 +80,36 @@ export default function AdminDashboard() {
 
   const statCards = [
     {
-      title: "Total Clients",
-      value: stats.totalClients,
-      icon: Users,
+      title: "Client Messages",
+      value: stats.recentMessages,
+      icon: MessageSquare,
       color: "text-neon-purple",
       bgColor: "bg-neon-purple/10",
       borderColor: "border-neon-purple/20"
     },
     {
-      title: "Active Projects",
-      value: stats.activeProjects,
-      icon: FolderOpen,
+      title: "Total Clients",
+      value: stats.totalClients,
+      icon: Users,
       color: "text-neon-blue",
       bgColor: "bg-neon-blue/10",
       borderColor: "border-neon-blue/20"
     },
     {
-      title: "Pending Reviews",
-      value: stats.pendingTestimonials,
-      icon: MessageSquare,
-      color: "text-yellow-400",
-      bgColor: "bg-yellow-400/10",
-      borderColor: "border-yellow-400/20"
+      title: "Active Projects",
+      value: stats.activeProjects,
+      icon: FolderOpen,
+      color: "text-green-400",
+      bgColor: "bg-green-400/10",
+      borderColor: "border-green-400/20"
     },
     {
       title: "Active Services",
       value: stats.totalServices,
       icon: BarChart3,
-      color: "text-green-400",
-      bgColor: "bg-green-400/10",
-      borderColor: "border-green-400/20"
+      color: "text-yellow-400",
+      bgColor: "bg-yellow-400/10",
+      borderColor: "border-yellow-400/20"
     }
   ];
 
@@ -142,34 +147,43 @@ export default function AdminDashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Recent Activity */}
+        {/* Recent Messages */}
         <Card className="bg-midnight-light/50 border-gray-700">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-white">
-              <Clock className="h-5 w-5 text-neon-purple" />
-              Recent Activity
+            <CardTitle className="flex items-center justify-between text-white">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-neon-purple" />
+                Recent Client Messages
+              </div>
+              <a href="/admin/messages" className="text-xs text-neon-blue hover:underline">
+                View All
+              </a>
             </CardTitle>
           </CardHeader>
           <CardContent>
             {stats.recentActivity.length > 0 ? (
               <div className="space-y-4">
-                {stats.recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-midnight/30 rounded-lg">
+                {stats.recentActivity.map((message, index) => (
+                  <div key={index} className="flex items-start gap-3 p-3 bg-midnight/30 rounded-lg hover:bg-midnight/50 transition-colors">
                     <div className={`mt-1 ${
-                      activity.status === 'approved' ? 'text-green-400' :
-                      activity.status === 'pending' ? 'text-yellow-400' :
-                      'text-red-400'
+                      message.status === 'resolved' ? 'text-green-400' :
+                      message.status === 'in_progress' ? 'text-yellow-400' :
+                      'text-neon-blue'
                     }`}>
-                      {activity.status === 'approved' ? <CheckCircle className="h-4 w-4" /> :
-                       activity.status === 'pending' ? <Clock className="h-4 w-4" /> :
-                       <AlertCircle className="h-4 w-4" />}
+                      <MessageSquare className="h-4 w-4" />
                     </div>
-                    <div className="flex-1">
-                      <p className="text-white text-sm">
-                        New feedback: "{activity.testimonial.substring(0, 50)}..."
-                      </p>
-                      <p className="text-gray-400 text-xs mt-1">
-                        {new Date(activity.created_at).toLocaleDateString()}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white text-sm font-medium truncate">{message.name}</p>
+                          <p className="text-gray-400 text-xs truncate">{message.email}</p>
+                        </div>
+                        <span className="text-xs text-gray-500 whitespace-nowrap">
+                          {new Date(message.created_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <p className="text-gray-300 text-sm mt-2 line-clamp-2">
+                        {message.message}
                       </p>
                     </div>
                   </div>
@@ -177,8 +191,8 @@ export default function AdminDashboard() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <Clock className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-gray-400">No recent activity</p>
+                <MessageSquare className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                <p className="text-gray-400">No messages yet</p>
               </div>
             )}
           </CardContent>

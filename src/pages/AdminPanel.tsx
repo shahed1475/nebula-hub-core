@@ -77,37 +77,14 @@ export default function AdminPanel() {
 
   const checkAdminStatus = async (email: string) => {
     try {
-      // Ensure profile exists first
-      const { data: { user: authUser } } = await supabase.auth.getUser();
-      if (authUser) {
-        const { data: existing } = await supabase
-          .from('profiles')
-          .select('user_id')
-          .eq('user_id', authUser.id)
-          .maybeSingle();
-
-        if (!existing) {
-          await supabase.from('profiles').insert({
-            user_id: authUser.id,
-            email: authUser.email,
-            full_name: authUser.user_metadata?.full_name || authUser.email,
-          });
-        }
-      }
-
-      // Check admin status
-      const { data: profile, error } = await supabase
+      // Check admin status directly without creating profile
+      const { data: profile } = await supabase
         .from("profiles")
         .select("is_admin")
         .eq("email", email.toLowerCase())
         .maybeSingle();
 
-      if (error) {
-        console.error('Error checking admin status:', error);
-        setIsAdmin(false);
-      } else {
-        setIsAdmin(profile?.is_admin || false);
-      }
+      setIsAdmin(profile?.is_admin || false);
     } catch (error) {
       console.error('Error in checkAdminStatus:', error);
       setIsAdmin(false);

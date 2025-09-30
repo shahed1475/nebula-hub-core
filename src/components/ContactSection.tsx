@@ -65,11 +65,31 @@ const ContactSection = ({
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('contact_submissions')
-        .insert([formData]);
+        .insert([formData])
+        .select()
+        .single();
 
       if (error) throw error;
+
+      // Send email notification in background
+      try {
+        await supabase.functions.invoke('notify-new-message', {
+          body: {
+            id: data.id,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            company: formData.company,
+            subject: formData.subject,
+            message: formData.message
+          }
+        });
+      } catch (emailError) {
+        console.error('Email notification failed:', emailError);
+        // Don't fail the submission if email fails
+      }
 
       toast({
         title: "Message Sent Successfully!",
