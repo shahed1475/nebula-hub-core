@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 
 const Header = () => {
@@ -15,9 +21,12 @@ const Header = () => {
     { name: "Pricing", href: "/pricing", isAnchor: false },
     { name: "Blog", href: "/blog", isAnchor: false },
     { name: "Contact", href: "/contact", isAnchor: false },
-    { name: "Terms & Conditions", href: "/terms-and-conditions", isAnchor: false },
-    { name: "Privacy Policy", href: "/privacy-policy", isAnchor: false },
-    { name: "Refund Policy", href: "/refund-policy", isAnchor: false },
+  ];
+
+  const legalItems = [
+    { name: "Terms & Conditions", href: "/terms-and-conditions" },
+    { name: "Privacy Policy", href: "/privacy-policy" },
+    { name: "Refund Policy", href: "/refund-policy" },
   ];
 
   return (
@@ -61,6 +70,27 @@ const Header = () => {
                 </Link>
               )
             ))}
+            
+            {/* Legal Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="text-foreground hover:text-accent transition-colors duration-300 relative group flex items-center space-x-1 outline-none">
+                <span>Legal</span>
+                <ChevronDown className="w-4 h-4" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-card border-border shadow-lg">
+                {legalItems.map((item) => (
+                  <DropdownMenuItem key={item.name} asChild>
+                    <Link
+                      to={item.href}
+                      className="text-foreground hover:text-accent transition-colors cursor-pointer"
+                    >
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* CTA Buttons */}
@@ -110,6 +140,24 @@ const Header = () => {
                 </Link>
               )
             ))}
+            
+            {/* Legal Section in Mobile */}
+            <div className="pt-2">
+              <div className="text-foreground font-medium py-2">Legal</div>
+              <div className="pl-4 space-y-2">
+                {legalItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block text-muted-foreground hover:text-accent transition-colors duration-300 py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            
             <div className="pt-4 space-y-3">
               <Link to="/portal">
                 <Button variant="outline" size="sm" className="w-full">
