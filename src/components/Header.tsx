@@ -15,6 +15,9 @@ const Header = () => {
     { name: "Pricing", href: "/pricing", isAnchor: false },
     { name: "Blog", href: "/blog", isAnchor: false },
     { name: "Contact", href: "/contact", isAnchor: false },
+    { name: "Terms & Conditions", href: "/terms-and-conditions", isAnchor: false },
+    { name: "Privacy Policy", href: "/privacy-policy", isAnchor: false },
+    { name: "Refund Policy", href: "/refund-policy", isAnchor: false },
   ];
 
   return (
