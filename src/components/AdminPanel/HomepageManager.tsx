@@ -12,25 +12,29 @@ interface HomepageContent {
   id: string;
   hero_title: string;
   hero_subtitle: string;
-  projects_count: number;
+  hero_cta_primary: string;
+  hero_cta_secondary: string;
   clients_count: number;
-  years_experience: number;
-  cta_primary_text: string;
-  cta_secondary_text: string;
+  projects_count: number;
+  satisfaction_rate: number;
+  team_size: number;
+  about_title: string;
   about_description: string;
 }
 
 export default function HomepageManager() {
   const [content, setContent] = useState<HomepageContent>({
     id: '',
-    hero_title: "Building Future-Ready AI & Software Solutions 🚀",
-    hero_subtitle: "We create intelligent, scalable, and future-proof solutions for businesses worldwide",
-    projects_count: 50,
-    clients_count: 25,
-    years_experience: 5,
-    cta_primary_text: "Start Your Project",
-    cta_secondary_text: "View Portfolio",
-    about_description: "PopupGenix is a forward-thinking AI & software company creating intelligent, scalable, and future-proof solutions for businesses worldwide."
+    hero_title: "Transform Your Ideas Into Digital Reality",
+    hero_subtitle: "We create stunning websites, mobile apps, and AI solutions that drive your business forward.",
+    hero_cta_primary: "Get Started",
+    hero_cta_secondary: "View Our Work",
+    clients_count: 150,
+    projects_count: 200,
+    satisfaction_rate: 98,
+    team_size: 15,
+    about_title: "About PopupGenix",
+    about_description: "We are a team of passionate developers and designers who specialize in creating innovative digital solutions."
   });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -47,7 +51,16 @@ export default function HomepageManager() {
         .from('homepage_content')
         .select('*')
         .limit(1)
-        .single();
+        .maybeSingle();
+
+      if (error) {
+        console.error('Error loading homepage content:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load homepage content.",
+          variant: "destructive"
+        });
+      }
 
       if (data) {
         setContent(data);
@@ -92,14 +105,20 @@ export default function HomepageManager() {
   const resetToDefaults = () => {
     setContent({
       id: content.id,
-      hero_title: "Building Future-Ready AI & Software Solutions 🚀",
-      hero_subtitle: "We create intelligent, scalable, and future-proof solutions for businesses worldwide",
-      projects_count: 50,
-      clients_count: 25,
-      years_experience: 5,
-      cta_primary_text: "Start Your Project",
-      cta_secondary_text: "View Portfolio",
-      about_description: "PopupGenix is a forward-thinking AI & software company creating intelligent, scalable, and future-proof solutions for businesses worldwide."
+      hero_title: "Transform Your Ideas Into Digital Reality",
+      hero_subtitle: "We create stunning websites, mobile apps, and AI solutions that drive your business forward.",
+      hero_cta_primary: "Get Started",
+      hero_cta_secondary: "View Our Work",
+      clients_count: 150,
+      projects_count: 200,
+      satisfaction_rate: 98,
+      team_size: 15,
+      about_title: "About PopupGenix",
+      about_description: "We are a team of passionate developers and designers who specialize in creating innovative digital solutions."
+    });
+    toast({
+      title: "Reset",
+      description: "Fields have been reset to default values. Click 'Save Changes' to persist.",
     });
   };
 
@@ -175,7 +194,7 @@ export default function HomepageManager() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="projects_count" className="text-gray-300">Projects Delivered</Label>
+              <Label htmlFor="projects_count" className="text-gray-300">Projects Count</Label>
               <Input
                 id="projects_count"
                 type="number"
@@ -185,7 +204,7 @@ export default function HomepageManager() {
               />
             </div>
             <div>
-              <Label htmlFor="clients_count" className="text-gray-300">Global Clients</Label>
+              <Label htmlFor="clients_count" className="text-gray-300">Clients Count</Label>
               <Input
                 id="clients_count"
                 type="number"
@@ -195,12 +214,22 @@ export default function HomepageManager() {
               />
             </div>
             <div>
-              <Label htmlFor="years_experience" className="text-gray-300">Years in Business</Label>
+              <Label htmlFor="satisfaction_rate" className="text-gray-300">Satisfaction Rate (%)</Label>
               <Input
-                id="years_experience"
+                id="satisfaction_rate"
                 type="number"
-                value={content.years_experience}
-                onChange={(e) => setContent({ ...content, years_experience: parseInt(e.target.value) || 0 })}
+                value={content.satisfaction_rate}
+                onChange={(e) => setContent({ ...content, satisfaction_rate: parseInt(e.target.value) || 0 })}
+                className="bg-midnight/50 border-gray-600 text-white"
+              />
+            </div>
+            <div>
+              <Label htmlFor="team_size" className="text-gray-300">Team Size</Label>
+              <Input
+                id="team_size"
+                type="number"
+                value={content.team_size}
+                onChange={(e) => setContent({ ...content, team_size: parseInt(e.target.value) || 0 })}
                 className="bg-midnight/50 border-gray-600 text-white"
               />
             </div>
@@ -214,34 +243,43 @@ export default function HomepageManager() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="cta_primary_text" className="text-gray-300">Primary CTA Text</Label>
+              <Label htmlFor="hero_cta_primary" className="text-gray-300">Primary CTA Text</Label>
               <Input
-                id="cta_primary_text"
-                value={content.cta_primary_text}
-                onChange={(e) => setContent({ ...content, cta_primary_text: e.target.value })}
+                id="hero_cta_primary"
+                value={content.hero_cta_primary}
+                onChange={(e) => setContent({ ...content, hero_cta_primary: e.target.value })}
                 className="bg-midnight/50 border-gray-600 text-white"
               />
             </div>
             <div>
-              <Label htmlFor="cta_secondary_text" className="text-gray-300">Secondary CTA Text</Label>
+              <Label htmlFor="hero_cta_secondary" className="text-gray-300">Secondary CTA Text</Label>
               <Input
-                id="cta_secondary_text"
-                value={content.cta_secondary_text}
-                onChange={(e) => setContent({ ...content, cta_secondary_text: e.target.value })}
+                id="hero_cta_secondary"
+                value={content.hero_cta_secondary}
+                onChange={(e) => setContent({ ...content, hero_cta_secondary: e.target.value })}
                 className="bg-midnight/50 border-gray-600 text-white"
               />
             </div>
           </CardContent>
         </Card>
 
-        {/* About Description */}
+        {/* About Section */}
         <Card className="bg-midnight-light/50 border-gray-700">
           <CardHeader>
-            <CardTitle className="text-white">About Description</CardTitle>
+            <CardTitle className="text-white">About Section</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <div>
-              <Label htmlFor="about_description" className="text-gray-300">Company Description</Label>
+              <Label htmlFor="about_title" className="text-gray-300">About Title</Label>
+              <Input
+                id="about_title"
+                value={content.about_title}
+                onChange={(e) => setContent({ ...content, about_title: e.target.value })}
+                className="bg-midnight/50 border-gray-600 text-white"
+              />
+            </div>
+            <div>
+              <Label htmlFor="about_description" className="text-gray-300">About Description</Label>
               <Textarea
                 id="about_description"
                 value={content.about_description}
@@ -266,25 +304,33 @@ export default function HomepageManager() {
           </div>
           <div className="flex justify-center gap-4">
             <span className="px-4 py-2 bg-neon-purple/20 text-neon-purple rounded-lg border border-neon-purple/30">
-              {content.cta_primary_text}
+              {content.hero_cta_primary}
             </span>
             <span className="px-4 py-2 bg-neon-blue/20 text-neon-blue rounded-lg border border-neon-blue/30">
-              {content.cta_secondary_text}
+              {content.hero_cta_secondary}
             </span>
           </div>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-4 gap-4 text-center">
             <div>
               <div className="text-2xl font-bold text-neon-purple">{content.projects_count}+</div>
-              <div className="text-gray-300 text-sm">Projects Delivered</div>
+              <div className="text-gray-300 text-sm">Projects</div>
             </div>
             <div>
               <div className="text-2xl font-bold text-neon-blue">{content.clients_count}+</div>
-              <div className="text-gray-300 text-sm">Global Clients</div>
+              <div className="text-gray-300 text-sm">Clients</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-purple-400">{content.years_experience}+</div>
-              <div className="text-gray-300 text-sm">Years in Business</div>
+              <div className="text-2xl font-bold text-purple-400">{content.satisfaction_rate}%</div>
+              <div className="text-gray-300 text-sm">Satisfaction</div>
             </div>
+            <div>
+              <div className="text-2xl font-bold text-pink-400">{content.team_size}+</div>
+              <div className="text-gray-300 text-sm">Team Size</div>
+            </div>
+          </div>
+          <div className="pt-4 border-t border-gray-700">
+            <h3 className="text-lg font-semibold text-white mb-2">{content.about_title}</h3>
+            <p className="text-gray-300 text-sm">{content.about_description}</p>
           </div>
         </CardContent>
       </Card>
