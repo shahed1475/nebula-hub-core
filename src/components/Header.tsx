@@ -239,7 +239,7 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-foreground hover:text-accent transition-colors z-[60] relative"
+            className="md:hidden p-2 text-foreground hover:text-accent transition-colors relative"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
@@ -248,166 +248,163 @@ const Header = () => {
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-
       </nav>
     </header>
 
-    {/* Mobile Navigation Overlay */}
+    {/* Mobile Navigation - Only render when open */}
     {isMenuOpen && (
-      <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] md:hidden"
-        style={{ top: '72px' }}
-        onClick={() => setIsMenuOpen(false)}
-        aria-hidden="true"
-      />
+      <>
+        {/* Overlay */}
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] md:hidden animate-fade-in"
+          style={{ top: '72px' }}
+          onClick={() => setIsMenuOpen(false)}
+          aria-hidden="true"
+        />
+
+        {/* Navigation Panel */}
+        <div
+          className="fixed top-[72px] left-0 right-0 md:hidden z-[101] animate-slide-down"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+        >
+          <div className="mx-4 mt-2 rounded-xl border border-border/50 bg-background shadow-2xl overflow-hidden">
+            {/* Close button */}
+            <div className="flex justify-end p-3 border-b border-border/50">
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 text-foreground hover:text-accent transition-colors"
+                aria-label="Close menu"
+                type="button"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Links */}
+            <div className="p-2 max-h-[70vh] overflow-y-auto">
+              <div className="flex flex-col gap-1">
+                {navigationBefore.map((item) => (
+                  item.isAnchor ? (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                ))}
+
+                {/* Services */}
+                <div className="pt-2">
+                  <div className="px-4 py-3 text-foreground font-medium">Services</div>
+                  <div className="flex flex-col gap-1">
+                    {serviceItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className="block rounded-lg px-6 py-2 text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors text-sm"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {navigationAfter.map((item) => (
+                  item.isAnchor ? (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                ))}
+
+                {/* Legal */}
+                <div className="pt-2">
+                  <div className="px-4 py-3 text-foreground font-medium">Legal</div>
+                  <div className="flex flex-col gap-1">
+                    {legalItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className="block rounded-lg px-6 py-2 text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors text-sm"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Blog */}
+                {navigationEnd.map((item) => (
+                  item.isAnchor ? (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )
+                ))}
+              </div>
+
+              {/* CTAs */}
+              <div className="mt-4 border-t border-border/50 p-4 space-y-3">
+                <Link to="/portal" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="outline" size="sm" className="w-full">
+                    Client Portal
+                  </Button>
+                </Link>
+                <Link to="/quote" onClick={() => setIsMenuOpen(false)}>
+                  <Button variant="hero" size="sm" className="w-full">
+                    Get a Quote
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
     )}
-
-    {/* Mobile Navigation Panel */}
-    <div
-      className={`fixed left-0 right-0 md:hidden z-[101] transition-all duration-300 ease-out ${
-        isMenuOpen 
-          ? 'top-[72px] opacity-100 pointer-events-auto' 
-          : 'top-[-100vh] opacity-0 pointer-events-none'
-      }`}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Mobile navigation"
-    >
-      <div className="mx-4 mt-2 rounded-xl border border-border/50 bg-background shadow-2xl overflow-hidden">
-        {/* Close row (extra close option) */}
-        <div className="flex justify-end p-3 border-b border-border/50">
-          <button
-            onClick={() => setIsMenuOpen(false)}
-            className="p-2 text-foreground hover:text-accent transition-colors"
-            aria-label="Close menu"
-            type="button"
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        {/* Links */}
-        <div className="p-2 max-h-[70vh] overflow-y-auto">
-          <div className="flex flex-col gap-1">
-            {navigationBefore.map((item) => (
-              item.isAnchor ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            ))}
-
-            {/* Services */}
-            <div className="pt-2">
-              <div className="px-4 py-3 text-foreground font-medium">Services</div>
-              <div className="flex flex-col gap-1">
-                {serviceItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block rounded-lg px-6 py-2 text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors text-sm"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {navigationAfter.map((item) => (
-              item.isAnchor ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            ))}
-
-            {/* Legal */}
-            <div className="pt-2">
-              <div className="px-4 py-3 text-foreground font-medium">Legal</div>
-              <div className="flex flex-col gap-1">
-                {legalItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block rounded-lg px-6 py-2 text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors text-sm"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Blog (navigationEnd) */}
-            {navigationEnd.map((item) => (
-              item.isAnchor ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            ))}
-          </div>
-
-          {/* CTAs */}
-          <div className="mt-4 border-t border-border/50 p-4 space-y-3">
-            <Link to="/portal" onClick={() => setIsMenuOpen(false)}>
-              <Button variant="outline" size="sm" className="w-full">
-                Client Portal
-              </Button>
-            </Link>
-            <Link to="/quote" onClick={() => setIsMenuOpen(false)}>
-              <Button variant="hero" size="sm" className="w-full">
-                Get a Quote
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-
     </>
   );
 };
