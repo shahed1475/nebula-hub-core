@@ -245,123 +245,149 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation Overlay */}
         {isMenuOpen && (
-          <div className="md:hidden mt-6 pb-6 space-y-4 animate-slide-up">
-            {navigationBefore.map((item) => (
-              item.isAnchor ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block text-foreground hover:text-accent transition-colors duration-300 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block text-foreground hover:text-accent transition-colors duration-300 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            ))}
-            
-            {/* Services Section in Mobile */}
-            <div className="pt-2">
-              <div className="text-foreground font-medium py-2">Services</div>
-              <div className="pl-4 space-y-2">
-                {serviceItems.map((item) => (
+          <div 
+            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 md:hidden"
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
+
+        {/* Mobile Navigation Sidebar */}
+        <div 
+          className={`fixed top-0 right-0 h-full w-[280px] bg-background border-l border-border/50 shadow-2xl transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
+            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <div className="flex flex-col h-full overflow-y-auto">
+            {/* Close Button */}
+            <div className="flex justify-end p-4 border-b border-border/50">
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 text-foreground hover:text-accent transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Menu Items */}
+            <div className="flex-1 px-6 py-6 space-y-1">
+              {navigationBefore.map((item) => (
+                item.isAnchor ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="block text-muted-foreground hover:text-accent transition-colors duration-300 py-2"
+                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
-                ))}
+                )
+              ))}
+              
+              {/* Services Section in Mobile */}
+              <div className="pt-2">
+                <div className="text-foreground font-medium py-3 px-4">Services</div>
+                <div className="space-y-1">
+                  {serviceItems.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="block text-muted-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-2 px-4 ml-4 rounded-lg text-sm"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            {navigationAfter.map((item) => (
-              item.isAnchor ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block text-foreground hover:text-accent transition-colors duration-300 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block text-foreground hover:text-accent transition-colors duration-300 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            ))}
-            
-            {/* Legal Section in Mobile */}
-            <div className="pt-2">
-              <div className="text-foreground font-medium py-2">Legal</div>
-              <div className="pl-4 space-y-2">
-                {legalItems.map((item) => (
+              {navigationAfter.map((item) => (
+                item.isAnchor ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="block text-muted-foreground hover:text-accent transition-colors duration-300 py-2"
+                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
-                ))}
+                )
+              ))}
+              
+              {/* Legal Section in Mobile */}
+              <div className="pt-2">
+                <div className="text-foreground font-medium py-3 px-4">Legal</div>
+                <div className="space-y-1">
+                  {legalItems.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className="block text-muted-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-2 px-4 ml-4 rounded-lg text-sm"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
               </div>
+
+              {navigationEnd.map((item) => (
+                item.isAnchor ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              ))}
             </div>
 
-            {navigationEnd.map((item) => (
-              item.isAnchor ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block text-foreground hover:text-accent transition-colors duration-300 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  className="block text-foreground hover:text-accent transition-colors duration-300 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              )
-            ))}
-            
-            <div className="pt-4 space-y-3">
-              <Link to="/portal">
+            {/* CTA Buttons at Bottom */}
+            <div className="p-6 border-t border-border/50 space-y-3">
+              <Link to="/portal" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="outline" size="sm" className="w-full">
                   Client Portal
                 </Button>
               </Link>
-              <Link to="/quote">
+              <Link to="/quote" onClick={() => setIsMenuOpen(false)}>
                 <Button variant="hero" size="sm" className="w-full">
                   Get a Quote
                 </Button>
               </Link>
             </div>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   );
