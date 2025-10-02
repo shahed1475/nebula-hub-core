@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Users, Send, Plus, MessageSquare } from "lucide-react";
+import { Users, Send, Plus, MessageSquare, Upload, Link2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Client {
@@ -27,6 +27,8 @@ export default function ClientManager() {
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
   const [updateTitle, setUpdateTitle] = useState("");
   const [updateContent, setUpdateContent] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
@@ -81,7 +83,7 @@ export default function ClientManager() {
     if (!selectedClient || !updateTitle.trim() || !updateContent.trim()) {
       toast({
         title: "Error",
-        description: "Please fill in all fields",
+        description: "Please fill in title and content fields",
         variant: "destructive"
       });
       return;
@@ -101,25 +103,80 @@ export default function ClientManager() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("No authenticated user");
 
-      // Send update to the client's first project (you could allow selecting which project)
-      const { error } = await supabase
+      let fileUrl = null;
+
+      // Upload file if provided
+      if (uploadedFile) {
+        const fileExt = uploadedFile.name.split('.').pop();
+        const fileName = `${crypto.randomUUID()}.${fileExt}`;
+        const filePath = `${selectedClient.id}/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('client-updates')
+          .upload(filePath, uploadedFile);
+
+        if (uploadError) {
+          console.error('Upload error:', uploadError);
+          throw new Error("Failed to upload file");
+        }
+
+        const { data: { publicUrl } } = supabase.storage
+          .from('client-updates')
+          .getPublicUrl(filePath);
+
+        fileUrl = filePath; // Store path not public URL for private files
+      }
+
+      // Insert update to database
+      const { data: insertedUpdate, error: insertError } = await supabase
         .from('client_updates')
         .insert({
           project_id: selectedClient.projects[0].id,
           title: updateTitle,
           content: updateContent,
-          admin_id: user.id
+          link_url: linkUrl || null,
+          file_url: fileUrl,
+          admin_id: user.id,
+          status: 'sent'
+        })
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+
+      // Send email notification
+      try {
+        const { error: emailError } = await supabase.functions.invoke('notify-client-update', {
+          body: {
+            updateId: insertedUpdate.id,
+            clientEmail: selectedClient.email,
+            clientName: selectedClient.name,
+            title: updateTitle,
+            content: updateContent,
+            hasFile: !!uploadedFile,
+            hasLink: !!linkUrl,
+            linkUrl: linkUrl || null
+          }
         });
 
-      if (error) throw error;
+        if (emailError) {
+          console.error('Email notification error:', emailError);
+          // Don't fail the whole operation if email fails
+        }
+      } catch (emailError) {
+        console.error('Email notification error:', emailError);
+      }
 
       toast({
         title: "Success",
         description: "Update sent to client successfully!",
       });
 
+      // Reset form
       setUpdateTitle("");
       setUpdateContent("");
+      setLinkUrl("");
+      setUploadedFile(null);
       setIsDialogOpen(false);
       setSelectedClient(null);
     } catch (error) {
@@ -200,6 +257,8 @@ export default function ClientManager() {
                       setSelectedClient(null);
                       setUpdateTitle("");
                       setUpdateContent("");
+                      setLinkUrl("");
+                      setUploadedFile(null);
                     }
                   }}>
                     <DialogTrigger asChild>
@@ -213,15 +272,15 @@ export default function ClientManager() {
                         Send Update
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="bg-midnight-light border-gray-700">
+                    <DialogContent className="bg-midnight-light border-gray-700 max-w-2xl">
                       <DialogHeader>
                         <DialogTitle className="text-white">
                           Send Update to {client.name}
                         </DialogTitle>
                       </DialogHeader>
-                      <div className="space-y-4">
+                      <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
                         <div>
-                          <Label htmlFor="title" className="text-gray-300">Update Title</Label>
+                          <Label htmlFor="title" className="text-gray-300">Update Title *</Label>
                           <Input
                             id="title"
                             value={updateTitle}
@@ -231,7 +290,7 @@ export default function ClientManager() {
                           />
                         </div>
                         <div>
-                          <Label htmlFor="content" className="text-gray-300">Update Content</Label>
+                          <Label htmlFor="content" className="text-gray-300">Update Content *</Label>
                           <Textarea
                             id="content"
                             value={updateContent}
@@ -239,6 +298,38 @@ export default function ClientManager() {
                             placeholder="Tell your client about project progress, new features, next steps..."
                             className="bg-midnight/50 border-gray-600 min-h-[120px]"
                           />
+                        </div>
+                        <div>
+                          <Label htmlFor="link" className="text-gray-300 flex items-center gap-2">
+                            <Link2 className="h-4 w-4" />
+                            Related Link (Optional)
+                          </Label>
+                          <Input
+                            id="link"
+                            type="url"
+                            value={linkUrl}
+                            onChange={(e) => setLinkUrl(e.target.value)}
+                            placeholder="https://example.com/demo"
+                            className="bg-midnight/50 border-gray-600"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="file" className="text-gray-300 flex items-center gap-2">
+                            <Upload className="h-4 w-4" />
+                            Attach File (Optional)
+                          </Label>
+                          <Input
+                            id="file"
+                            type="file"
+                            onChange={(e) => setUploadedFile(e.target.files?.[0] || null)}
+                            className="bg-midnight/50 border-gray-600"
+                            accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif,.zip"
+                          />
+                          {uploadedFile && (
+                            <p className="text-sm text-gray-400 mt-2">
+                              Selected: {uploadedFile.name} ({(uploadedFile.size / 1024).toFixed(2)} KB)
+                            </p>
+                          )}
                         </div>
                         <Button
                           onClick={sendUpdate}

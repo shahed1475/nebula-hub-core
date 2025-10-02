@@ -83,8 +83,18 @@ export default function Updates() {
 
   const downloadFile = async (fileUrl: string) => {
     try {
-      window.open(fileUrl, '_blank');
+      // Get signed URL for private file
+      const { data, error } = await supabase.storage
+        .from('client-updates')
+        .createSignedUrl(fileUrl, 3600); // 1 hour expiry
+
+      if (error) throw error;
+      
+      if (data?.signedUrl) {
+        window.open(data.signedUrl, '_blank');
+      }
     } catch (error: any) {
+      console.error('Error downloading file:', error);
       toast({
         title: "Error",
         description: "Failed to download file",

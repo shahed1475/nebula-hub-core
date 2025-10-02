@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.notify-client-reply]
 verify_jwt = false
+
+[functions.notify-client-update]
+verify_jwt = false
