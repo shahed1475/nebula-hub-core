@@ -1,5 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
@@ -25,6 +26,7 @@ const App = () => (
   <>
     <Toaster />
     <Sonner />
+    <AnimatedBackground mode="particles" particleCount={80} />
       <BrowserRouter>
         <ScrollToHash />
         <Routes>

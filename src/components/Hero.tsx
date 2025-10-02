@@ -6,15 +6,6 @@ import heroImage from "@/assets/hero-bg.jpg";
 const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-hero">
-        <img 
-          src={heroImage} 
-          alt="Futuristic digital background"
-          className="w-full h-full object-cover opacity-30 mix-blend-overlay"
-        />
-      </div>
-
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-float"></div>

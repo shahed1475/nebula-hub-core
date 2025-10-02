@@ -76,6 +76,19 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    position: relative;
+  }
+
+  /* Ensure all major containers have proper z-index */
+  #root {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Ensure all content appears above animated background */
+  main, header, footer, section {
+    position: relative;
+    z-index: 1;
   }
 }
 

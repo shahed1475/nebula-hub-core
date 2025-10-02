@@ -1,7 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
 import { 
   Target, 
   Eye, 
@@ -16,67 +15,6 @@ import {
 } from "lucide-react";
 
 const About = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = canvas.offsetHeight;
-
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-    }> = [];
-
-    for (let i = 0; i < 50; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 2 + 1
-      });
-    }
-
-    const animate = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((particle) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
-
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(33, 150, 243, 0.6)';
-        ctx.fill();
-      });
-
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   const values = [
     {
       icon: Sparkles,
@@ -113,26 +51,8 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(230, 90%, 10%), hsl(270, 80%, 15%), hsl(0, 0%, 5%))' }}>
-      {/* Animated Particles Canvas */}
-      <canvas 
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full opacity-30"
-        style={{ height: '100%' }}
-      />
-
-      {/* Animated Grid Background */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(rgba(33, 150, 243, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(33, 150, 243, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px'
-        }} />
-      </div>
-
-      {/* Glowing Orbs */}
+    <section id="about" className="py-24 relative overflow-hidden">
+      {/* Glowing Orbs for depth */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-20 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '4s' }}></div>
         <div className="absolute bottom-40 left-20 w-80 h-80 bg-purple-500/20 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }}></div>
