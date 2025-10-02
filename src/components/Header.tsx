@@ -238,8 +238,11 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 text-foreground hover:text-accent transition-colors"
+            className="md:hidden p-2 text-foreground hover:text-accent transition-colors z-[60] relative"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={isMenuOpen}
+            type="button"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -248,16 +251,20 @@ const Header = () => {
         {/* Mobile Navigation Overlay */}
         {isMenuOpen && (
           <div 
-            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-40 md:hidden"
+            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-[55] md:hidden"
             onClick={() => setIsMenuOpen(false)}
+            aria-hidden="true"
           />
         )}
 
         {/* Mobile Navigation Sidebar */}
         <div 
-          className={`fixed top-0 right-0 h-full w-[280px] bg-background border-l border-border/50 shadow-2xl transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
+          className={`fixed top-0 right-0 h-full w-[280px] bg-background border-l border-border/50 shadow-2xl transform transition-transform duration-300 ease-in-out z-[60] md:hidden ${
             isMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
         >
           <div className="flex flex-col h-full overflow-y-auto">
             {/* Close Button */}
