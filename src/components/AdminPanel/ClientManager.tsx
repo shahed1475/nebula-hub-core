@@ -227,7 +227,7 @@ export default function ClientManager() {
                             value={updateTitle}
                             onChange={(e) => setUpdateTitle(e.target.value)}
                             placeholder="Project Update: New Features Released"
-                            className="bg-midnight/50 border-gray-600 text-white placeholder-gray-400"
+                            className="bg-midnight/50 border-gray-600"
                           />
                         </div>
                         <div>
@@ -237,7 +237,7 @@ export default function ClientManager() {
                             value={updateContent}
                             onChange={(e) => setUpdateContent(e.target.value)}
                             placeholder="Tell your client about project progress, new features, next steps..."
-                            className="bg-midnight/50 border-gray-600 text-white placeholder-gray-400 min-h-[120px]"
+                            className="bg-midnight/50 border-gray-600 min-h-[120px]"
                           />
                         </div>
                         <Button
