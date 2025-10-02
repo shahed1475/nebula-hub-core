@@ -184,7 +184,7 @@ export default function InvoiceForm() {
                     setFormData({ ...formData, invoice_number: e.target.value })
                   }
                   required
-                  className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
                 />
               </div>
               <div>
@@ -199,7 +199,7 @@ export default function InvoiceForm() {
                     setFormData({ ...formData, issue_date: e.target.value })
                   }
                   required
-                  className="bg-midnight/50 border-gray-600 text-white"
+                  className="bg-midnight/50 border-gray-600"
                 />
               </div>
               <div>
@@ -214,7 +214,7 @@ export default function InvoiceForm() {
                     setFormData({ ...formData, due_date: e.target.value })
                   }
                   required
-                  className="bg-midnight/50 border-gray-600 text-white"
+                  className="bg-midnight/50 border-gray-600"
                 />
               </div>
             </div>
@@ -239,7 +239,7 @@ export default function InvoiceForm() {
                     setFormData({ ...formData, client_name: e.target.value })
                   }
                   required
-                  className="bg-midnight/50 border-gray-600 text-white"
+                  className="bg-midnight/50 border-gray-600"
                 />
               </div>
               <div>
@@ -252,7 +252,7 @@ export default function InvoiceForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, client_company: e.target.value })
                   }
-                  className="bg-midnight/50 border-gray-600 text-white"
+                  className="bg-midnight/50 border-gray-600"
                 />
               </div>
               <div>
@@ -267,7 +267,7 @@ export default function InvoiceForm() {
                     setFormData({ ...formData, client_email: e.target.value })
                   }
                   required
-                  className="bg-midnight/50 border-gray-600 text-white"
+                  className="bg-midnight/50 border-gray-600"
                 />
               </div>
               <div>
@@ -280,7 +280,7 @@ export default function InvoiceForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, client_phone: e.target.value })
                   }
-                  className="bg-midnight/50 border-gray-600 text-white"
+                  className="bg-midnight/50 border-gray-600"
                 />
               </div>
             </div>
@@ -294,7 +294,7 @@ export default function InvoiceForm() {
                 onChange={(e) =>
                   setFormData({ ...formData, client_address: e.target.value })
                 }
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
                 rows={3}
               />
             </div>
@@ -331,7 +331,7 @@ export default function InvoiceForm() {
                       updateLineItem(item.id, "service_name", e.target.value)
                     }
                     required
-                    className="bg-midnight/50 border-gray-600 text-white"
+                    className="bg-midnight/50 border-gray-600"
                   />
                 </div>
                 <div className="md:col-span-3">
@@ -341,7 +341,7 @@ export default function InvoiceForm() {
                     onChange={(e) =>
                       updateLineItem(item.id, "description", e.target.value)
                     }
-                    className="bg-midnight/50 border-gray-600 text-white"
+                    className="bg-midnight/50 border-gray-600"
                   />
                 </div>
                 <div className="md:col-span-2">
@@ -355,7 +355,7 @@ export default function InvoiceForm() {
                       updateLineItem(item.id, "quantity", parseFloat(e.target.value) || 0)
                     }
                     required
-                    className="bg-midnight/50 border-gray-600 text-white"
+                    className="bg-midnight/50 border-gray-600"
                   />
                 </div>
                 <div className="md:col-span-2">
@@ -369,7 +369,7 @@ export default function InvoiceForm() {
                       updateLineItem(item.id, "rate", parseFloat(e.target.value) || 0)
                     }
                     required
-                    className="bg-midnight/50 border-gray-600 text-white"
+                    className="bg-midnight/50 border-gray-600"
                   />
                 </div>
                 <div className="md:col-span-1">
@@ -416,7 +416,7 @@ export default function InvoiceForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, tax: parseFloat(e.target.value) || 0 })
                   }
-                  className="bg-midnight/50 border-gray-600 text-white"
+                  className="bg-midnight/50 border-gray-600"
                 />
               </div>
               <div>
@@ -432,7 +432,7 @@ export default function InvoiceForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, discount: parseFloat(e.target.value) || 0 })
                   }
-                  className="bg-midnight/50 border-gray-600 text-white"
+                  className="bg-midnight/50 border-gray-600"
                 />
               </div>
             </div>
@@ -466,7 +466,7 @@ export default function InvoiceForm() {
                 onChange={(e) =>
                   setFormData({ ...formData, payment_instructions: e.target.value })
                 }
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
                 rows={3}
                 placeholder="Bank details, payment terms, etc..."
               />

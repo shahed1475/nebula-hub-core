@@ -161,10 +161,10 @@ export default function InvoiceManager() {
               placeholder="Search by invoice number, client name, or email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-midnight/50 border-gray-600 text-white"
+              className="bg-midnight/50 border-gray-600"
             />
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="bg-midnight/50 border-gray-600 text-white">
+              <SelectTrigger className="bg-midnight/50 border-gray-600">
                 <SelectValue placeholder="Filter by status" />
               </SelectTrigger>
               <SelectContent>

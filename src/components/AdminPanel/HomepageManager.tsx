@@ -225,7 +225,7 @@ export default function HomepageManager() {
                   console.log('Hero title changed:', e.target.value);
                   setContent({ ...content, hero_title: e.target.value });
                 }}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
               />
             </div>
             <div>
@@ -234,7 +234,7 @@ export default function HomepageManager() {
                 id="hero_subtitle"
                 value={content.hero_subtitle}
                 onChange={(e) => setContent({ ...content, hero_subtitle: e.target.value })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
                 rows={3}
               />
             </div>
@@ -254,7 +254,7 @@ export default function HomepageManager() {
                 type="number"
                 value={content.projects_count}
                 onChange={(e) => setContent({ ...content, projects_count: parseInt(e.target.value) || 0 })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
               />
             </div>
             <div>
@@ -264,7 +264,7 @@ export default function HomepageManager() {
                 type="number"
                 value={content.clients_count}
                 onChange={(e) => setContent({ ...content, clients_count: parseInt(e.target.value) || 0 })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
               />
             </div>
             <div>
@@ -274,7 +274,7 @@ export default function HomepageManager() {
                 type="number"
                 value={content.satisfaction_rate}
                 onChange={(e) => setContent({ ...content, satisfaction_rate: parseInt(e.target.value) || 0 })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
               />
             </div>
             <div>
@@ -284,7 +284,7 @@ export default function HomepageManager() {
                 type="number"
                 value={content.team_size}
                 onChange={(e) => setContent({ ...content, team_size: parseInt(e.target.value) || 0 })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
               />
             </div>
           </CardContent>
@@ -302,7 +302,7 @@ export default function HomepageManager() {
                 id="hero_cta_primary"
                 value={content.hero_cta_primary}
                 onChange={(e) => setContent({ ...content, hero_cta_primary: e.target.value })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
               />
             </div>
             <div>
@@ -311,7 +311,7 @@ export default function HomepageManager() {
                 id="hero_cta_secondary"
                 value={content.hero_cta_secondary}
                 onChange={(e) => setContent({ ...content, hero_cta_secondary: e.target.value })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
               />
             </div>
           </CardContent>
@@ -329,7 +329,7 @@ export default function HomepageManager() {
                 id="about_title"
                 value={content.about_title}
                 onChange={(e) => setContent({ ...content, about_title: e.target.value })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
               />
             </div>
             <div>
@@ -338,7 +338,7 @@ export default function HomepageManager() {
                 id="about_description"
                 value={content.about_description}
                 onChange={(e) => setContent({ ...content, about_description: e.target.value })}
-                className="bg-midnight/50 border-gray-600 text-white"
+                className="bg-midnight/50 border-gray-600"
                 rows={4}
               />
             </div>
