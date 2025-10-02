@@ -43,6 +43,7 @@ const Header = () => {
   ];
 
   return (
+    <>
     <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-lg border-b border-border/50">
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
@@ -248,155 +249,164 @@ const Header = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation Overlay */}
-        {isMenuOpen && (
-          <div 
-            className="fixed inset-0 bg-background/95 backdrop-blur-lg z-[55] md:hidden"
-            onClick={() => setIsMenuOpen(false)}
-            aria-hidden="true"
-          />
-        )}
-
-        {/* Mobile Navigation Sidebar */}
-        <div 
-          className={`fixed top-0 right-0 h-full w-[280px] bg-background border-l border-border/50 shadow-2xl transform transition-transform duration-300 ease-in-out z-[60] md:hidden ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile navigation"
-        >
-          <div className="flex flex-col h-full overflow-y-auto">
-            {/* Close Button */}
-            <div className="flex justify-end p-4 border-b border-border/50">
-              <button
-                onClick={() => setIsMenuOpen(false)}
-                className="p-2 text-foreground hover:text-accent transition-colors"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            {/* Menu Items */}
-            <div className="flex-1 px-6 py-6 space-y-1">
-              {navigationBefore.map((item) => (
-                item.isAnchor ? (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                )
-              ))}
-              
-              {/* Services Section in Mobile */}
-              <div className="pt-2">
-                <div className="text-foreground font-medium py-3 px-4">Services</div>
-                <div className="space-y-1">
-                  {serviceItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className="block text-muted-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-2 px-4 ml-4 rounded-lg text-sm"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {navigationAfter.map((item) => (
-                item.isAnchor ? (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                )
-              ))}
-              
-              {/* Legal Section in Mobile */}
-              <div className="pt-2">
-                <div className="text-foreground font-medium py-3 px-4">Legal</div>
-                <div className="space-y-1">
-                  {legalItems.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.href}
-                      className="block text-muted-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-2 px-4 ml-4 rounded-lg text-sm"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {navigationEnd.map((item) => (
-                item.isAnchor ? (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ) : (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="block text-foreground hover:text-accent hover:bg-accent/10 transition-all duration-300 py-3 px-4 rounded-lg"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                )
-              ))}
-            </div>
-
-            {/* CTA Buttons at Bottom */}
-            <div className="p-6 border-t border-border/50 space-y-3">
-              <Link to="/portal" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="outline" size="sm" className="w-full">
-                  Client Portal
-                </Button>
-              </Link>
-              <Link to="/quote" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="hero" size="sm" className="w-full">
-                  Get a Quote
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
       </nav>
     </header>
+
+    {/* Mobile Navigation Overlay */}
+    {isMenuOpen && (
+      <div
+        className="fixed inset-0 bg-background/95 backdrop-blur-lg z-[55] md:hidden"
+        onClick={() => setIsMenuOpen(false)}
+        aria-hidden="true"
+      />
+    )}
+
+    {/* Mobile Navigation Panel */}
+    <div
+      className={`fixed top-16 left-0 right-0 md:hidden z-[60] transition-transform duration-300 ease-out ${
+        isMenuOpen ? 'translate-y-0' : '-translate-y-full'
+      }`}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile navigation"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="mx-4 rounded-xl border border-border/50 bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in">
+        {/* Close row (extra close option) */}
+        <div className="flex justify-end p-3 border-b border-border/50">
+          <button
+            onClick={() => setIsMenuOpen(false)}
+            className="p-2 text-foreground hover:text-accent transition-colors"
+            aria-label="Close menu"
+            type="button"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Links */}
+        <div className="p-2 max-h-[70vh] overflow-y-auto">
+          <div className="flex flex-col gap-1">
+            {navigationBefore.map((item) => (
+              item.isAnchor ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
+            ))}
+
+            {/* Services */}
+            <div className="pt-2">
+              <div className="px-4 py-3 text-foreground font-medium">Services</div>
+              <div className="flex flex-col gap-1">
+                {serviceItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block rounded-lg px-6 py-2 text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors text-sm"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {navigationAfter.map((item) => (
+              item.isAnchor ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
+            ))}
+
+            {/* Legal */}
+            <div className="pt-2">
+              <div className="px-4 py-3 text-foreground font-medium">Legal</div>
+              <div className="flex flex-col gap-1">
+                {legalItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block rounded-lg px-6 py-2 text-muted-foreground hover:text-accent hover:bg-accent/10 transition-colors text-sm"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Blog (navigationEnd) */}
+            {navigationEnd.map((item) => (
+              item.isAnchor ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="block rounded-lg px-4 py-3 text-foreground hover:text-accent hover:bg-accent/10 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
+            ))}
+          </div>
+
+          {/* CTAs */}
+          <div className="mt-4 border-t border-border/50 p-4 space-y-3">
+            <Link to="/portal" onClick={() => setIsMenuOpen(false)}>
+              <Button variant="outline" size="sm" className="w-full">
+                Client Portal
+              </Button>
+            </Link>
+            <Link to="/quote" onClick={() => setIsMenuOpen(false)}>
+              <Button variant="hero" size="sm" className="w-full">
+                Get a Quote
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </>
   );
 };
 
