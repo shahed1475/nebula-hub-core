@@ -69,10 +69,7 @@ export default function WorkUpdatesManager() {
     try {
       const { data, error } = await supabase
         .from("client_updates")
-        .select(`
-          *,
-          projects!client_updates_project_id_fkey (title, client_name)
-        `)
+        .select("*, projects(title, client_name)")
         .order("created_at", { ascending: false })
         .limit(20);
 

@@ -58,17 +58,35 @@ export default function ClientMessagesManager() {
 
   const loadMessages = async () => {
     try {
-      const { data, error } = await supabase
+      // First get messages with projects
+      const { data: messagesData, error: messagesError } = await supabase
         .from("messages")
-        .select(`
-          *,
-          projects!messages_project_id_fkey (title, client_name),
-          profiles!messages_sender_id_fkey (full_name, email)
-        `)
+        .select("*, projects(title, client_name)")
         .order("created_at", { ascending: false });
 
-      if (error) throw error;
-      setMessages((data || []) as any);
+      if (messagesError) throw messagesError;
+
+      // Get unique sender IDs
+      const senderIds = [...new Set(messagesData?.map(m => m.sender_id) || [])];
+
+      // Get profiles for all senders
+      const { data: profilesData, error: profilesError } = await supabase
+        .from("profiles")
+        .select("user_id, full_name, email")
+        .in("user_id", senderIds);
+
+      if (profilesError) throw profilesError;
+
+      // Create a map of user_id to profile
+      const profilesMap = new Map(profilesData?.map(p => [p.user_id, p]) || []);
+
+      // Combine the data
+      const enrichedMessages = messagesData?.map(msg => ({
+        ...msg,
+        profiles: profilesMap.get(msg.sender_id) || null
+      }));
+
+      setMessages(enrichedMessages || []);
     } catch (error: any) {
       toast({
         title: "Error",
