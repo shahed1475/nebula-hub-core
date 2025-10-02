@@ -17,7 +17,6 @@ const Header = () => {
     { name: "Home", href: "/", isAnchor: false },
     { name: "About", href: "/#about", isAnchor: false },
     { name: "Portfolio", href: "/#portfolio", isAnchor: false },
-    { name: "Pricing", href: "/pricing", isAnchor: false },
     { name: "Blog", href: "/blog", isAnchor: false },
     { name: "Contact", href: "/contact", isAnchor: false },
   ];
