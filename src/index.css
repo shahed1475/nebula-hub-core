@@ -117,7 +117,7 @@ All colors MUST be HSL.
     @apply text-primary hover:text-primary-glow;
   }
 
-  /* Custom animations for Services section */
+  /* Custom animations for Services and Portfolio sections */
   @keyframes wave-slide {
     0%, 100% {
       transform: translateX(-100%);
@@ -126,6 +126,26 @@ All colors MUST be HSL.
     50% {
       transform: translateX(0%);
       opacity: 1;
+    }
+  }
+
+  @keyframes wave-horizontal {
+    0%, 100% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    50% {
+      transform: translateX(100%);
+      opacity: 1;
+    }
+  }
+
+  @keyframes grid-move {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(60px, 60px);
     }
   }
 
@@ -152,6 +172,18 @@ All colors MUST be HSL.
     }
   }
 
+  @keyframes gradient-border {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
   @keyframes pulse-dot {
     0%, 100% {
       transform: scale(1);
@@ -160,6 +192,15 @@ All colors MUST be HSL.
     50% {
       transform: scale(1.5);
       opacity: 0.6;
+    }
+  }
+
+  @keyframes tag-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
     }
   }
 }
