@@ -9,7 +9,8 @@ import {
   PenTool,
   LogOut,
   Shield,
-  FileText
+  FileText,
+  Receipt
 } from "lucide-react";
 import { Mail } from "lucide-react";
 import {
@@ -35,6 +36,7 @@ const adminItems = [
   { title: "Client Messages", url: "/admin/client-messages", icon: MessageSquare },
   { title: "Contact Messages", url: "/admin/messages", icon: Mail },
   { title: "Quote Requests", url: "/admin/quotes", icon: FileText },
+  { title: "Invoices", url: "/admin/invoices", icon: Receipt },
   { title: "Client Manager", url: "/admin/clients", icon: Users },
   { title: "Testimonial Manager", url: "/admin/testimonials", icon: MessageSquare },
 ];

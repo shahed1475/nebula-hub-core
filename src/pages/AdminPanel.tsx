@@ -12,6 +12,8 @@ import QuoteRequestsManager from "@/components/AdminPanel/QuoteRequestsManager";
 import ClientManager from "@/components/AdminPanel/ClientManager";
 import WorkUpdatesManager from "@/components/AdminPanel/WorkUpdatesManager";
 import ClientMessagesManager from "@/components/AdminPanel/ClientMessagesManager";
+import InvoiceManager from "@/components/AdminPanel/InvoiceManager";
+import InvoiceForm from "@/components/AdminPanel/InvoiceForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -190,6 +192,8 @@ export default function AdminPanel() {
                   <Route path="/client-messages" element={<ClientMessagesManager />} />
                   <Route path="/messages" element={<MessagesManager />} />
                   <Route path="/quotes" element={<QuoteRequestsManager />} />
+                  <Route path="/invoices" element={<InvoiceManager />} />
+                  <Route path="/invoices/create" element={<InvoiceForm />} />
                   <Route path="/testimonials" element={<TestimonialManager />} />
                   <Route path="/clients" element={<ClientManager />} />
                   <Route path="*" element={<Navigate to="/admin" replace />} />
