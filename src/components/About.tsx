@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import { 
   Target, 
   Eye, 
@@ -15,6 +16,67 @@ import {
 } from "lucide-react";
 
 const About = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = canvas.offsetHeight;
+
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+    }> = [];
+
+    for (let i = 0; i < 50; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 2 + 1
+      });
+    }
+
+    const animate = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((particle) => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+
+        if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+        if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(33, 150, 243, 0.6)';
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const values = [
     {
       icon: Sparkles,
@@ -51,62 +113,112 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-24 bg-background relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-accent/5 rounded-full blur-3xl"></div>
+    <section id="about" className="py-24 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(230, 90%, 10%), hsl(270, 80%, 15%), hsl(0, 0%, 5%))' }}>
+      {/* Animated Particles Canvas */}
+      <canvas 
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full opacity-30"
+        style={{ height: '100%' }}
+      />
+
+      {/* Animated Grid Background */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(33, 150, 243, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(33, 150, 243, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '50px 50px'
+        }} />
+      </div>
+
+      {/* Glowing Orbs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 right-20 w-96 h-96 bg-primary/20 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '4s' }}></div>
+        <div className="absolute bottom-40 left-20 w-80 h-80 bg-purple-500/20 rounded-full blur-[100px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '8s', animationDelay: '2s' }}></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Who We Are Section */}
+        {/* Who We Are Section - Glassmorphism */}
         <div className="max-w-4xl mx-auto text-center mb-20">
-          <div className="inline-flex items-center space-x-2 bg-card/50 backdrop-blur-sm border border-primary/30 rounded-full px-6 py-3 mb-8">
+          <div className="inline-flex items-center space-x-2 backdrop-blur-md border rounded-full px-6 py-3 mb-8 animate-fade-in" 
+               style={{ 
+                 background: 'rgba(255, 255, 255, 0.05)', 
+                 borderColor: 'rgba(33, 150, 243, 0.3)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+               }}>
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium">About PopupGenix</span>
           </div>
 
-          <h2 className="text-4xl md:text-6xl font-bold mb-8 bg-gradient-primary bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 bg-gradient-primary bg-clip-text text-transparent animate-fade-in" style={{ animationDelay: '0.2s' }}>
             Who We Are
           </h2>
 
-          <div className="text-left space-y-6 mb-12">
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              PopupGenix is a custom software and AI solutions company helping businesses of all sizes 
-              transform their ideas into powerful digital products. We design and build everything from 
-              websites and mobile apps to advanced AI-driven platforms. Our team focuses on creating 
-              scalable, secure, and user-friendly solutions that are designed to grow with your business.
-            </p>
+          {/* Frosted Glass Container */}
+          <div className="backdrop-blur-xl rounded-3xl p-8 md:p-12 mb-12 animate-fade-in border" 
+               style={{ 
+                 background: 'rgba(255, 255, 255, 0.05)', 
+                 borderColor: 'rgba(255, 255, 255, 0.1)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+                 animationDelay: '0.4s'
+               }}>
+            <div className="text-left space-y-6">
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                PopupGenix is a custom software and AI solutions company helping businesses of all sizes 
+                transform their ideas into powerful digital products. We design and build everything from 
+                websites and mobile apps to advanced AI-driven platforms. Our team focuses on creating 
+                scalable, secure, and user-friendly solutions that are designed to grow with your business.
+              </p>
 
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              We provide complete enterprise software such as <span className="text-accent font-medium">CRM systems</span> (Customer 
-              Relationship Management) that help companies manage customer interactions, and <span className="text-accent font-medium">ERP 
-              systems</span> (Enterprise Resource Planning) that streamline operations like sales, HR, finance, 
-              and inventory management.
-            </p>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                We provide complete enterprise software such as <span className="text-accent font-medium">CRM systems</span> (Customer 
+                Relationship Management) that help companies manage customer interactions, and <span className="text-accent font-medium">ERP 
+                systems</span> (Enterprise Resource Planning) that streamline operations like sales, HR, finance, 
+                and inventory management.
+              </p>
 
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-              In addition, we deliver modern <span className="text-accent font-medium">SaaS platforms</span>, responsive web applications, 
-              and intelligent <span className="text-accent font-medium">AI/ML solutions</span> such as predictive analytics, automation, 
-              and computer vision. Our mission is simple: to help businesses innovate faster, reduce costs, 
-              and serve their customers better with the power of technology.
-            </p>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                In addition, we deliver modern <span className="text-accent font-medium">SaaS platforms</span>, responsive web applications, 
+                and intelligent <span className="text-accent font-medium">AI/ML solutions</span> such as predictive analytics, automation, 
+                and computer vision. Our mission is simple: to help businesses innovate faster, reduce costs, 
+                and serve their customers better with the power of technology.
+              </p>
+            </div>
           </div>
 
-          {/* Stats Grid */}
+          {/* Stats Grid - Animated Glass Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
             {stats.map((stat, index) => {
               const IconComponent = stat.icon;
               return (
                 <div 
                   key={stat.label}
-                  className="text-center animate-fade-in"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className="text-center animate-fade-in group cursor-pointer backdrop-blur-xl rounded-2xl p-6 border transition-all duration-500 hover:scale-105"
+                  style={{ 
+                    animationDelay: `${index * 0.1 + 0.6}s`,
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 0 40px rgba(33, 150, 243, 0.4), 0 8px 32px rgba(0, 0, 0, 0.3)';
+                    e.currentTarget.style.borderColor = 'rgba(33, 150, 243, 0.5)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                  }}
                 >
-                  <div className="inline-flex p-3 rounded-xl bg-card border border-primary/20 mb-3">
-                    <IconComponent className="w-6 h-6 text-accent" />
+                  <div className="inline-flex p-3 rounded-xl mb-3 backdrop-blur-sm border transition-all duration-300 group-hover:scale-110"
+                       style={{ 
+                         background: 'rgba(33, 150, 243, 0.1)',
+                         borderColor: 'rgba(33, 150, 243, 0.3)'
+                       }}>
+                    <IconComponent className="w-6 h-6 text-accent group-hover:text-primary transition-colors" />
                   </div>
-                  <div className="text-2xl md:text-3xl font-bold text-accent mb-1">{stat.number}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-accent mb-1 group-hover:text-primary transition-colors">{stat.number}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
               );
@@ -114,38 +226,74 @@ const About = () => {
           </div>
         </div>
 
-        {/* Mission & Vision */}
+        {/* Mission & Vision - Futuristic Glass Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
           {/* Mission */}
-          <Card className="p-8 bg-gradient-card border-border/50 hover:border-primary/30 transition-all duration-500 group">
+          <div className="p-8 backdrop-blur-xl rounded-3xl border transition-all duration-500 group animate-fade-in hover:scale-[1.02]"
+               style={{ 
+                 background: 'rgba(255, 255, 255, 0.05)',
+                 borderColor: 'rgba(255, 255, 255, 0.1)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                 animationDelay: '0.8s'
+               }}
+               onMouseEnter={(e) => {
+                 e.currentTarget.style.boxShadow = '0 0 40px rgba(33, 150, 243, 0.4), 0 8px 32px rgba(0, 0, 0, 0.3)';
+                 e.currentTarget.style.borderColor = 'rgba(33, 150, 243, 0.5)';
+               }}
+               onMouseLeave={(e) => {
+                 e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+               }}>
             <div className="mb-6">
-              <div className="inline-flex p-3 rounded-xl bg-card/50 border border-primary/20 group-hover:shadow-neon transition-all duration-300">
-                <Target className="w-8 h-8 text-primary" />
+              <div className="inline-flex p-3 rounded-xl backdrop-blur-sm border transition-all duration-300 group-hover:scale-110"
+                   style={{ 
+                     background: 'rgba(33, 150, 243, 0.1)',
+                     borderColor: 'rgba(33, 150, 243, 0.3)'
+                   }}>
+                <Target className="w-8 h-8 text-primary group-hover:drop-shadow-[0_0_8px_rgba(33,150,243,0.8)] transition-all" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-foreground">Our Mission</h3>
+            <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors">Our Mission</h3>
             <p className="text-muted-foreground leading-relaxed">
               To help businesses innovate faster, reduce costs, and serve their customers better 
               with the power of technology. We believe in making advanced AI and enterprise software 
               accessible to organizations of all sizes, delivering solutions that drive measurable 
               results and sustainable growth.
             </p>
-          </Card>
+          </div>
 
           {/* Vision */}
-          <Card className="p-8 bg-gradient-card border-border/50 hover:border-primary/30 transition-all duration-500 group">
+          <div className="p-8 backdrop-blur-xl rounded-3xl border transition-all duration-500 group animate-fade-in hover:scale-[1.02]"
+               style={{ 
+                 background: 'rgba(255, 255, 255, 0.05)',
+                 borderColor: 'rgba(255, 255, 255, 0.1)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                 animationDelay: '1s'
+               }}
+               onMouseEnter={(e) => {
+                 e.currentTarget.style.boxShadow = '0 0 40px rgba(16, 185, 129, 0.4), 0 8px 32px rgba(0, 0, 0, 0.3)';
+                 e.currentTarget.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+               }}
+               onMouseLeave={(e) => {
+                 e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+               }}>
             <div className="mb-6">
-              <div className="inline-flex p-3 rounded-xl bg-card/50 border border-primary/20 group-hover:shadow-neon transition-all duration-300">
-                <Eye className="w-8 h-8 text-accent" />
+              <div className="inline-flex p-3 rounded-xl backdrop-blur-sm border transition-all duration-300 group-hover:scale-110"
+                   style={{ 
+                     background: 'rgba(16, 185, 129, 0.1)',
+                     borderColor: 'rgba(16, 185, 129, 0.3)'
+                   }}>
+                <Eye className="w-8 h-8 text-accent group-hover:drop-shadow-[0_0_8px_rgba(16,185,129,0.8)] transition-all" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-4 text-foreground">Our Vision</h3>
+            <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-accent transition-colors">Our Vision</h3>
             <p className="text-muted-foreground leading-relaxed">
               Becoming a global leader in AI-powered custom software solutions, 
               setting new standards for innovation, quality, and client success 
               in the digital transformation landscape.
             </p>
-          </Card>
+          </div>
         </div>
 
         {/* Core Values */}
@@ -163,14 +311,31 @@ const About = () => {
             {values.map((value, index) => {
               const IconComponent = value.icon;
               return (
-                <Card 
+                <div 
                   key={value.title}
-                  className="p-6 bg-gradient-card border-border/50 hover:border-primary/30 transition-all duration-500 group text-center animate-slide-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className="p-6 backdrop-blur-xl rounded-2xl border transition-all duration-500 group text-center animate-fade-in hover:scale-105"
+                  style={{ 
+                    animationDelay: `${index * 0.1 + 1.2}s`,
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 0 30px rgba(33, 150, 243, 0.3), 0 8px 32px rgba(0, 0, 0, 0.3)';
+                    e.currentTarget.style.borderColor = 'rgba(33, 150, 243, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                  }}
                 >
                   <div className="mb-4">
-                    <div className="inline-flex p-3 rounded-xl bg-card/50 border border-primary/20 group-hover:shadow-neon transition-all duration-300">
-                      <IconComponent className="w-6 h-6 text-accent" />
+                    <div className="inline-flex p-3 rounded-xl backdrop-blur-sm border transition-all duration-300 group-hover:scale-110"
+                         style={{ 
+                           background: 'rgba(33, 150, 243, 0.1)',
+                           borderColor: 'rgba(33, 150, 243, 0.3)'
+                         }}>
+                      <IconComponent className="w-6 h-6 text-accent group-hover:text-primary transition-colors" />
                     </div>
                   </div>
                   <h4 className="text-xl font-bold mb-3 text-foreground group-hover:text-accent transition-colors">
@@ -179,14 +344,27 @@ const About = () => {
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {value.description}
                   </p>
-                </Card>
+                </div>
               );
             })}
           </div>
 
-          {/* CTA */}
-          <div className="text-center">
-            <div className="bg-gradient-card p-12 rounded-2xl border border-primary/20 shadow-elegant">
+          {/* CTA - Premium Glass Card */}
+          <div className="text-center animate-fade-in" style={{ animationDelay: '1.8s' }}>
+            <div className="backdrop-blur-xl p-12 rounded-3xl border transition-all duration-500 hover:scale-[1.02]"
+                 style={{ 
+                   background: 'rgba(255, 255, 255, 0.05)',
+                   borderColor: 'rgba(255, 255, 255, 0.1)',
+                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                 }}
+                 onMouseEnter={(e) => {
+                   e.currentTarget.style.boxShadow = '0 0 50px rgba(33, 150, 243, 0.5), 0 8px 32px rgba(0, 0, 0, 0.3)';
+                   e.currentTarget.style.borderColor = 'rgba(33, 150, 243, 0.6)';
+                 }}
+                 onMouseLeave={(e) => {
+                   e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.3)';
+                   e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                 }}>
               <h3 className="text-3xl font-bold mb-4 text-foreground">
                 Ready to Experience the PopupGenix Difference?
               </h3>
@@ -196,7 +374,7 @@ const About = () => {
               </p>
               <div className="flex items-center justify-center">
                 <Link to="/contact">
-                  <Button variant="hero" size="lg">
+                  <Button variant="hero" size="lg" className="hover:scale-110 transition-transform duration-300">
                     Start Your Journey
                     <ArrowRight className="w-5 h-5" />
                   </Button>
