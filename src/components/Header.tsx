@@ -23,12 +23,12 @@ const Header = () => {
   ];
 
   const serviceItems = [
-    { name: "AI & Machine Learning", href: "/#services" },
-    { name: "Custom Software Development", href: "/#services" },
-    { name: "Web Development", href: "/#services" },
-    { name: "Mobile Apps", href: "/#services" },
-    { name: "CRM & SaaS Tools", href: "/#services" },
-    { name: "Cloud & DevOps", href: "/#services" },
+    { name: "AI & Machine Learning", href: "/services/ai-machine-learning" },
+    { name: "Custom Software Development", href: "/services/custom-software" },
+    { name: "Web Development", href: "/services/web-development" },
+    { name: "Mobile Apps", href: "/services/mobile-apps" },
+    { name: "CRM & SaaS Tools", href: "/services/crm-saas" },
+    { name: "Cloud & DevOps", href: "/services/cloud-devops" },
   ];
 
   const legalItems = [
