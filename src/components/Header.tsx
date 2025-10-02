@@ -255,7 +255,8 @@ const Header = () => {
     {/* Mobile Navigation Overlay */}
     {isMenuOpen && (
       <div
-        className="fixed inset-0 bg-background/95 backdrop-blur-lg z-[55] md:hidden"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] md:hidden"
+        style={{ top: '72px' }}
         onClick={() => setIsMenuOpen(false)}
         aria-hidden="true"
       />
@@ -263,15 +264,16 @@ const Header = () => {
 
     {/* Mobile Navigation Panel */}
     <div
-      className={`fixed top-16 left-0 right-0 md:hidden z-[60] transition-transform duration-300 ease-out ${
-        isMenuOpen ? 'translate-y-0' : '-translate-y-full'
+      className={`fixed left-0 right-0 md:hidden z-[101] transition-all duration-300 ease-out ${
+        isMenuOpen 
+          ? 'top-[72px] opacity-100 pointer-events-auto' 
+          : 'top-[-100vh] opacity-0 pointer-events-none'
       }`}
       role="dialog"
       aria-modal="true"
       aria-label="Mobile navigation"
-      onClick={(e) => e.stopPropagation()}
     >
-      <div className="mx-4 rounded-xl border border-border/50 bg-background/95 backdrop-blur-xl shadow-2xl overflow-hidden animate-fade-in">
+      <div className="mx-4 mt-2 rounded-xl border border-border/50 bg-background shadow-2xl overflow-hidden">
         {/* Close row (extra close option) */}
         <div className="flex justify-end p-3 border-b border-border/50">
           <button
