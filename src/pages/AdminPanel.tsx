@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { AdminSidebar } from "@/components/AdminPanel/AdminSidebar";
 import AdminDashboard from "@/components/AdminPanel/AdminDashboard";
 import HomepageManager from "@/components/AdminPanel/HomepageManager";
@@ -169,39 +170,41 @@ export default function AdminPanel() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-midnight-dark via-midnight to-midnight-light">
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full">
-          <AdminSidebar />
-          
-          <main className="flex-1">
-            {/* Global Header */}
-            <header className="h-16 flex items-center border-b border-gray-700 bg-midnight-light/80 backdrop-blur-sm px-6">
-              <SidebarTrigger className="text-gray-300 hover:text-white" />
-              <div className="ml-4">
-                <h2 className="text-white font-semibold">PopupGenix Admin Dashboard</h2>
-              </div>
-            </header>
+      <TooltipProvider>
+        <SidebarProvider defaultOpen>
+          <div className="flex min-h-screen w-full">
+            <AdminSidebar />
+            
+            <main className="flex-1">
+              {/* Global Header */}
+              <header className="h-16 flex items-center border-b border-gray-700 bg-midnight-light/80 backdrop-blur-sm px-6">
+                <SidebarTrigger className="text-gray-300 hover:text-white" />
+                <div className="ml-4">
+                  <h2 className="text-white font-semibold">PopupGenix Admin Dashboard</h2>
+                </div>
+              </header>
 
-            {/* Page Content */}
-            <div className="p-6">
-                <Routes>
-                  <Route path="/" element={<AdminDashboard />} />
-                  <Route path="/homepage" element={<HomepageManager />} />
-                  <Route path="/services" element={<ServicesManager />} />
-                  <Route path="/work-updates" element={<WorkUpdatesManager />} />
-                  <Route path="/client-messages" element={<ClientMessagesManager />} />
-                  <Route path="/messages" element={<MessagesManager />} />
-                  <Route path="/quotes" element={<QuoteRequestsManager />} />
-                  <Route path="/invoices" element={<InvoiceManager />} />
-                  <Route path="/invoices/create" element={<InvoiceForm />} />
-                  <Route path="/testimonials" element={<TestimonialManager />} />
-                  <Route path="/clients" element={<ClientManager />} />
-                  <Route path="*" element={<Navigate to="/admin" replace />} />
-                </Routes>
-            </div>
-          </main>
-        </div>
-      </SidebarProvider>
+              {/* Page Content */}
+              <div className="p-6">
+                  <Routes>
+                    <Route path="/" element={<AdminDashboard />} />
+                    <Route path="/homepage" element={<HomepageManager />} />
+                    <Route path="/services" element={<ServicesManager />} />
+                    <Route path="/work-updates" element={<WorkUpdatesManager />} />
+                    <Route path="/client-messages" element={<ClientMessagesManager />} />
+                    <Route path="/messages" element={<MessagesManager />} />
+                    <Route path="/quotes" element={<QuoteRequestsManager />} />
+                    <Route path="/invoices" element={<InvoiceManager />} />
+                    <Route path="/invoices/create" element={<InvoiceForm />} />
+                    <Route path="/testimonials" element={<TestimonialManager />} />
+                    <Route path="/clients" element={<ClientManager />} />
+                    <Route path="*" element={<Navigate to="/admin" replace />} />
+                  </Routes>
+              </div>
+            </main>
+          </div>
+        </SidebarProvider>
+      </TooltipProvider>
     </div>
   );
 }
