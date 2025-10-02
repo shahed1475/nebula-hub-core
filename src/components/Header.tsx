@@ -16,11 +16,19 @@ const Header = () => {
   const navigation = [
     { name: "Home", href: "/", isAnchor: false },
     { name: "About", href: "/#about", isAnchor: false },
-    { name: "Services", href: "/#services", isAnchor: false },
     { name: "Portfolio", href: "/#portfolio", isAnchor: false },
     { name: "Pricing", href: "/pricing", isAnchor: false },
     { name: "Blog", href: "/blog", isAnchor: false },
     { name: "Contact", href: "/contact", isAnchor: false },
+  ];
+
+  const serviceItems = [
+    { name: "AI & Machine Learning", href: "/#services" },
+    { name: "Custom Software Development", href: "/#services" },
+    { name: "Web Development", href: "/#services" },
+    { name: "Mobile Apps", href: "/#services" },
+    { name: "CRM & SaaS Tools", href: "/#services" },
+    { name: "Cloud & DevOps", href: "/#services" },
   ];
 
   const legalItems = [
@@ -71,20 +79,92 @@ const Header = () => {
               )
             ))}
             
+            {/* Services Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="text-foreground hover:text-accent transition-colors duration-300 relative group flex items-center space-x-1 outline-none">
+                <span>Services</span>
+                <ChevronDown className="w-4 h-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent 
+                className="backdrop-blur-xl border min-w-[240px]"
+                style={{
+                  background: 'rgba(20, 20, 30, 0.95)',
+                  borderColor: 'rgba(33, 150, 243, 0.3)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(33, 150, 243, 0.2)'
+                }}
+              >
+                {serviceItems.map((item) => (
+                  <DropdownMenuItem 
+                    key={item.name} 
+                    asChild
+                    className="cursor-pointer transition-all duration-300 hover:bg-primary/10"
+                    style={{
+                      padding: '12px 16px'
+                    }}
+                  >
+                    <Link
+                      to={item.href}
+                      className="text-foreground hover:text-accent transition-colors flex items-center group/item"
+                      style={{
+                        textShadow: 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.textShadow = '0 0 10px rgba(16, 185, 129, 0.5)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.textShadow = 'none';
+                      }}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent mr-3 opacity-0 group-hover/item:opacity-100 transition-opacity" 
+                            style={{
+                              boxShadow: '0 0 8px rgba(16, 185, 129, 0.8)'
+                            }}></span>
+                      {item.name}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
             {/* Legal Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger className="text-foreground hover:text-accent transition-colors duration-300 relative group flex items-center space-x-1 outline-none">
                 <span>Legal</span>
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className="w-4 h-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-card border-border shadow-lg">
+              <DropdownMenuContent 
+                className="backdrop-blur-xl border min-w-[220px]"
+                style={{
+                  background: 'rgba(20, 20, 30, 0.95)',
+                  borderColor: 'rgba(33, 150, 243, 0.3)',
+                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(33, 150, 243, 0.2)'
+                }}
+              >
                 {legalItems.map((item) => (
-                  <DropdownMenuItem key={item.name} asChild>
+                  <DropdownMenuItem 
+                    key={item.name} 
+                    asChild
+                    className="cursor-pointer transition-all duration-300 hover:bg-primary/10"
+                    style={{
+                      padding: '12px 16px'
+                    }}
+                  >
                     <Link
                       to={item.href}
-                      className="text-foreground hover:text-accent transition-colors cursor-pointer"
+                      className="text-foreground hover:text-accent transition-colors flex items-center group/item"
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.textShadow = '0 0 10px rgba(16, 185, 129, 0.5)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.textShadow = 'none';
+                      }}
                     >
+                      <span className="w-1.5 h-1.5 rounded-full bg-accent mr-3 opacity-0 group-hover/item:opacity-100 transition-opacity"
+                            style={{
+                              boxShadow: '0 0 8px rgba(16, 185, 129, 0.8)'
+                            }}></span>
                       {item.name}
                     </Link>
                   </DropdownMenuItem>
@@ -140,6 +220,23 @@ const Header = () => {
                 </Link>
               )
             ))}
+            
+            {/* Services Section in Mobile */}
+            <div className="pt-2">
+              <div className="text-foreground font-medium py-2">Services</div>
+              <div className="pl-4 space-y-2">
+                {serviceItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="block text-muted-foreground hover:text-accent transition-colors duration-300 py-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
             
             {/* Legal Section in Mobile */}
             <div className="pt-2">
