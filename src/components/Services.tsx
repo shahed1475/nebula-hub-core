@@ -1,16 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { 
   Globe, 
   Smartphone, 
-  ShoppingCart, 
-  BarChart3, 
-  Palette, 
-  Rocket,
   ArrowRight,
   Sparkles,
   Brain,
@@ -22,6 +17,27 @@ import {
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState<any>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const services = [
     {
       icon: Brain,
@@ -74,18 +90,57 @@ const Services = () => {
   ];
 
   return (
-    <section id="services" className="py-24 bg-background relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+    <section ref={sectionRef} id="services" className="py-24 relative overflow-hidden">
+      {/* Animated Gradient Waves Background */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute top-0 left-0 w-full h-full">
+          {[...Array(3)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent"
+              style={{
+                top: `${20 + i * 30}%`,
+                animation: `wave-slide ${4 + i}s ease-in-out infinite`,
+                animationDelay: `${i * 0.5}s`
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Glowing Orbs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-primary/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '5s' }}></div>
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-accent/10 rounded-full blur-[120px] animate-pulse" style={{ animationDuration: '7s', animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-purple-500/10 rounded-full blur-[140px] animate-pulse" style={{ animationDuration: '6s', animationDelay: '1s' }}></div>
+      </div>
+
+      {/* Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-primary/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `float-particle ${5 + Math.random() * 10}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 5}s`
+            }}
+          />
+        ))}
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 bg-card/50 backdrop-blur-sm border border-primary/30 rounded-full px-6 py-3 mb-6">
-            <Sparkles className="w-4 h-4 text-accent" />
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-flex items-center space-x-2 backdrop-blur-md rounded-full px-6 py-3 mb-6 animate-fade-in border"
+               style={{ 
+                 background: 'rgba(255, 255, 255, 0.05)',
+                 borderColor: 'rgba(33, 150, 243, 0.3)',
+                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(33, 150, 243, 0.2)'
+               }}>
+            <Sparkles className="w-4 h-4 text-accent animate-pulse" />
             <span className="text-sm font-medium">Our Services</span>
           </div>
           
@@ -99,84 +154,180 @@ const Services = () => {
           </p>
         </div>
 
-        {/* Services Grid */}
+        {/* Services Grid - Glassmorphism Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {services.map((service, index) => {
             const IconComponent = service.icon;
+            const isHovered = hoveredCard === index;
+            
             return (
-              <Card 
+              <div 
                 key={service.title}
-                className="p-8 bg-gradient-card border-border/50 hover:border-primary/30 transition-all duration-500 group hover:shadow-elegant animate-slide-up"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className={`relative p-8 backdrop-blur-xl rounded-3xl border transition-all duration-700 group cursor-pointer ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+                }`}
+                style={{ 
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  borderColor: isHovered ? 'rgba(33, 150, 243, 0.6)' : 'rgba(255, 255, 255, 0.1)',
+                  boxShadow: isHovered 
+                    ? '0 0 40px rgba(33, 150, 243, 0.4), 0 8px 32px rgba(0, 0, 0, 0.4)' 
+                    : '0 8px 32px rgba(0, 0, 0, 0.3)',
+                  transitionDelay: `${index * 0.1}s`,
+                  transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)'
+                }}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                <div className="mb-6">
-                  <div className={`inline-flex p-3 rounded-xl bg-card/50 border border-primary/20 group-hover:shadow-neon transition-all duration-300 ${service.color}`}>
-                    <IconComponent className="w-8 h-8" />
-                  </div>
-                </div>
-                
-                <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-accent transition-colors">
-                  {service.title}
-                </h3>
-                
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {service.description}
-                </p>
-                
-                <ul className="space-y-3 mb-8">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-center space-x-3">
-                      <div className="w-2 h-2 bg-accent rounded-full flex-shrink-0"></div>
-                      <span className="text-sm text-muted-foreground">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full group-hover:border-primary/60 group-hover:shadow-neon"
-                      onClick={() => setSelectedService(service)}
+                {/* Animated Background on Hover */}
+                <div 
+                  className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(33, 150, 243, 0.1), rgba(16, 185, 129, 0.1))',
+                    backgroundSize: '200% 200%',
+                    animation: isHovered ? 'gradient-shift 3s ease infinite' : 'none'
+                  }}
+                />
+
+                {/* Content */}
+                <div className="relative z-10">
+                  {/* Icon with Animation */}
+                  <div className="mb-6">
+                    <div 
+                      className={`inline-flex p-4 rounded-2xl backdrop-blur-sm border transition-all duration-500 ${service.color}`}
+                      style={{ 
+                        background: isHovered ? 'rgba(33, 150, 243, 0.15)' : 'rgba(33, 150, 243, 0.08)',
+                        borderColor: isHovered ? 'rgba(33, 150, 243, 0.5)' : 'rgba(33, 150, 243, 0.2)',
+                        boxShadow: isHovered ? '0 0 30px rgba(33, 150, 243, 0.4)' : 'none',
+                        transform: isHovered ? 'scale(1.1) rotate(5deg)' : 'scale(1) rotate(0deg)'
+                      }}
                     >
-                      Learn More
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-                    <DialogHeader>
-                      <DialogTitle className="flex items-center text-2xl">
-                        <service.icon className="w-6 h-6 mr-3 text-primary" />
-                        {service.title}
-                      </DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <p className="text-muted-foreground leading-relaxed">
-                        {service.learnMore}
-                      </p>
-                      <div>
-                        <h4 className="font-semibold mb-2">Key Features:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {service.features.map((feature: string, featureIndex: number) => (
-                            <Badge key={featureIndex} variant="secondary">
-                              {feature}
-                            </Badge>
-                          ))}
+                      <IconComponent 
+                        className="w-8 h-8 transition-all duration-500" 
+                        style={{
+                          filter: isHovered ? 'drop-shadow(0 0 8px rgba(33, 150, 243, 0.8))' : 'none'
+                        }}
+                      />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold mb-4 text-foreground group-hover:text-primary transition-colors duration-300">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                    {service.description}
+                  </p>
+                  
+                  {/* Features with Glow Effect */}
+                  <ul className="space-y-3 mb-8">
+                    {service.features.map((feature, featureIndex) => (
+                      <li 
+                        key={feature} 
+                        className="flex items-center space-x-3 group/item"
+                      >
+                        <div 
+                          className="w-2 h-2 rounded-full flex-shrink-0 transition-all duration-300"
+                          style={{
+                            background: isHovered ? 'rgba(16, 185, 129, 1)' : 'rgba(16, 185, 129, 0.6)',
+                            boxShadow: isHovered ? '0 0 10px rgba(16, 185, 129, 0.8)' : 'none',
+                            animation: isHovered ? `pulse-dot ${1 + featureIndex * 0.2}s ease-in-out infinite` : 'none'
+                          }}
+                        ></div>
+                        <span 
+                          className="text-sm transition-colors duration-300"
+                          style={{
+                            color: isHovered ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.6)'
+                          }}
+                        >
+                          {feature}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  
+                  {/* Glowing Gradient Button */}
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <button
+                        className="w-full py-3 px-6 rounded-xl text-sm font-medium transition-all duration-500 relative overflow-hidden group/btn"
+                        style={{
+                          background: isHovered 
+                            ? 'linear-gradient(135deg, rgba(138, 43, 226, 0.2), rgba(33, 150, 243, 0.2))' 
+                            : 'rgba(255, 255, 255, 0.05)',
+                          border: isHovered 
+                            ? '1px solid rgba(33, 150, 243, 0.6)' 
+                            : '1px solid rgba(255, 255, 255, 0.1)',
+                          boxShadow: isHovered 
+                            ? '0 0 20px rgba(33, 150, 243, 0.4), inset 0 0 20px rgba(33, 150, 243, 0.1)' 
+                            : 'none'
+                        }}
+                        onClick={() => setSelectedService(service)}
+                      >
+                        <span className="relative z-10 flex items-center justify-center">
+                          Learn More
+                          <ArrowRight 
+                            className="w-4 h-4 ml-2 transition-transform duration-300" 
+                            style={{
+                              transform: isHovered ? 'translateX(4px)' : 'translateX(0)'
+                            }}
+                          />
+                        </span>
+                        {/* Animated shine effect */}
+                        <div 
+                          className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000"
+                          style={{
+                            background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)'
+                          }}
+                        />
+                      </button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto backdrop-blur-xl border"
+                      style={{
+                        background: 'rgba(20, 20, 30, 0.95)',
+                        borderColor: 'rgba(33, 150, 243, 0.3)',
+                        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
+                      }}>
+                      <DialogHeader>
+                        <DialogTitle className="flex items-center text-2xl">
+                          <service.icon className="w-6 h-6 mr-3 text-primary" />
+                          {service.title}
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <p className="text-muted-foreground leading-relaxed">
+                          {service.learnMore}
+                        </p>
+                        <div>
+                          <h4 className="font-semibold mb-2">Key Features:</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {service.features.map((feature: string, featureIndex: number) => (
+                              <Badge 
+                                key={featureIndex} 
+                                variant="secondary"
+                                className="backdrop-blur-sm"
+                                style={{
+                                  background: 'rgba(33, 150, 243, 0.2)',
+                                  borderColor: 'rgba(33, 150, 243, 0.4)'
+                                }}
+                              >
+                                {feature}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        <div className="pt-4 border-t border-primary/20">
+                          <Link to="/quote">
+                            <Button className="w-full">
+                              Get a Quote for {service.title}
+                              <ArrowRight className="w-4 h-4 ml-2" />
+                            </Button>
+                          </Link>
                         </div>
                       </div>
-                      <div className="pt-4 border-t">
-                        <Link to="/quote">
-                          <Button className="w-full">
-                            Get a Quote for {service.title}
-                            <ArrowRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </Card>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+              </div>
             );
           })}
         </div>
