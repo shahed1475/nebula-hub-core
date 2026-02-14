@@ -316,7 +316,7 @@ const Services = () => {
                           </div>
                         </div>
                         <div className="pt-4 border-t border-primary/20">
-                          <Link to="/quote">
+                          <Link to="/contact">
                             <Button className="w-full">
                               Get a Quote for {service.title}
                               <ArrowRight className="w-4 h-4 ml-2" />

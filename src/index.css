@@ -7,8 +7,69 @@ All colors MUST be HSL.
 */
 
 @layer base {
+  /* ── Light Theme ── */
   :root {
-    /* PopupGenix Dark Theme - Premium Tech Feel */
+    --background: 220 20% 97%;
+    --foreground: 220 25% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 12%;
+
+    /* Purple to Blue Gradient Brand Colors */
+    --primary: 250 100% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 260 100% 60%;
+
+    --secondary: 220 20% 92%;
+    --secondary-foreground: 220 25% 20%;
+
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 15% 42%;
+
+    /* Accents */
+    --accent: 200 100% 45%;
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 190 100% 50%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 85%;
+    --input: 220 15% 90%;
+    --ring: 250 100% 55%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(270 100% 55%) 0%, hsl(220 100% 55%) 50%, hsl(190 100% 50%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(270 40% 95%) 0%, hsl(220 30% 96%) 50%, hsl(190 30% 96%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(220 20% 97%) 100%);
+    --gradient-futuristic: linear-gradient(135deg, hsl(230 30% 96%), hsl(270 25% 96%), hsl(0 0% 98%));
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
+
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.6);
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --glass-blur: blur(20px);
+
+    /* Shadows */
+    --shadow-neon: 0 0 20px hsl(250 100% 55% / 0.25);
+    --shadow-neon-blue: 0 0 20px hsl(200 100% 50% / 0.25);
+    --shadow-card: 0 4px 20px hsl(220 30% 80% / 0.4);
+    --shadow-elegant: 0 10px 40px hsl(220 30% 80% / 0.3);
+    --shadow-glass: 0 4px 16px rgba(0, 0, 0, 0.06);
+    --shadow-glow: 0 0 20px hsl(250 100% 55% / 0.15), 0 0 40px hsl(270 80% 50% / 0.08);
+
+    /* Animations */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* ── Dark Theme ── */
+  .dark {
     --background: 220 27% 8%;
     --foreground: 210 40% 98%;
 
@@ -18,18 +79,16 @@ All colors MUST be HSL.
     --popover: 220 25% 12%;
     --popover-foreground: 210 40% 98%;
 
-    /* Purple to Blue Gradient Brand Colors */
     --primary: 250 100% 65%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 260 100% 70%;
-    
+
     --secondary: 220 25% 15%;
     --secondary-foreground: 210 40% 95%;
 
     --muted: 220 20% 20%;
     --muted-foreground: 210 20% 65%;
 
-    /* Neon Accents */
     --accent: 200 100% 60%;
     --accent-foreground: 0 0% 100%;
     --accent-glow: 190 100% 65%;
@@ -41,31 +100,22 @@ All colors MUST be HSL.
     --input: 220 20% 18%;
     --ring: 250 100% 65%;
 
-    --radius: 0.75rem;
-
-    /* Premium Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(270 100% 65%) 0%, hsl(220 100% 65%) 50%, hsl(190 100% 65%) 100%);
     --gradient-hero: linear-gradient(135deg, hsl(270 100% 15%) 0%, hsl(220 50% 8%) 50%, hsl(190 50% 10%) 100%);
     --gradient-card: linear-gradient(135deg, hsl(220 25% 12%) 0%, hsl(220 25% 15%) 100%);
     --gradient-futuristic: linear-gradient(135deg, hsl(230 90% 10%), hsl(270 80% 15%), hsl(0 0% 5%));
     --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    
-    /* Glassmorphism */
+
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
     --glass-blur: blur(20px);
-    
-    /* Neon Shadows & Glows */
+
     --shadow-neon: 0 0 30px hsl(250 100% 65% / 0.5);
     --shadow-neon-blue: 0 0 30px hsl(200 100% 60% / 0.5);
     --shadow-card: 0 10px 30px hsl(220 50% 5% / 0.8);
     --shadow-elegant: 0 20px 60px hsl(220 50% 3% / 0.9);
     --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.3);
     --shadow-glow: 0 0 40px hsl(250 100% 65% / 0.4), 0 0 80px hsl(270 80% 50% / 0.2);
-
-    /* Animations */
-    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 }
 

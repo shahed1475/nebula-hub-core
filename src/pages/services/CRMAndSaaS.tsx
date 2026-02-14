@@ -69,7 +69,7 @@ const CRMAndSaaS = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/quote">
+              <Link to="/contact">
                 <Button variant="hero" size="lg" className="hover:scale-110 transition-transform duration-300">
                   Get Started
                   <ArrowRight className="w-5 h-5" />
@@ -168,7 +168,7 @@ const CRMAndSaaS = () => {
               and scales with your business.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/quote">
+              <Link to="/contact">
                 <Button variant="hero" size="lg">
                   Request a Quote
                   <ArrowRight className="w-5 h-5" />

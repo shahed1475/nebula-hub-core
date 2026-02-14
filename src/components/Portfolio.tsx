@@ -33,17 +33,6 @@ const Portfolio = () => {
 
   const projects = [
     {
-      title: "Spendly",
-      category: "Finance SaaS",
-      description: "AI-powered expense management platform with automated categorization and intelligent budget insights.",
-      image: "/portfolio/spendly.png",
-      tags: ["AI/ML", "SaaS", "FinTech", "React"],
-      challenge: "Complex expense tracking and budget management for businesses",
-      approach: "Machine learning algorithms for automatic expense categorization",
-      outcome: "40% reduction in expense processing time for clients",
-      link: "https://github.com/raihan-js/spendly"
-    },
-    {
       title: "Clarify AI",
       category: "AI Platform",
       description: "Advanced AI-powered data analysis platform that transforms complex datasets into actionable insights.",
@@ -53,28 +42,6 @@ const Portfolio = () => {
       approach: "Natural language processing for intuitive data queries",
       outcome: "300% increase in data-driven decision making",
       link: "https://www.clarify.ai/"
-    },
-    {
-      title: "Pregacare",
-      category: "Healthcare App",
-      description: "Comprehensive pregnancy tracking mobile app with AI-powered health monitoring and personalized care plans.",
-      image: "/portfolio/pregacare.png",
-      tags: ["Mobile", "Healthcare", "AI", "React Native"],
-      challenge: "Personalized healthcare guidance throughout pregnancy",
-      approach: "AI algorithms for personalized health recommendations",
-      outcome: "50,000+ active users with 98% satisfaction rate",
-      link: "https://github.com/raihan-js/pregacare"
-    },
-    {
-      title: "FlaskColorWorks",
-      category: "AI Tool",
-      description: "Intelligent color palette generator using computer vision and design principles for creative professionals.",
-      image: "/portfolio/flask.png",
-      tags: ["AI", "Computer Vision", "Design", "Python"],
-      challenge: "Automated color palette generation for designers",
-      approach: "Computer vision algorithms analyzing color harmony",
-      outcome: "Used by 10,000+ designers worldwide",
-      link: "https://github.com/raihan-js/FlaskColorWorks"
     },
     {
       title: "Klevere AI",
@@ -102,7 +69,7 @@ const Portfolio = () => {
       title: "Inno AI",
       category: "Business AI",
       description: "Comprehensive AI suite for business automation, from customer service to process optimization.",
-      image: "/portfolio/inno.png",
+      image: "/portfolio/inno.jpg",
       tags: ["AI", "Automation", "Business", "Enterprise"],
       challenge: "End-to-end business process automation",
       approach: "Modular AI systems for different business functions",
@@ -191,7 +158,7 @@ const Portfolio = () => {
         </div>
 
         {/* Portfolio Grid - Futuristic Glassmorphism Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 max-w-5xl mx-auto">
           {projects.map((project, index) => {
             const isHovered = hoveredCard === index;
             
@@ -202,11 +169,11 @@ const Portfolio = () => {
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
                 }`}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  borderColor: isHovered ? 'rgba(138, 43, 226, 0.6)' : 'rgba(255, 255, 255, 0.1)',
+                  background: 'var(--glass-bg)',
+                  borderColor: isHovered ? 'rgba(138, 43, 226, 0.6)' : 'var(--glass-border)',
                   boxShadow: isHovered
-                    ? '0 0 50px rgba(138, 43, 226, 0.5), 0 8px 32px rgba(0, 0, 0, 0.4)'
-                    : '0 8px 32px rgba(0, 0, 0, 0.3)',
+                    ? '0 0 50px rgba(138, 43, 226, 0.5), var(--shadow-glass)'
+                    : 'var(--shadow-glass)',
                   transitionDelay: `${index * 0.15}s`,
                   transform: isHovered ? 'translateY(-12px) scale(1.02)' : 'translateY(0) scale(1)'
                 }}
@@ -264,20 +231,6 @@ const Portfolio = () => {
                     </div>
                   </div>
 
-                  {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <div
-                      className="backdrop-blur-md rounded-full px-4 py-2 text-xs font-medium border"
-                      style={{
-                        background: 'rgba(255, 255, 255, 0.1)',
-                        borderColor: 'rgba(138, 43, 226, 0.4)',
-                        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)'
-                      }}
-                    >
-                      {project.category}
-                    </div>
-                  </div>
-
                   {/* External Link Button */}
                   <div
                     className="absolute top-4 right-4 transition-all duration-500"
@@ -304,9 +257,9 @@ const Portfolio = () => {
                 {/* Project Content */}
                 <div className="relative p-6 z-10">
                   <h3
-                    className="text-xl font-bold mb-3 transition-colors duration-300"
+                    className="text-xl font-bold mb-3 transition-colors duration-300 text-foreground"
                     style={{
-                      color: isHovered ? 'rgba(16, 185, 129, 1)' : 'rgba(255, 255, 255, 0.9)'
+                      color: isHovered ? 'rgba(16, 185, 129, 1)' : undefined
                     }}
                   >
                     {project.title}
@@ -345,10 +298,10 @@ const Portfolio = () => {
                     style={{
                       background: isHovered
                         ? 'linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(33, 150, 243, 0.3))'
-                        : 'rgba(255, 255, 255, 0.05)',
+                        : 'var(--glass-bg)',
                       border: isHovered
                         ? '2px solid rgba(138, 43, 226, 0.6)'
-                        : '1px solid rgba(255, 255, 255, 0.1)',
+                        : '1px solid var(--glass-border)',
                       boxShadow: isHovered
                         ? '0 0 30px rgba(138, 43, 226, 0.5), inset 0 0 20px rgba(138, 43, 226, 0.2)'
                         : 'none'

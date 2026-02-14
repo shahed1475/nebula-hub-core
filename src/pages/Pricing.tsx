@@ -23,7 +23,7 @@ const Pricing = () => {
         "Community forum access"
       ],
       cta: "Get Started",
-      ctaAction: () => navigate("/quote"),
+      ctaAction: () => navigate("/contact"),
       highlighted: true
     },
     {

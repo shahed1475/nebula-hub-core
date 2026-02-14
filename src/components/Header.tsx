@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -8,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import ThemeToggle from "@/components/ThemeToggle";
 
 
 const Header = () => {
@@ -92,13 +92,8 @@ const Header = () => {
                 <ChevronDown className="w-4 h-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
               </DropdownMenuTrigger>
-              <DropdownMenuContent 
-                className="backdrop-blur-xl border min-w-[240px]"
-                style={{
-                  background: 'rgba(20, 20, 30, 0.95)',
-                  borderColor: 'rgba(33, 150, 243, 0.3)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(33, 150, 243, 0.2)'
-                }}
+              <DropdownMenuContent
+                className="backdrop-blur-xl border border-border min-w-[240px] bg-popover shadow-lg"
               >
                 {serviceItems.map((item) => (
                   <DropdownMenuItem 
@@ -162,13 +157,8 @@ const Header = () => {
                 <ChevronDown className="w-4 h-4 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary group-hover:w-full transition-all duration-300"></span>
               </DropdownMenuTrigger>
-              <DropdownMenuContent 
-                className="backdrop-blur-xl border min-w-[220px]"
-                style={{
-                  background: 'rgba(20, 20, 30, 0.95)',
-                  borderColor: 'rgba(33, 150, 243, 0.3)',
-                  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(33, 150, 243, 0.2)'
-                }}
+              <DropdownMenuContent
+                className="backdrop-blur-xl border border-border min-w-[220px] bg-popover shadow-lg"
               >
                 {legalItems.map((item) => (
                   <DropdownMenuItem 
@@ -223,30 +213,24 @@ const Header = () => {
             ))}
           </div>
 
-          {/* CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link to="/portal">
-              <Button variant="outline" size="sm">
-                Client Portal
-              </Button>
-            </Link>
-            <Link to="/quote">
-              <Button variant="hero" size="sm">
-                Get a Quote
-              </Button>
-            </Link>
+          {/* Theme Toggle */}
+          <div className="hidden md:flex items-center">
+            <ThemeToggle />
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-foreground hover:text-accent transition-colors relative"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-            aria-expanded={isMenuOpen}
-            type="button"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* Mobile: theme toggle + menu button */}
+          <div className="md:hidden flex items-center space-x-2">
+            <ThemeToggle />
+            <button
+              className="p-2 text-foreground hover:text-accent transition-colors relative"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+              type="button"
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
       </nav>
     </header>
@@ -387,19 +371,6 @@ const Header = () => {
                 ))}
               </div>
 
-              {/* CTAs */}
-              <div className="mt-4 border-t border-border/50 p-4 space-y-3">
-                <Link to="/portal" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" size="sm" className="w-full">
-                    Client Portal
-                  </Button>
-                </Link>
-                <Link to="/quote" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="hero" size="sm" className="w-full">
-                    Get a Quote
-                  </Button>
-                </Link>
-              </div>
             </div>
           </div>
         </div>

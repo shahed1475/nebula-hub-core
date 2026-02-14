@@ -1,24 +1,18 @@
 import { Button } from "@/components/ui/button";
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Facebook, 
-  Twitter, 
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Twitter,
   Linkedin,
-  ArrowRight 
+  ArrowRight
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
 import PaymentLogos from "@/components/PaymentLogos";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [email, setEmail] = useState("");
-  const [isSubscribed, setIsSubscribed] = useState(false);
-  const { toast } = useToast();
 
   const quickLinks = [
     { name: "About Us", href: "/#about", isAnchor: false },
@@ -43,47 +37,6 @@ const Footer = () => {
     { icon: Linkedin, href: "https://www.linkedin.com/company/popupgenix", label: "LinkedIn" }
   ];
 
-  const handleSubscribe = async () => {
-    if (!email) {
-      toast({
-        title: "Email Required",
-        description: "Please enter your email address.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from('newsletter_subscriptions')
-        .insert([{ email }]);
-
-      if (error) {
-        if (error.code === '23505') {
-          toast({
-            title: "Already Subscribed",
-            description: "This email is already subscribed to our newsletter.",
-            variant: "destructive"
-          });
-        } else {
-          throw error;
-        }
-      } else {
-        setIsSubscribed(true);
-        toast({
-          title: "Successfully Subscribed!",
-          description: "Thank you for subscribing to our newsletter.",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Subscription Failed",
-        description: "There was an error subscribing. Please try again.",
-        variant: "destructive"
-      });
-    }
-  };
-
   return (
     <footer className="bg-gradient-card border-t border-border/50 relative overflow-hidden">
       {/* Background Effects */}
@@ -93,59 +46,6 @@ const Footer = () => {
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Newsletter Section */}
-        <div className="py-16 border-b border-border/30">
-          <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-3xl font-bold mb-4 text-foreground">
-              Stay Updated with PopupGenix
-            </h3>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Get the latest insights on web development, design trends, and digital marketing 
-              strategies delivered to your inbox.
-            </p>
-            {!isSubscribed ? (
-              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 max-w-md mx-auto">
-                <input 
-                  type="email" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="w-full px-6 py-3 bg-input border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                />
-                <Button 
-                  variant="hero" 
-                  size="lg" 
-                  className="w-full sm:w-auto"
-                  onClick={handleSubscribe}
-                >
-                  Subscribe
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </div>
-            ) : (
-              <div className="text-center space-y-4">
-                <div className="text-lg font-semibold text-accent">
-                  🎉 Thank you for subscribing!
-                </div>
-                <p className="text-muted-foreground">
-                  You'll receive our latest insights on web development and digital marketing.
-                </p>
-                <div className="flex items-center justify-center space-x-4">
-                  <span className="text-sm text-muted-foreground">Connect with us:</span>
-                  <a 
-                    href="https://www.linkedin.com/company/popupgenix"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent hover:text-primary transition-colors"
-                  >
-                    <Linkedin className="w-5 h-5" />
-                  </a>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
         {/* Main Footer Content */}
         <div className="py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
@@ -163,15 +63,15 @@ const Footer = () => {
                 and deliver exceptional user experiences through intelligent, scalable technology.
               </p>
               <div className="space-y-3">
-                <div className="flex items-center space-x-3 text-white font-medium">
+                <div className="flex items-center space-x-3 text-foreground font-medium">
                   <Mail className="w-4 h-4 text-accent" />
                   <span>hello@popupgenix.com</span>
                 </div>
-                <div className="flex items-center space-x-3 text-white font-medium">
+                <div className="flex items-center space-x-3 text-foreground font-medium">
                   <Phone className="w-4 h-4 text-accent" />
                   <span>+1 479 689 1012</span>
                 </div>
-                <div className="flex items-center space-x-3 text-white font-medium">
+                <div className="flex items-center space-x-3 text-foreground font-medium">
                   <MapPin className="w-4 h-4 text-accent" />
                   <span>1209 MOUNTAIN ROAD PL NE, STE R, ALBUQUERQUE, NM 87110, USA</span>
                 </div>

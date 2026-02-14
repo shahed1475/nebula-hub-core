@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useTheme } from 'next-themes';
 
 interface Particle {
   x: number;
@@ -18,14 +19,15 @@ interface AnimatedBackgroundProps {
   colors?: string[];
 }
 
-export const AnimatedBackground = ({ 
-  mode = 'particles', 
+export const AnimatedBackground = ({
+  mode = 'particles',
   particleCount = 80,
   colors = ['rgba(138, 43, 226, 0.8)', 'rgba(33, 150, 243, 0.8)', 'rgba(16, 185, 129, 0.8)']
 }: AnimatedBackgroundProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
   const particlesRef = useRef<Particle[]>([]);
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -67,7 +69,8 @@ export const AnimatedBackground = ({
 
     // Draw particles with connections
     const drawParticles = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      const isDark = document.documentElement.classList.contains('dark');
+      ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       particlesRef.current.forEach((particle, i) => {
@@ -150,24 +153,12 @@ export const AnimatedBackground = ({
         });
       });
 
-      // Draw mouse glow
-      const mouseGradient = ctx.createRadialGradient(
-        mouseRef.current.x, mouseRef.current.y, 0,
-        mouseRef.current.x, mouseRef.current.y, 100
-      );
-      mouseGradient.addColorStop(0, 'rgba(138, 43, 226, 0.2)');
-      mouseGradient.addColorStop(0.5, 'rgba(33, 150, 243, 0.1)');
-      mouseGradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
-      
-      ctx.fillStyle = mouseGradient;
-      ctx.beginPath();
-      ctx.arc(mouseRef.current.x, mouseRef.current.y, 100, 0, Math.PI * 2);
-      ctx.fill();
     };
 
     // Draw waves (alternative mode)
     const drawWaves = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+      const isDark = document.documentElement.classList.contains('dark');
+      ctx.fillStyle = isDark ? 'rgba(0, 0, 0, 0.02)' : 'rgba(255, 255, 255, 0.02)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const time = Date.now() * 0.001;
@@ -238,15 +229,19 @@ export const AnimatedBackground = ({
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [mode, particleCount, colors]);
+  }, [mode, particleCount, colors, resolvedTheme]);
+
+  const isDark = resolvedTheme === 'dark';
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full pointer-events-none"
+      className="fixed top-0 left-0 w-full pointer-events-none transition-colors duration-500"
       style={{
         zIndex: 0,
-        background: 'linear-gradient(135deg, hsl(230, 90%, 10%), hsl(270, 80%, 15%), hsl(0, 0%, 5%))'
+        background: isDark
+          ? 'linear-gradient(135deg, hsl(230, 90%, 10%), hsl(270, 80%, 15%), hsl(0, 0%, 5%))'
+          : 'linear-gradient(135deg, hsl(220, 20%, 96%), hsl(240, 15%, 97%), hsl(210, 20%, 98%))'
       }}
     />
   );

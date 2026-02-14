@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { ThemeProvider } from "next-themes";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
@@ -10,7 +11,6 @@ import Portal from "./pages/Portal";
 import AdminPanel from "./pages/AdminPanel";
 
 import Contact from "./pages/Contact";
-import Quote from "./pages/Quote";
 import BlogPost from "./pages/BlogPost";
 import WordPressBlog from "./pages/WordPressBlog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -31,7 +31,7 @@ import CloudAndDevOps from "./pages/services/CloudAndDevOps";
 
 
 const App = () => (
-  <>
+  <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
     <Toaster />
     <Sonner />
     <AnimatedBackground mode="particles" particleCount={80} />
@@ -40,7 +40,6 @@ const App = () => (
         <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/quote" element={<Quote />} />
         <Route path="/pricing" element={<Pricing />} />
          <Route path="/blog" element={<WordPressBlog />} />
          <Route path="/blog/:slug" element={<BlogPost />} />
@@ -66,7 +65,7 @@ const App = () => (
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  </>
+  </ThemeProvider>
 );
 
 export default App;
