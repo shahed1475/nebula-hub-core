@@ -39,4 +39,13 @@ describe("isValidLeadStatusTransition", () => {
     expect(isValidLeadStatusTransition("disqualified", "new")).toBe(false);
     expect(isValidLeadStatusTransition("lost", "researching")).toBe(false);
   });
+
+  it("rejects terminal-to-exit-target transitions (a terminal state cannot re-enter another terminal state)", () => {
+    expect(isValidLeadStatusTransition("won", "lost")).toBe(false);
+    expect(isValidLeadStatusTransition("won", "disqualified")).toBe(false);
+    expect(isValidLeadStatusTransition("lost", "won")).toBe(false);
+    expect(isValidLeadStatusTransition("lost", "disqualified")).toBe(false);
+    expect(isValidLeadStatusTransition("disqualified", "won")).toBe(false);
+    expect(isValidLeadStatusTransition("disqualified", "lost")).toBe(false);
+  });
 });
