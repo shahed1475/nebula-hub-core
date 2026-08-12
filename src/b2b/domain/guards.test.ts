@@ -1,0 +1,42 @@
+import { describe, expect, it } from "vitest";
+import { canApproveOutreach, isValidLeadStatusTransition } from "./guards";
+
+describe("canApproveOutreach", () => {
+  it("returns true when approval_status is approved", () => {
+    expect(canApproveOutreach({ approval_status: "approved" })).toBe(true);
+  });
+
+  it("returns false when approval_status is pending", () => {
+    expect(canApproveOutreach({ approval_status: "pending" })).toBe(false);
+  });
+
+  it("returns false when approval_status is rejected", () => {
+    expect(canApproveOutreach({ approval_status: "rejected" })).toBe(false);
+  });
+});
+
+describe("isValidLeadStatusTransition", () => {
+  it("allows the next sequential pipeline stage", () => {
+    expect(isValidLeadStatusTransition("new", "researching")).toBe(true);
+    expect(isValidLeadStatusTransition("proposal", "won")).toBe(true);
+  });
+
+  it("rejects skipping stages", () => {
+    expect(isValidLeadStatusTransition("new", "won")).toBe(false);
+  });
+
+  it("rejects a no-op transition", () => {
+    expect(isValidLeadStatusTransition("new", "new")).toBe(false);
+  });
+
+  it("allows exiting to disqualified or lost from any active stage", () => {
+    expect(isValidLeadStatusTransition("contacted", "disqualified")).toBe(true);
+    expect(isValidLeadStatusTransition("qualified", "lost")).toBe(true);
+  });
+
+  it("rejects leaving a terminal state", () => {
+    expect(isValidLeadStatusTransition("won", "contacted")).toBe(false);
+    expect(isValidLeadStatusTransition("disqualified", "new")).toBe(false);
+    expect(isValidLeadStatusTransition("lost", "researching")).toBe(false);
+  });
+});
