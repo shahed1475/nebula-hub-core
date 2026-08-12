@@ -2,6 +2,13 @@
 
 **Status:** Approved by user 2026-08-13 (research table kept unified, per recommendation).
 
+**Addendum (pre-implementation correction):** the existing schema already has a
+`public.messages` table (client-portal contact messages, added in
+`20250930141456_*.sql`). The `messages`/`message_events` tables below are renamed to
+`outreach_messages`/`outreach_message_events` to avoid colliding with it — this repo's
+`messages` table is unrelated and must not be touched (constraint #1/#2). No other
+proposed table name collides with an existing one.
+
 ## Purpose
 
 Lay down the persistent schema and TypeScript domain layer for the B2B Growth Engine's
@@ -157,8 +164,8 @@ requires approval).
 | created_at, updated_at | timestamptz | |
 | | | unique `(campaign_id, lead_id)` |
 
-### `messages`
-Outbound only.
+### `outreach_messages`
+Outbound only. (Renamed from `messages` — see addendum above.)
 
 | column | type | notes |
 |---|---|---|
@@ -173,13 +180,13 @@ Outbound only.
 | sent_at | timestamptz | |
 | created_at, updated_at | timestamptz | |
 
-### `message_events`
-Append-only delivery/engagement timeline.
+### `outreach_message_events`
+Append-only delivery/engagement timeline. (Renamed from `message_events`.)
 
 | column | type | notes |
 |---|---|---|
 | id | uuid pk | |
-| message_id | uuid not null → messages(id) | indexed |
+| message_id | uuid not null → outreach_messages(id) | indexed |
 | event_type | text not null, CHECK IN ('queued','sent','delivered','opened','clicked','bounced','failed','unsubscribed') | |
 | metadata | jsonb not null default '{}' | |
 | occurred_at | timestamptz not null default now() | |
@@ -192,7 +199,7 @@ Inbound only.
 | id | uuid pk | |
 | lead_id | uuid not null → leads(id) | indexed |
 | contact_id | uuid → contacts(id) | |
-| in_reply_to_message_id | uuid → messages(id) | nullable |
+| in_reply_to_message_id | uuid → outreach_messages(id) | nullable |
 | raw_content | text not null | |
 | received_at | timestamptz not null default now() | |
 | intent | text | populated by Reply Agent in a later phase |
@@ -298,8 +305,8 @@ companies ─────< leads
 leads ─────────< lead_scores
 leads/contacts ─< research           (via subject_type/subject_id, no FK — see below)
 leads ─────────< campaign_leads >──── campaigns
-campaign_leads ─< messages ─< message_events
-leads ─────────< replies >──── messages (in_reply_to, nullable)
+campaign_leads ─< outreach_messages ─< outreach_message_events
+leads ─────────< replies >──── outreach_messages (in_reply_to, nullable)
 leads ─────────< meetings >──── contacts
 agent_tasks ───< agent_runs
 strategies ────< strategy_versions ─< leads / campaigns / lead_scores / analytics_events
