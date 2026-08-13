@@ -111,6 +111,28 @@ describe("ClaudeAIProvider", () => {
     ).rejects.toBeInstanceOf(AIProviderValidationError);
   });
 
+  it("wraps invalid input in AIProviderValidationError before calling the client", async () => {
+    const fakeClient: AnthropicMessagesLike = {
+      messages: {
+        parse: async () => {
+          throw new Error("should never be called");
+        },
+      },
+    };
+    const provider = makeProvider(fakeClient);
+
+    await expect(
+      provider.qualifyLead({
+        companySummary: "",
+        companyPainPoints: [],
+        companyIcpFitSignals: [],
+        contactSummary: null,
+        contactPainPoints: [],
+        icpCriteria: {},
+      })
+    ).rejects.toBeInstanceOf(AIProviderValidationError);
+  });
+
   it("throws AIProviderRateLimitError when the client throws a 429", async () => {
     const fakeClient: AnthropicMessagesLike = {
       messages: {

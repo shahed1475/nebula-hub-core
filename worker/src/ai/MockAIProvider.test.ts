@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { AIProviderValidationError } from "./errors.js";
 import { MockAIProvider } from "./MockAIProvider.js";
 
 describe("MockAIProvider", () => {
@@ -93,7 +94,7 @@ describe("MockAIProvider", () => {
     expect(Object.keys(result).sort()).toEqual(["confidence", "recommendedChanges", "summary"]);
   });
 
-  it("rejects invalid input via schema validation", async () => {
+  it("wraps invalid input in AIProviderValidationError", async () => {
     await expect(
       provider.analyzeCompany({
         companyName: "",
@@ -102,6 +103,6 @@ describe("MockAIProvider", () => {
         description: null,
         rawContext: null,
       })
-    ).rejects.toThrow();
+    ).rejects.toBeInstanceOf(AIProviderValidationError);
   });
 });

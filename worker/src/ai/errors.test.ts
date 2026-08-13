@@ -7,6 +7,7 @@ import {
   AIProviderRateLimitError,
   AIProviderAuthenticationError,
   AIProviderRequestError,
+  parseOrThrow,
 } from "./errors.js";
 
 describe("AIProvider error hierarchy", () => {
@@ -41,5 +42,21 @@ describe("AIProvider error hierarchy", () => {
     const cause = new Error("original");
     const error = new AIProviderRequestError("wrapped", { cause });
     expect(error.cause).toBe(cause);
+  });
+});
+
+describe("parseOrThrow", () => {
+  it("returns the parsed value when the schema accepts the input", () => {
+    const schema = { parse: (input: unknown) => input };
+    expect(parseOrThrow(schema, "ok")).toBe("ok");
+  });
+
+  it("wraps a thrown ZodError in AIProviderValidationError", () => {
+    const schema = {
+      parse: () => {
+        throw new Error("simulated zod failure");
+      },
+    };
+    expect(() => parseOrThrow(schema, "bad")).toThrow(AIProviderValidationError);
   });
 });

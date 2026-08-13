@@ -49,3 +49,14 @@ export class AIProviderRequestError extends AIProviderError {
     this.name = "AIProviderRequestError";
   }
 }
+
+export function parseOrThrow<T>(schema: { parse: (input: unknown) => T }, rawInput: unknown): T {
+  try {
+    return schema.parse(rawInput);
+  } catch (error) {
+    throw new AIProviderValidationError(
+      `Input failed schema validation: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error }
+    );
+  }
+}

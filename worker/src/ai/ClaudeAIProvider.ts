@@ -9,6 +9,7 @@ import {
   AIProviderRefusalError,
   AIProviderRequestError,
   AIProviderValidationError,
+  parseOrThrow,
 } from "./errors.js";
 import {
   analyzeCompanyInputSchema,
@@ -114,7 +115,7 @@ export class ClaudeAIProvider implements AIProvider {
   }
 
   async analyzeCompany(rawInput: AnalyzeCompanyInput): Promise<AnalyzeCompanyOutput> {
-    const input = analyzeCompanyInputSchema.parse(rawInput);
+    const input = parseOrThrow(analyzeCompanyInputSchema, rawInput);
     return this.runStructured(
       "You are a B2B research analyst. Analyze the company described and return structured findings.",
       `Company name: ${input.companyName}\nDomain: ${input.domain ?? "unknown"}\nIndustry: ${input.industry ?? "unknown"}\nDescription: ${input.description ?? "none"}\nAdditional context: ${input.rawContext ?? "none"}`,
@@ -123,7 +124,7 @@ export class ClaudeAIProvider implements AIProvider {
   }
 
   async researchContact(rawInput: ResearchContactInput): Promise<ResearchContactOutput> {
-    const input = researchContactInputSchema.parse(rawInput);
+    const input = parseOrThrow(researchContactInputSchema, rawInput);
     return this.runStructured(
       "You are a B2B research analyst. Analyze the contact described and return structured findings.",
       `Full name: ${input.fullName}\nTitle: ${input.title ?? "unknown"}\nCompany: ${input.companyName}\nAdditional context: ${input.rawContext ?? "none"}`,
@@ -132,7 +133,7 @@ export class ClaudeAIProvider implements AIProvider {
   }
 
   async qualifyLead(rawInput: QualifyLeadInput): Promise<QualifyLeadOutput> {
-    const input = qualifyLeadInputSchema.parse(rawInput);
+    const input = parseOrThrow(qualifyLeadInputSchema, rawInput);
     return this.runStructured(
       "You are a B2B sales qualification analyst. Score this lead against the given ICP criteria.",
       `Company summary: ${input.companySummary}\nCompany pain points: ${input.companyPainPoints.join(", ") || "none"}\nCompany ICP fit signals: ${input.companyIcpFitSignals.join(", ") || "none"}\nContact summary: ${input.contactSummary ?? "unknown"}\nContact pain points: ${input.contactPainPoints.join(", ") || "none"}\nICP criteria: ${JSON.stringify(input.icpCriteria)}`,
@@ -141,7 +142,7 @@ export class ClaudeAIProvider implements AIProvider {
   }
 
   async generateOutreach(rawInput: GenerateOutreachInput): Promise<GenerateOutreachOutput> {
-    const input = generateOutreachInputSchema.parse(rawInput);
+    const input = parseOrThrow(generateOutreachInputSchema, rawInput);
     return this.runStructured(
       "You are a B2B sales copywriter. Draft a single outreach message. This is a DRAFT ONLY — it will never be sent automatically and always requires human review and approval before any send.",
       `Company: ${input.companyName}\nContact: ${input.contactName}${input.contactTitle ? ` (${input.contactTitle})` : ""}\nChannel: ${input.channel}\nCompany pain points: ${input.companyPainPoints.join(", ") || "none"}\nPersonalization hooks: ${input.personalizationHooks.join(", ") || "none"}\nMessaging themes: ${input.messagingThemes?.join(", ") ?? "none"}`,
@@ -150,7 +151,7 @@ export class ClaudeAIProvider implements AIProvider {
   }
 
   async classifyReply(rawInput: ClassifyReplyInput): Promise<ClassifyReplyOutput> {
-    const input = classifyReplyInputSchema.parse(rawInput);
+    const input = parseOrThrow(classifyReplyInputSchema, rawInput);
     return this.runStructured(
       "You are a B2B sales reply classifier. Classify the intent and sentiment of this inbound reply.",
       `Reply content: ${input.rawContent}\nOriginal message summary: ${input.originalMessageSummary ?? "unknown"}`,
@@ -159,7 +160,7 @@ export class ClaudeAIProvider implements AIProvider {
   }
 
   async generateReply(rawInput: GenerateReplyInput): Promise<GenerateReplyOutput> {
-    const input = generateReplyInputSchema.parse(rawInput);
+    const input = parseOrThrow(generateReplyInputSchema, rawInput);
     return this.runStructured(
       "You are a B2B sales copywriter. Draft a single follow-up reply. This is a DRAFT ONLY — it will never be sent automatically and always requires human review and approval before any send.",
       `Contact: ${input.contactName} at ${input.companyName}\nTheir message: ${input.rawContent}\nClassified intent: ${input.intent}\nClassified sentiment: ${input.sentiment}\nConversation summary: ${input.conversationSummary ?? "none"}`,
@@ -168,7 +169,7 @@ export class ClaudeAIProvider implements AIProvider {
   }
 
   async analyzeStrategy(rawInput: AnalyzeStrategyInput): Promise<AnalyzeStrategyOutput> {
-    const input = analyzeStrategyInputSchema.parse(rawInput);
+    const input = parseOrThrow(analyzeStrategyInputSchema, rawInput);
     return this.runStructured(
       "You are a B2B growth strategy analyst. Recommend adjustments to the current targeting/messaging strategy based on measured performance. This is a set of RECOMMENDATIONS ONLY — you are not creating, updating, or activating any strategy configuration.",
       `Current config: ${JSON.stringify(input.currentConfig)}\nPerformance metrics: ${JSON.stringify(input.performanceMetrics)}`,

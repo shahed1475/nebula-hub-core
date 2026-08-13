@@ -1,4 +1,5 @@
 import type { AIProvider } from "./AIProvider.js";
+import { parseOrThrow } from "./errors.js";
 import {
   analyzeCompanyInputSchema,
   analyzeCompanyOutputSchema,
@@ -32,7 +33,7 @@ import {
 
 export class MockAIProvider implements AIProvider {
   async analyzeCompany(rawInput: AnalyzeCompanyInput): Promise<AnalyzeCompanyOutput> {
-    const input = analyzeCompanyInputSchema.parse(rawInput);
+    const input = parseOrThrow(analyzeCompanyInputSchema, rawInput);
     return analyzeCompanyOutputSchema.parse({
       summary: `${input.companyName} is a company in the ${input.industry ?? "unknown"} industry (mock analysis).`,
       companySizeEstimate: "11-50",
@@ -46,7 +47,7 @@ export class MockAIProvider implements AIProvider {
   }
 
   async researchContact(rawInput: ResearchContactInput): Promise<ResearchContactOutput> {
-    const input = researchContactInputSchema.parse(rawInput);
+    const input = parseOrThrow(researchContactInputSchema, rawInput);
     return researchContactOutputSchema.parse({
       summary: `${input.fullName} works at ${input.companyName}${input.title ? ` as ${input.title}` : ""} (mock research).`,
       seniority: input.title ? "manager" : null,
@@ -57,7 +58,7 @@ export class MockAIProvider implements AIProvider {
   }
 
   async qualifyLead(rawInput: QualifyLeadInput): Promise<QualifyLeadOutput> {
-    const input = qualifyLeadInputSchema.parse(rawInput);
+    const input = parseOrThrow(qualifyLeadInputSchema, rawInput);
     return qualifyLeadOutputSchema.parse({
       score: 50,
       band: "warm",
@@ -67,7 +68,7 @@ export class MockAIProvider implements AIProvider {
   }
 
   async generateOutreach(rawInput: GenerateOutreachInput): Promise<GenerateOutreachOutput> {
-    const input = generateOutreachInputSchema.parse(rawInput);
+    const input = parseOrThrow(generateOutreachInputSchema, rawInput);
     return generateOutreachOutputSchema.parse({
       subject: `Quick question for ${input.contactName}`,
       body: `Hi ${input.contactName},\n\nThis is a mock draft outreach message for ${input.companyName}.\n\n(MockAIProvider — not sent, draft only.)`,
@@ -76,7 +77,7 @@ export class MockAIProvider implements AIProvider {
   }
 
   async classifyReply(rawInput: ClassifyReplyInput): Promise<ClassifyReplyOutput> {
-    const input = classifyReplyInputSchema.parse(rawInput);
+    const input = parseOrThrow(classifyReplyInputSchema, rawInput);
     return classifyReplyOutputSchema.parse({
       intent: "other",
       sentiment: "neutral",
@@ -86,14 +87,14 @@ export class MockAIProvider implements AIProvider {
   }
 
   async generateReply(rawInput: GenerateReplyInput): Promise<GenerateReplyOutput> {
-    const input = generateReplyInputSchema.parse(rawInput);
+    const input = parseOrThrow(generateReplyInputSchema, rawInput);
     return generateReplyOutputSchema.parse({
       body: `Hi ${input.contactName},\n\nThanks for your reply. (Mock draft reply — not sent.)`,
     });
   }
 
   async analyzeStrategy(rawInput: AnalyzeStrategyInput): Promise<AnalyzeStrategyOutput> {
-    const input = analyzeStrategyInputSchema.parse(rawInput);
+    const input = parseOrThrow(analyzeStrategyInputSchema, rawInput);
     return analyzeStrategyOutputSchema.parse({
       summary: `Mock strategy analysis: ${input.performanceMetrics.totalLeads} leads processed.`,
       recommendedChanges: [],
