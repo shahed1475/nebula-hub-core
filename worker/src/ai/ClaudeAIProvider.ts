@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
+import type { MessageCreateParamsNonStreaming } from "@anthropic-ai/sdk/resources";
 import type { AIProvider } from "./AIProvider.js";
 import type { EffortLevel } from "../config/env.js";
 import {
@@ -44,9 +45,11 @@ import {
 
 export interface AnthropicMessagesLike {
   messages: {
-    parse(params: Record<string, unknown>): Promise<{
+    parse(
+      params: MessageCreateParamsNonStreaming
+    ): Promise<{
       parsed_output: unknown;
-      stop_reason: string;
+      stop_reason: string | null;
       stop_details?: { category?: string | null } | null;
     }>;
   };
