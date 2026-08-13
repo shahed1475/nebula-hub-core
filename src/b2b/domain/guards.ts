@@ -1,6 +1,6 @@
 import type { LeadStatus } from "./lead";
 
-export function canApproveOutreach(campaignLead: {
+export function isOutreachApproved(campaignLead: {
   approval_status: "pending" | "approved" | "rejected";
 }): boolean {
   return campaignLead.approval_status === "approved";

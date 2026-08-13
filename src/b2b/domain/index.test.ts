@@ -23,7 +23,7 @@ describe("b2b domain barrel export", () => {
   });
 
   it("exports the pipeline guards", () => {
-    expect(domain.canApproveOutreach).toBeDefined();
+    expect(domain.isOutreachApproved).toBeDefined();
     expect(domain.isValidLeadStatusTransition).toBeDefined();
   });
 });

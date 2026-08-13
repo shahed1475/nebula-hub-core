@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { campaignLeadSchema } from "./campaignLead";
-import { canApproveOutreach } from "./guards";
+import { isOutreachApproved } from "./guards";
 
 const validCampaignLead = {
   id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
@@ -25,11 +25,11 @@ describe("campaignLeadSchema", () => {
     ).toThrow();
   });
 
-  it("parses into a shape canApproveOutreach accepts", () => {
+  it("parses into a shape isOutreachApproved accepts", () => {
     const approved = campaignLeadSchema.parse({
       ...validCampaignLead,
       approval_status: "approved",
     });
-    expect(canApproveOutreach(approved)).toBe(true);
+    expect(isOutreachApproved(approved)).toBe(true);
   });
 });

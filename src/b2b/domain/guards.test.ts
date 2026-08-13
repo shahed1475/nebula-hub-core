@@ -1,17 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { canApproveOutreach, isValidLeadStatusTransition } from "./guards";
+import { isOutreachApproved, isValidLeadStatusTransition } from "./guards";
 
-describe("canApproveOutreach", () => {
+describe("isOutreachApproved", () => {
   it("returns true when approval_status is approved", () => {
-    expect(canApproveOutreach({ approval_status: "approved" })).toBe(true);
+    expect(isOutreachApproved({ approval_status: "approved" })).toBe(true);
   });
 
   it("returns false when approval_status is pending", () => {
-    expect(canApproveOutreach({ approval_status: "pending" })).toBe(false);
+    expect(isOutreachApproved({ approval_status: "pending" })).toBe(false);
   });
 
   it("returns false when approval_status is rejected", () => {
-    expect(canApproveOutreach({ approval_status: "rejected" })).toBe(false);
+    expect(isOutreachApproved({ approval_status: "rejected" })).toBe(false);
   });
 });
 
