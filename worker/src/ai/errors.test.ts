@@ -59,4 +59,19 @@ describe("parseOrThrow", () => {
     };
     expect(() => parseOrThrow(schema, "bad")).toThrow(AIProviderValidationError);
   });
+
+  it("uses a custom context label in the error message when provided", () => {
+    const schema = {
+      parse: () => {
+        throw new Error("simulated failure");
+      },
+    };
+    try {
+      parseOrThrow(schema, "bad", "Output");
+      throw new Error("expected parseOrThrow to throw");
+    } catch (error) {
+      expect(error).toBeInstanceOf(AIProviderValidationError);
+      expect((error as Error).message).toMatch(/^Output failed schema validation/);
+    }
+  });
 });

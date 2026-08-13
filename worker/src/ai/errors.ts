@@ -50,12 +50,16 @@ export class AIProviderRequestError extends AIProviderError {
   }
 }
 
-export function parseOrThrow<T>(schema: { parse: (input: unknown) => T }, rawInput: unknown): T {
+export function parseOrThrow<T>(
+  schema: { parse: (input: unknown) => T },
+  rawInput: unknown,
+  context: string = "Input"
+): T {
   try {
     return schema.parse(rawInput);
   } catch (error) {
     throw new AIProviderValidationError(
-      `Input failed schema validation: ${error instanceof Error ? error.message : String(error)}`,
+      `${context} failed schema validation: ${error instanceof Error ? error.message : String(error)}`,
       { cause: error }
     );
   }

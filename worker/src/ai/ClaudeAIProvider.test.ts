@@ -45,6 +45,57 @@ describe("ClaudeAIProvider", () => {
     expect(result.confidence).toBe(0.8);
   });
 
+  it("researchContact returns validated output on success", async () => {
+    const fakeClient: AnthropicMessagesLike = {
+      messages: {
+        parse: async () => ({
+          stop_reason: "end_turn",
+          parsed_output: {
+            summary: "Jane Doe is VP of Engineering at Acme.",
+            seniority: "executive",
+            likelyPainPoints: ["Limited engineering bandwidth"],
+            personalizationHooks: ["Recently posted about scaling challenges"],
+            confidence: 0.75,
+          },
+        }),
+      },
+    };
+
+    const provider = makeProvider(fakeClient);
+    const result = await provider.researchContact({
+      fullName: "Jane Doe",
+      title: "VP Engineering",
+      companyName: "Acme",
+      rawContext: null,
+    });
+
+    expect(result.summary).toBe("Jane Doe is VP of Engineering at Acme.");
+    expect(result.confidence).toBe(0.75);
+  });
+
+  it("generateReply returns validated draft output on success", async () => {
+    const fakeClient: AnthropicMessagesLike = {
+      messages: {
+        parse: async () => ({
+          stop_reason: "end_turn",
+          parsed_output: { body: "Thanks for getting back to me — happy to share more details." },
+        }),
+      },
+    };
+
+    const provider = makeProvider(fakeClient);
+    const result = await provider.generateReply({
+      rawContent: "Can you tell me more about pricing?",
+      intent: "question",
+      sentiment: "neutral",
+      companyName: "Acme",
+      contactName: "Jane",
+      conversationSummary: null,
+    });
+
+    expect(result.body).toBe("Thanks for getting back to me — happy to share more details.");
+  });
+
   it("throws AIProviderRefusalError when stop_reason is refusal", async () => {
     const fakeClient: AnthropicMessagesLike = {
       messages: {
